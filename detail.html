@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI 工具导航">
+<meta name="twitter:card" content="summary_large_image">
+<title>AI 工具导航</title>
+<link rel="canonical" href="">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --border: #e6e8ec;
+    --text: #1a1d26;
+    --text-secondary: #6b7280;
+    --primary: #4f6cf7;
+    --primary-light: #eef1ff;
+    --primary-dark: #3b55d6;
+    --ad-label: #9ca3af;
+    --shadow: 0 1px 3px rgba(0,0,0,.06);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,.08);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --max-w: 900px;
+    --header-h: 64px;
+  }
+  html { font-size: 16px; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6;
+  }
+
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    height: var(--header-h);
+    display: flex; align-items: center;
+  }
+  header .inner {
+    max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+    width: 100%; display: flex; align-items: center; gap: 12px;
+  }
+  .back-link {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--text-secondary); font-size: .9rem; font-weight: 500;
+    text-decoration: none; padding: 6px 12px; border-radius: var(--radius-sm);
+    transition: background .15s, color .15s;
+  }
+  .back-link:hover { background: var(--primary-light); color: var(--primary); }
+
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 32px 24px 60px; }
+
+  /* Loading / Error */
+  .loading-state, .error-state {
+    text-align: center; padding: 80px 20px; color: var(--text-secondary);
+  }
+  .loading-state .spinner {
+    width: 36px; height: 36px; border: 3px solid var(--border);
+    border-top-color: var(--primary); border-radius: 50%;
+    animation: spin .8s linear infinite; margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .error-state .emoji { font-size: 3rem; margin-bottom: 12px; }
+  .error-state h2 { margin-bottom: 8px; }
+
+  /* Tool Hero */
+  .tool-hero {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 36px;
+    display: flex; gap: 28px; align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .tool-hero .icon-wrap {
+    width: 72px; height: 72px; border-radius: 16px;
+    background: var(--primary-light); display: flex; align-items: center;
+    justify-content: center; font-size: 2.4rem; flex-shrink: 0;
+  }
+  .tool-hero .info { flex: 1; min-width: 0; }
+  .tool-hero h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 4px; }
+  .tool-hero .cat-tag {
+    display: inline-block; font-size: .78rem; padding: 2px 12px;
+    border-radius: 999px; background: var(--primary-light); color: var(--primary);
+    margin-bottom: 10px;
+  }
+  .tool-hero p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; }
+  .tool-hero .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tool-hero .tag {
+    font-size: .75rem; padding: 3px 12px; border-radius: 999px;
+    background: var(--bg); color: var(--text-secondary);
+  }
+  .tool-hero .tag.free { background: #e0f2e9; color: #0b7a4a; }
+  .tool-hero .tag.paid { background: #fef3e2; color: #b45a0c; }
+  .tool-hero .tag.freemium { background: #e8edff; color: #4f6cf7; }
+  .tool-hero .tag.hot { background: #fef0ec; color: #d13b3b; }
+  .tool-hero .tag.oss { background: #ede9fe; color: #6d28d9; }
+  .btn-visit {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 28px; border-radius: 999px; font-size: .95rem;
+    background: var(--primary); color: #fff; font-weight: 600;
+    border: none; cursor: pointer; text-decoration: none;
+    transition: background .2s, transform .15s;
+  }
+  .btn-visit:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+  /* Ad */
+  .ad-banner {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 24px;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    margin-bottom: 24px; min-height: 72px;
+    color: var(--ad-label); font-size: .8rem; cursor: pointer;
+    transition: box-shadow .2s;
+  }
+  .ad-banner:hover { box-shadow: var(--shadow-hover); }
+  .ad-banner .ad-icon { font-size: 1.5rem; opacity: .5; }
+
+  /* Sections */
+  .detail-section {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px 32px; margin-bottom: 20px;
+  }
+  .detail-section h2 {
+    font-size: 1.1rem; font-weight: 600; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .detail-section ul {
+    list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .detail-section ul li {
+    padding: 8px 14px; background: var(--bg); border-radius: var(--radius-sm);
+    font-size: .9rem; display: flex; align-items: center; gap: 8px;
+  }
+  .detail-section ul li::before {
+    content: '✓'; color: var(--primary); font-weight: 700; font-size: .85rem;
+  }
+
+  /* Related */
+  .related-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;
+  }
+  .related-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 16px; cursor: pointer;
+    text-decoration: none; color: inherit; display: block;
+    transition: box-shadow .2s, transform .15s;
+  }
+  .related-card:hover {
+    box-shadow: var(--shadow-hover); transform: translateY(-1px);
+  }
+  .related-card .r-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--primary-light); display: flex; align-items: center;
+    justify-content: center; font-size: 1.1rem; margin-bottom: 8px;
+  }
+  .related-card .r-name { font-weight: 600; font-size: .9rem; }
+  .related-card .r-desc {
+    font-size: .78rem; color: var(--text-secondary);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  footer {
+    text-align: center; padding: 32px 24px; border-top: 1px solid var(--border);
+    color: var(--text-secondary); font-size: .82rem;
+  }
+  footer a { color: var(--primary); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .tool-hero { flex-direction: column; align-items: center; text-align: center; padding: 24px; }
+    .tool-hero .tags { justify-content: center; }
+    .detail-section ul { grid-template-columns: 1fr; }
+    .detail-section { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <a class="back-link" href="index.html">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      返回首页
+    </a>
+  </div>
+</header>
+
+<div class="container">
+  <div id="loading" class="loading-state">
+    <div class="spinner"></div>
+    <span>加载中...</span>
+  </div>
+  <div id="error" class="error-state" style="display:none;">
+    <div class="emoji">🔍</div>
+    <h2>未找到该工具</h2>
+    <p>请检查链接是否正确</p>
+    <a href="index.html" class="btn-visit" style="margin-top:12px;display:inline-flex;">返回首页</a>
+  </div>
+  <div id="content" style="display:none;"></div>
+</div>
+
+<footer>
+  © 2026 AI 导航 &mdash; <a href="index.html">发现最好的 AI 工具</a>
+</footer>
+
+<script src="tools.js"></script>
+<script>
+(function() {
+  // Get tool ID from URL
+  const params = new URLSearchParams(window.location.search);
+  const toolId = params.get('tool');
+
+  if (!toolId) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
+    document.getElementById('error').querySelector('h2').textContent = '缺少工具 ID';
+    return;
+  }
+
+  const tool = getToolById(toolId);
+  if (!tool) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
+    return;
+  }
+
+  const cat = CATEGORIES.find(c => c.id === tool.cat);
+  const related = getRelatedTools(tool);
+
+  // SEO meta
+  const siteName = 'AI 工具导航';
+  document.title = tool.name + ' — ' + siteName;
+  setMeta('description', tool.name + '：' + tool.desc + ' 了解功能、使用场景、优缺点，发现更多 AI 工具。');
+  setMeta('og:title', tool.name + ' — ' + siteName);
+  setMeta('og:description', tool.desc);
+  setMeta('og:url', window.location.href);
+  setCanonical(window.location.href);
+  const twitterDesc = document.querySelector('meta[name="twitter:card"]');
+  if (!twitterDesc) {
+    const m = document.createElement('meta');
+    m.name = 'twitter:title';
+    m.content = tool.name;
+    document.head.appendChild(m);
+  }
+
+  // Build content
+  const content = document.getElementById('content');
+  const tagLabels = { 'free': '免费', 'paid': '付费', 'freemium': '免费增值', '热门': '🔥 热门', '开源': '📂 开源' };
+
+  const tagsHtml = tool.tags.map(t => {
+    const cls = t === 'free' ? 'free' : t === 'paid' ? 'paid' : t === 'freemium' ? 'freemium' : t === '热门' ? 'hot' : t === '开源' ? 'oss' : '';
+    return `<span class="tag ${cls}">${tagLabels[t] || t}</span>`;
+  }).join('');
+
+  const useCasesHtml = (tool.useCases || []).map(uc => `<li>${uc}</li>`).join('');
+  const featuresHtml = (tool.features || []).map(f => `<li>${f}</li>`).join('');
+
+  const relatedHtml = related.map(r => `
+    <a class="related-card" href="detail.html?tool=${r.id}">
+      <div class="r-icon">${r.icon}</div>
+      <div class="r-name">${r.name}</div>
+      <div class="r-desc">${r.desc}</div>
+    </a>
+  `).join('');
+
+  content.innerHTML = `
+    <div class="tool-hero">
+      <div class="icon-wrap">${tool.icon}</div>
+      <div class="info">
+        <div class="cat-tag">${cat ? cat.label : ''}</div>
+        <h1>${tool.name}</h1>
+        <p>${tool.desc}</p>
+        <div class="tags">${tagsHtml}</div>
+        <a class="btn-visit" href="${tool.url}" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          访问官网
+        </a>
+      </div>
+    </div>
+
+    <div class="ad-banner" onclick="window.open('https://vercel.com', '_blank')">
+      <span class="ad-icon">⚡</span>
+      <span>Vercel — 全球领先的前端部署平台，让开发更简单</span>
+    </div>
+
+    <div class="detail-section">
+      <h2>🎯 适用场景</h2>
+      <ul>${useCasesHtml}</ul>
+    </div>
+
+    <div class="detail-section">
+      <h2>⭐ 核心功能</h2>
+      <ul>${featuresHtml}</ul>
+    </div>
+
+    ${related.length > 0 ? `
+    <div class="detail-section">
+      <h2>🔗 相关工具</h2>
+      <div class="related-grid">${relatedHtml}</div>
+    </div>
+    ` : ''}
+
+    <div class="ad-banner" onclick="window.open('https://replicate.com', '_blank')">
+      <span class="ad-icon">🔄</span>
+      <span>Replicate — 云端运行数千个 AI 模型，按量计费</span>
+    </div>
+  `;
+
+  // Show content
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('content').style.display = 'block';
+
+  function setMeta(name, content) {
+    let el = document.querySelector('meta[name="' + name + '"], meta[property="' + name + '"]');
+    if (!el) {
+      el = document.createElement('meta');
+      if (name.startsWith('og:')) el.setAttribute('property', name);
+      else el.setAttribute('name', name);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', content);
+  }
+
+  function setCanonical(url) {
+    let el = document.querySelector('link[rel="canonical"]');
+    if (el) el.setAttribute('href', url);
+  }
+})();
+</script>
+</body>
+</html>

@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI 工具导航 — 发现最好的 AI 工具，覆盖聊天、图像、代码、视频、音频、办公等分类。">
 <title>AI 工具导航 — 发现最好的 AI 工具</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -49,9 +50,7 @@
   }
   .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; white-space: nowrap; }
   .logo svg { flex-shrink: 0; }
-  .search-wrap {
-    flex: 1; max-width: 480px; position: relative; margin: 0 auto 0 24px;
-  }
+  .search-wrap { flex: 1; max-width: 480px; position: relative; margin: 0 auto 0 24px; }
   .search-wrap input {
     width: 100%; padding: 8px 16px 8px 40px;
     border: 1px solid var(--border); border-radius: 999px;
@@ -94,18 +93,43 @@
   }
   .cat-item.active .badge { background: rgba(255,255,255,.2); color: #fff; }
 
+  /* Sort bar */
+  .sort-bar {
+    display: flex; align-items: center; gap: 8px; padding: 12px 0 16px;
+  }
+  .sort-btn {
+    padding: 5px 14px; border-radius: 999px; font-size: .8rem;
+    border: 1px solid var(--border); background: var(--surface);
+    cursor: pointer; transition: .15s; color: var(--text-secondary);
+  }
+  .sort-btn:hover { border-color: var(--primary); color: var(--primary); }
+  .sort-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
   /* ===== Main ===== */
   main { flex: 1; min-width: 0; }
 
   /* ===== Ads ===== */
   .ad-banner {
-    background: var(--surface); border: 1px dashed var(--border);
+    background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius); padding: 16px 24px;
     display: flex; align-items: center; justify-content: center; gap: 12px;
     margin-bottom: 28px; min-height: 72px;
-    color: var(--ad-label); font-size: .8rem;
+    color: var(--ad-label); font-size: .82rem; cursor: pointer;
+    transition: box-shadow .2s;
   }
-  .ad-banner .ad-icon { font-size: 1.5rem; opacity: .4; }
+  .ad-banner:hover { box-shadow: var(--shadow-hover); }
+  .ad-banner .ad-icon { font-size: 1.5rem; opacity: .5; }
+
+  .ad-side {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px 20px; text-align: center;
+    color: var(--ad-label); font-size: .8rem; margin-top: 16px;
+    min-height: 180px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 8px;
+    cursor: pointer; transition: box-shadow .2s;
+  }
+  .ad-side:hover { box-shadow: var(--shadow-hover); }
+  .ad-side .ad-icon { font-size: 2rem; opacity: .3; }
 
   /* ===== Section ===== */
   .section-title {
@@ -122,7 +146,8 @@
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius); padding: 20px;
     transition: box-shadow .2s, transform .2s, border-color .2s;
-    cursor: pointer; position: relative; display: flex; flex-direction: column;
+    cursor: pointer; display: flex; flex-direction: column;
+    position: relative;
   }
   .tool-card:hover {
     box-shadow: var(--shadow-hover); transform: translateY(-2px);
@@ -146,38 +171,74 @@
   .tool-card .tag.free { background: #e0f2e9; color: #0b7a4a; }
   .tool-card .tag.paid { background: #fef3e2; color: #b45a0c; }
   .tool-card .tag.freemium { background: #e8edff; color: #4f6cf7; }
-  .tool-card .go-link {
-    position: absolute; inset: 0; z-index: 1;
-    /* transparent clickable overlay */
-    /* actual link hidden inside for accessibility */
-  }
-  .tool-card .go-link a {
-    position: absolute; inset: 0; opacity: 0; z-index: 2;
-  }
+  .tool-card .tag.hot { background: #fef0ec; color: #d13b3b; }
+  .tool-card .tag.oss { background: #ede9fe; color: #6d28d9; }
 
-  /* ===== Side Ad ===== */
-  .ad-side {
-    background: var(--surface); border: 1px dashed var(--border);
-    border-radius: var(--radius); padding: 32px 20px; text-align: center;
-    color: var(--ad-label); font-size: .8rem; margin-top: 12px;
-    min-height: 180px; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 8px;
-  }
-  .ad-side .ad-icon { font-size: 2rem; opacity: .3; }
-
-  /* ===== Empty state ===== */
+  /* ===== Empty ===== */
   .empty-state {
     text-align: center; padding: 60px 20px; color: var(--text-secondary);
   }
   .empty-state .emoji { font-size: 3rem; margin-bottom: 12px; }
   .empty-state h3 { font-size: 1.1rem; margin-bottom: 6px; color: var(--text); }
 
-  /* ===== Footer ===== */
-  footer {
-    text-align: center; padding: 32px 24px; border-top: 1px solid var(--border);
-    color: var(--text-secondary); font-size: .82rem;
+  /* ===== Modal ===== */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,.3); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center;
   }
-  footer a { color: var(--primary); }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface); border-radius: var(--radius);
+    padding: 32px; width: 100%; max-width: 520px; max-height: 90vh;
+    overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.15);
+  }
+  .modal h2 { font-size: 1.2rem; margin-bottom: 4px; }
+  .modal .modal-sub { color: var(--text-secondary); font-size: .88rem; margin-bottom: 20px; }
+  .modal .close-btn {
+    float: right; border: none; background: none;
+    font-size: 1.4rem; cursor: pointer; color: var(--text-secondary);
+    padding: 4px; line-height: 1;
+  }
+  .modal .close-btn:hover { color: var(--text); }
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block; font-size: .85rem; font-weight: 500; margin-bottom: 6px;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 10px 14px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); font-size: .9rem; outline: none;
+    background: var(--bg); transition: border .2s;
+    font-family: inherit;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--primary);
+  }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+  .btn-cancel {
+    padding: 9px 20px; border-radius: 999px; font-size: .88rem;
+    border: 1px solid var(--border); background: var(--surface); cursor: pointer;
+  }
+  .btn-cancel:hover { background: var(--bg); }
+  .btn-primary {
+    padding: 9px 24px; border-radius: 999px; font-size: .88rem;
+    background: var(--primary); color: #fff; border: none; cursor: pointer;
+    font-weight: 500; transition: background .2s;
+  }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+
+  /* ===== Toast ===== */
+  .toast {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    z-index: 300; background: #1a1d26; color: #fff;
+    padding: 12px 24px; border-radius: 999px; font-size: .88rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,.15);
+    opacity: 0; transition: opacity .3s, transform .3s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   /* ===== Mobile ===== */
   .mobile-cat-bar { display: none; }
@@ -188,7 +249,7 @@
     .search-wrap input { padding: 8px 14px 8px 38px; }
     .header-actions .btn-submit span { display: none; }
     .mobile-cat-bar {
-      display: flex; gap: 8px; overflow-x: auto; padding: 0 0 16px;
+      display: flex; gap: 8px; overflow-x: auto; padding: 0 0 12px;
       scrollbar-width: none; -webkit-overflow-scrolling: touch;
     }
     .mobile-cat-bar::-webkit-scrollbar { display: none; }
@@ -198,12 +259,11 @@
       cursor: pointer; transition: .15s; white-space: nowrap;
     }
     .mobile-cat-item.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .tool-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+    .tool-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; }
     .ad-side { display: none; }
     .ad-banner { min-height: 60px; padding: 12px 16px; }
   }
 
-  /* ===== Scrollbar ===== */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
@@ -228,7 +288,7 @@
       <input type="text" id="searchInput" placeholder="搜索 AI 工具..." autocomplete="off">
     </div>
     <div class="header-actions">
-      <button class="btn-submit" onclick="alert('提交功能即将开放，敬请期待 🎉')">
+      <button class="btn-submit" id="openSubmitBtn">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         <span>提交工具</span>
       </button>
@@ -241,264 +301,296 @@
   <!-- Sidebar -->
   <aside>
     <nav class="cat-list" id="categoryList"></nav>
-    <!-- Side Ad -->
-    <div class="ad-side">
-      <div class="ad-icon">📢</div>
-      <div>广告位招商</div>
-      <div style="font-size:.72rem;">320×240</div>
+    <div class="ad-side" onclick="window.open('https://replicate.com','_blank')">
+      <div class="ad-icon">🤖</div>
+      <div style="font-weight:500;color:var(--text);margin-bottom:4px;">Replicate</div>
+      <div>云端运行 5000+ AI 模型</div>
     </div>
   </aside>
 
   <!-- Main -->
   <main>
-    <!-- Banner Ad -->
-    <div class="ad-banner">
-      <span class="ad-icon">📢</span>
-      <span>广告位招商 — 联系合作投放 AI 工具广告</span>
+    <div class="ad-banner" onclick="window.open('https://vercel.com','_blank')">
+      <span class="ad-icon">⚡</span>
+      <span>Vercel — 全球领先的前端部署平台 | 本站由 Vercel 强力驱动</span>
     </div>
 
-    <!-- Mobile category bar -->
     <div class="mobile-cat-bar" id="mobileCategoryBar"></div>
+
+    <!-- Sort bar -->
+    <div class="sort-bar">
+      <span style="font-size:.85rem;color:var(--text-secondary);font-weight:500;">排序：</span>
+      <button class="sort-btn active" data-sort="default">默认</button>
+      <button class="sort-btn" data-sort="name">名称</button>
+      <button class="sort-btn" data-sort="newest">最新</button>
+    </div>
 
     <div id="categorySections"></div>
 
-    <!-- Empty state -->
     <div class="empty-state" id="emptyState" style="display:none;">
       <div class="emoji">🔍</div>
       <h3>未找到相关工具</h3>
-      <p>试试其他关键词吧</p>
+      <p>试试其他关键词或分类</p>
     </div>
   </main>
 </div>
 
 <footer>
-  © 2026 AI 导航 &mdash; 发现最好的 AI 工具 &nbsp;·&nbsp; <a href="#" onclick="alert('联系我们：hello@ainav.example.com')">联系我们</a>
+  © 2026 AI 导航 &mdash; 发现最好的 AI 工具 &nbsp;·&nbsp; <a href="#" id="openSubmitLink" style="color:var(--primary);">提交工具</a>
 </footer>
 
+<!-- Submit Modal -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal">
+    <button class="close-btn" id="closeModalBtn">&times;</button>
+    <h2>📮 提交 AI 工具</h2>
+    <p class="modal-sub">推荐你觉得好用的 AI 工具，审核后会展示在导航中</p>
+    <form id="submitForm">
+      <div class="form-group">
+        <label>工具名称 *</label>
+        <input type="text" id="fieldName" placeholder="例如：ChatGPT" required>
+      </div>
+      <div class="form-group">
+        <label>官网地址 *</label>
+        <input type="url" id="fieldUrl" placeholder="https://example.com" required>
+      </div>
+      <div class="form-group">
+        <label>分类 *</label>
+        <select id="fieldCat" required>
+          <option value="">请选择分类</option>
+          <option value="chat">💬 聊天对话</option>
+          <option value="image">🎨 图像生成</option>
+          <option value="code">💻 代码开发</option>
+          <option value="video">🎬 视频创作</option>
+          <option value="audio">🎵 音频处理</option>
+          <option value="office">📋 办公效率</option>
+          <option value="search">🔍 搜索知识</option>
+          <option value="other">🧩 其他工具</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>简短介绍 *</label>
+        <textarea id="fieldDesc" placeholder="一句话描述这个工具..." required></textarea>
+      </div>
+      <div class="form-group">
+        <label>标签（逗号分隔）</label>
+        <input type="text" id="fieldTags" placeholder="免费, 热门, 开源">
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" id="cancelModalBtn">取消</button>
+        <button type="submit" class="btn-primary">提交</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="tools.js"></script>
 <script>
-// ========== 数据 ==========
-const CATEGORIES = [
-  { id: 'all', label: '🏠 全部' },
-  { id: 'chat', label: '💬 聊天对话' },
-  { id: 'image', label: '🎨 图像生成' },
-  { id: 'code', label: '💻 代码开发' },
-  { id: 'video', label: '🎬 视频创作' },
-  { id: 'audio', label: '🎵 音频处理' },
-  { id: 'office', label: '📋 办公效率' },
-  { id: 'search', label: '🔍 搜索知识' },
-  { id: 'other', label: '🧩 其他工具' },
-];
+(function() {
+  // ========== State ==========
+  let currentCategory = 'all';
+  let currentSearch = '';
+  let currentSort = 'default';
 
-const TOOLS = [
-  // -- 聊天对话 --
-  { name: 'ChatGPT', desc: 'OpenAI 旗下 AI 对话助手，支持多模态推理与内容生成。', cat: 'chat', icon: '🤖', tags: ['freemium', '热门'] },
-  { name: 'Claude', desc: 'Anthropic 的 AI 助手，擅长长文本理解和安全对话。', cat: 'chat', icon: '🧠', tags: ['freemium', '热门'] },
-  { name: 'Gemini', desc: 'Google 的多模态 AI，支持文字、图像、代码、音频。', cat: 'chat', icon: '✨', tags: ['free', '热门'] },
-  { name: 'DeepSeek', desc: '深度求索的大语言模型，中文能力强，支持联网搜索。', cat: 'chat', icon: '🌊', tags: ['free', '热门'] },
-  { name: '豆包', desc: '字节跳动旗下 AI 对话助手，集成在抖音、飞书等生态。', cat: 'chat', icon: '🫘', tags: ['free'] },
-  { name: 'Kimi', desc: '月之暗面出品，擅长超长上下文处理，中文友好。', cat: 'chat', icon: '🌙', tags: ['free'] },
-  { name: '通义千问', desc: '阿里云自研大模型，支持文档、代码、图像理解。', cat: 'chat', icon: '🧘', tags: ['free'] },
-  { name: '文心一言', desc: '百度知识增强大语言模型，融合文心大模型能力。', cat: 'chat', icon: '📖', tags: ['free'] },
-  { name: '智谱清言', desc: '智谱 AI 基于 GLM 模型的对话助手，支持多轮对话。', cat: 'chat', icon: '💡', tags: ['free'] },
-  { name: 'Perplexity', desc: 'AI 搜索引擎，直接给出带引用的回答。', cat: 'chat', icon: '🔎', tags: ['freemium'] },
-  // -- 图像生成 --
-  { name: 'Midjourney', desc: '顶尖 AI 图像生成工具，艺术风格出众。', cat: 'image', icon: '🎨', tags: ['paid'] },
-  { name: 'DALL·E 3', desc: 'OpenAI 文字生成图像模型，集成于 ChatGPT。', cat: 'image', icon: '🖼️', tags: ['paid'] },
-  { name: 'Stable Diffusion', desc: '开源图像生成模型，可本地部署，社区生态丰富。', cat: 'image', icon: '🌈', tags: ['free', '开源'] },
-  { name: 'ComfyUI', desc: '基于节点工作流的 Stable Diffusion 图形界面。', cat: 'image', icon: '🔗', tags: ['free', '开源'] },
-  { name: 'Leonardo AI', desc: '游戏资产与创意图像生成平台。', cat: 'image', icon: '🎮', tags: ['freemium'] },
-  { name: 'Fooocus', desc: '极简 Stable Diffusion 前端，一键出图。', cat: 'image', icon: '🖌️', tags: ['free', '开源'] },
-  { name: 'Ideogram', desc: '文字渲染优秀，擅长 Logo 和排版图像。', cat: 'image', icon: '🔤', tags: ['freemium'] },
-  { name: 'Flux', desc: 'BlackForest Labs 出品的高质量图像生成模型。', cat: 'image', icon: '⚡', tags: ['free', '开源'] },
-  // -- 代码开发 --
-  { name: 'GitHub Copilot', desc: 'AI 代码补全助手，深度集成 VS Code 等 IDE。', cat: 'code', icon: '🧑‍💻', tags: ['paid', '热门'] },
-  { name: 'Cursor', desc: 'AI 优先的代码编辑器，内置多模型对话能力。', cat: 'code', icon: '📟', tags: ['freemium', '热门'] },
-  { name: 'Windsurf', desc: 'Codeium 出品的 AI 驱动 IDE，支持 Flow 模式。', cat: 'code', icon: '🏄', tags: ['freemium'] },
-  { name: 'Codex', desc: 'OpenAI 的 AI 编程助手，深度集成开发工作流。', cat: 'code', icon: '📝', tags: ['freemium'] },
-  { name: 'v0', desc: 'Vercel 的 AI 前端生成工具，文字描述生成 UI。', cat: 'code', icon: '🎯', tags: ['freemium'] },
-  { name: 'Replit Agent', desc: 'AI 驱动的在线开发环境，可自动生成完整应用。', cat: 'code', icon: '🔄', tags: ['freemium'] },
-  { name: 'Bolt.new', desc: '浏览器内 AI 全栈开发工具，即时预览与部署。', cat: 'code', icon: '⚡', tags: ['freemium'] },
-  { name: 'Devin', desc: 'Cognition 出品的 AI 软件工程师，自主完成任务。', cat: 'code', icon: '🤖', tags: ['paid'] },
-  { name: 'Tabnine', desc: 'AI 代码补全，支持本地模型，注重隐私。', cat: 'code', icon: '📌', tags: ['freemium'] },
-  { name: 'Continue', desc: '开源 AI 代码助手，可接入任意 LLM。', cat: 'code', icon: '▶️', tags: ['free', '开源'] },
-  // -- 视频创作 --
-  { name: 'Sora', desc: 'OpenAI 视频生成模型，文字/图像生成高质量视频。', cat: 'video', icon: '🎥', tags: ['paid'] },
-  { name: 'Runway Gen-3', desc: '专业级 AI 视频生成与编辑平台。', cat: 'video', icon: '🎬', tags: ['paid'] },
-  { name: 'HeyGen', desc: 'AI 数字人视频生成，支持多语言口型同步。', cat: 'video', icon: '👤', tags: ['paid'] },
-  { name: 'Pika', desc: '轻松生成和编辑视频，支持多种风格。', cat: 'video', icon: '🦊', tags: ['freemium'] },
-  { name: '剪映', desc: '字节跳动视频编辑工具，内置丰富 AI 功能。', cat: 'video', icon: '✂️', tags: ['free', '热门'] },
-  { name: 'CapCut', desc: '剪映国际版，AI 视频剪辑与特效平台。', cat: 'video', icon: '✂️', tags: ['free'] },
-  { name: 'Kling', desc: '快手 AI 视频生成模型，支持图生视频。', cat: 'video', icon: '🦜', tags: ['free'] },
-  { name: 'Vidu', desc: '生数科技自研视频生成大模型。', cat: 'video', icon: '🎞️', tags: ['freemium'] },
-  // -- 音频处理 --
-  { name: 'ElevenLabs', desc: 'AI 语音合成，声音逼真，支持多语言多情感。', cat: 'audio', icon: '🗣️', tags: ['freemium'] },
-  { name: 'Suno', desc: 'AI 音乐生成，文字描述即可生成完整歌曲。', cat: 'audio', icon: '🎵', tags: ['freemium', '热门'] },
-  { name: 'Udio', desc: 'AI 音乐创作平台，高质量音频生成。', cat: 'audio', icon: '🎶', tags: ['freemium'] },
-  { name: 'Whisper', desc: 'OpenAI 开源语音识别模型，支持多语种。', cat: 'audio', icon: '🎤', tags: ['free', '开源'] },
-  { name: '讯飞听见', desc: '科大讯飞语音转文字，会议记录与字幕生成。', cat: 'audio', icon: '📄', tags: ['freemium'] },
-  { name: '剪映语音', desc: '剪映内置 AI 配音与文字转语音功能。', cat: 'audio', icon: '🔊', tags: ['free'] },
-  // -- 办公效率 --
-  { name: 'Notion AI', desc: '智能写作助手，嵌入 Notion 工作空间。', cat: 'office', icon: '📝', tags: ['paid'] },
-  { name: 'Gamma', desc: 'AI 自动生成演示文稿、文档和网页。', cat: 'office', icon: '📊', tags: ['freemium'] },
-  { name: '飞书智能伙伴', desc: '飞书内置 AI 助手，辅助写作、总结、问答。', cat: 'office', icon: '📎', tags: ['freemium'] },
-  { name: 'Grammarly', desc: 'AI 英文写作助手，语法检查与风格优化。', cat: 'office', icon: '✍️', tags: ['freemium'] },
-  { name: 'Beautiful.ai', desc: 'AI 设计幻灯片，自动排版与美化。', cat: 'office', icon: '📐', tags: ['paid'] },
-  { name: 'WPS AI', desc: '金山办公 AI 助手，支持文档、表格、演示。', cat: 'office', icon: '📄', tags: ['freemium'] },
-  { name: 'Otter.ai', desc: 'AI 会议记录与实时转写工具。', cat: 'office', icon: '🦦', tags: ['freemium'] },
-  { name: '讯飞星火', desc: '科大讯飞大模型，办公、学习、编程多场景。', cat: 'office', icon: '🔥', tags: ['free'] },
-  // -- 搜索知识 --
-  { name: 'Perplexity', desc: 'AI 搜索引擎，带引用来源的深度答案。', cat: 'search', icon: '🔎', tags: ['freemium', '热门'] },
-  { name: '秘塔 AI', desc: '中国 AI 搜索引擎，无广告，结构化的搜索结果。', cat: 'search', icon: '🗼', tags: ['free'] },
-  { name: '天工 AI', desc: '昆仑万维 AI 搜索助手，支持联网。', cat: 'search', icon: '⚙️', tags: ['free'] },
-  { name: 'Consensus', desc: 'AI 学术搜索引擎，从论文中提炼答案。', cat: 'search', icon: '📚', tags: ['freemium'] },
-  { name: 'Elicit', desc: 'AI 研究助手，自动提取论文关键信息。', cat: 'search', icon: '🔬', tags: ['freemium'] },
-  { name: 'SciSpace', desc: 'AI 论文阅读与解释工具，辅助科研。', cat: 'search', icon: '📖', tags: ['freemium'] },
-  // -- 其他 --
-  { name: 'Hugging Face', desc: 'AI 模型与数据集社区，托管大量开源模型。', cat: 'other', icon: '🤗', tags: ['free', '开源', '热门'] },
-  { name: 'Replicate', desc: '云端 AI 模型运行平台，API 调用各类模型。', cat: 'other', icon: '🔄', tags: ['freemium'] },
-  { name: 'Poe', desc: '集成多款 AI 聊天机器人的平台。', cat: 'other', icon: '📱', tags: ['freemium'] },
-  { name: 'Coze', desc: '字节跳动 AI Bot 开发平台，可自定义智能体。', cat: 'other', icon: '🧩', tags: ['free'] },
-  { name: 'Dify', desc: '开源 LLM 应用开发平台，可视化编排。', cat: 'other', icon: '⚗️', tags: ['free', '开源'] },
-  { name: 'Figma AI', desc: 'Figma 设计工具内置 AI 功能，生成 UI 组件。', cat: 'other', icon: '🖍️', tags: ['freemium'] },
-];
+  // ========== Render ==========
+  function buildPage() {
+    const catListEl = document.getElementById('categoryList');
+    const mobileBar = document.getElementById('mobileCategoryBar');
+    const sectionsEl = document.getElementById('categorySections');
+    const emptyState = document.getElementById('emptyState');
 
-// ========== 渲染 ==========
-function buildPage(filterCat = 'all', search = '') {
-  const catListEl = document.getElementById('categoryList');
-  const mobileBar = document.getElementById('mobileCategoryBar');
-  const sectionsEl = document.getElementById('categorySections');
-  const emptyState = document.getElementById('emptyState');
+    // Build category list
+    catListEl.innerHTML = CATEGORIES.map(c => {
+      const count = c.id === 'all' ? TOOLS.length : TOOLS.filter(t => t.cat === c.id).length;
+      return `<div class="cat-item${currentCategory === c.id ? ' active' : ''}" data-cat="${c.id}">
+        <span>${c.label}</span>
+        <span class="badge">${count}</span>
+      </div>`;
+    }).join('');
 
-  // Build category list
-  catListEl.innerHTML = CATEGORIES.map(c => `
-    <div class="cat-item${filterCat === c.id ? ' active' : ''}" data-cat="${c.id}">
-      <span>${c.label}</span>
-      <span class="badge">${c.id === 'all' ? TOOLS.length : TOOLS.filter(t => t.cat === c.id).length}</span>
-    </div>
-  `).join('');
+    mobileBar.innerHTML = CATEGORIES.map(c =>
+      `<div class="mobile-cat-item${currentCategory === c.id ? ' active' : ''}" data-cat="${c.id}">${c.label}</div>`
+    ).join('');
 
-  mobileBar.innerHTML = CATEGORIES.map(c => `
-    <div class="mobile-cat-item${filterCat === c.id ? ' active' : ''}" data-cat="${c.id}">${c.label}</div>
-  `).join('');
-
-  // Filter
-  const filtered = TOOLS.filter(t => {
-    if (filterCat !== 'all' && t.cat !== filterCat) return false;
-    if (search) {
-      const q = search.toLowerCase();
-      return t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q) || t.tags.some(tg => tg.includes(q));
-    }
-    return true;
-  });
-
-  // Group by category for "all" view
-  if (filterCat === 'all') {
-    let html = '';
-    // In "all" view, only show categories that have visible tools
-    const catsWithTools = CATEGORIES.slice(1).filter(c => {
-      return TOOLS.some(t => t.cat === c.id && filtered.includes(t));
+    // Filter
+    let allTools = getAllTools();
+    let filtered = allTools.filter(t => {
+      if (currentCategory !== 'all' && t.cat !== currentCategory) return false;
+      if (currentSearch) {
+        const q = currentSearch.toLowerCase();
+        return t.name.toLowerCase().includes(q)
+            || t.desc.toLowerCase().includes(q)
+            || (t.tags || []).some(tg => tg.includes(q));
+      }
+      return true;
     });
-    if (catsWithTools.length === 0) {
-      emptyState.style.display = 'block';
-      sectionsEl.innerHTML = '';
-      return;
+
+    // Sort
+    const sorter = {
+      'default': (a, b) => {
+        const hotOrder = (x) => (x.tags||[]).includes('热门') ? 0 : 1;
+        return hotOrder(a) - hotOrder(b) || a.name.localeCompare(b.name, 'zh');
+      },
+      'name': (a, b) => a.name.localeCompare(b.name, 'zh'),
+      'newest': (a, b) => (b.id||'').localeCompare(a.id||''),
+    };
+    filtered.sort(sorter[currentSort] || sorter.default);
+
+    // Group
+    if (currentCategory === 'all') {
+      let html = '';
+      const catsWithTools = CATEGORIES.slice(1).filter(c =>
+        filtered.some(t => t.cat === c.id)
+      );
+      if (catsWithTools.length === 0) {
+        emptyState.style.display = 'block';
+        sectionsEl.innerHTML = '';
+        return;
+      }
+      emptyState.style.display = 'none';
+      catsWithTools.forEach(c => {
+        const items = filtered.filter(t => t.cat === c.id);
+        html += renderSection(c, items);
+      });
+      sectionsEl.innerHTML = html;
+    } else {
+      if (filtered.length === 0) {
+        emptyState.style.display = 'block';
+        sectionsEl.innerHTML = '';
+        return;
+      }
+      emptyState.style.display = 'none';
+      const cat = CATEGORIES.find(c => c.id === currentCategory);
+      sectionsEl.innerHTML = renderSection(cat, filtered);
     }
-    emptyState.style.display = 'none';
-    catsWithTools.forEach(c => {
-      const items = TOOLS.filter(t => t.cat === c.id && filtered.includes(t));
-      html += renderSection(c, items);
+
+    // Click handlers
+    document.querySelectorAll('.cat-item, .mobile-cat-item').forEach(el => {
+      el.addEventListener('click', () => {
+        currentCategory = el.dataset.cat;
+        buildPage();
+        if (window.innerWidth <= 820) {
+          document.querySelector('main').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
     });
-    sectionsEl.innerHTML = html;
-  } else {
-    if (filtered.length === 0) {
-      emptyState.style.display = 'block';
-      sectionsEl.innerHTML = '';
-      return;
-    }
-    emptyState.style.display = 'none';
-    const cat = CATEGORIES.find(c => c.id === filterCat);
-    sectionsEl.innerHTML = renderSection(cat, filtered);
   }
 
-  // Category click handlers
-  document.querySelectorAll('.cat-item, .mobile-cat-item').forEach(el => {
-    el.addEventListener('click', () => {
-      const cat = el.dataset.cat;
-      document.getElementById('searchInput').value = '';
-      buildPage(cat, '');
-      // Scroll main into view on mobile
-      if (window.innerWidth <= 820) {
-        document.querySelector('main').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-
-  // Tool card click to open URL (placeholder for demo)
-  document.querySelectorAll('.tool-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-      // If the actual link inside was clicked, let it propagate
-      if (e.target.closest('a')) return;
-      const link = card.querySelector('a');
-      if (link && link.href && link.href !== '#') {
-        window.open(link.href, '_blank');
-      } else {
-        // demo: show tool info
-        const name = card.querySelector('h3').textContent;
-        alert(`即将跳转到「${name}」官网\n（演示模式，实际部署后替换为真实链接）`);
-      }
-    });
-  });
-}
-
-function renderSection(cat, items) {
-  if (!items || items.length === 0) return '';
-  return `
-    <div class="section" data-cat="${cat.id}">
+  function renderSection(cat, items) {
+    if (!items || items.length === 0) return '';
+    return `<div class="section" data-cat="${cat.id}">
       <div class="section-title">${cat.label}</div>
       <div class="section-sub">共 <span class="count">${items.length}</span> 个工具</div>
       <div class="tool-grid">
         ${items.map(t => renderCard(t)).join('')}
       </div>
-    </div>
-  `;
-}
+    </div>`;
+  }
 
-function renderCard(tool) {
-  const priceTag = tool.tags.find(t => ['free','paid','freemium'].includes(t)) || 'freemium';
-  const otherTags = tool.tags.filter(t => !['free','paid','freemium','热门','开源'].includes(t));
-  const extraTags = tool.tags.filter(t => ['热门','开源'].includes(t));
-  const displayTags = [...new Set([priceTag, ...extraTags, ...otherTags])];
-  return `
-    <div class="tool-card">
-      <div class="go-link"><a href="#" target="_blank" rel="noopener"></a></div>
+  function renderCard(tool) {
+    const priceTag = (tool.tags||[]).find(t => ['free','paid','freemium'].includes(t)) || 'freemium';
+    const extras = (tool.tags||[]).filter(t => !['free','paid','freemium'].includes(t));
+    const displayTags = [priceTag, ...extras];
+    const tagLabels = { 'free': '免费', 'paid': '付费', 'freemium': '免费增值', '热门': '🔥 热门', '开源': '📂 开源' };
+    const tagStyles = { 'free': 'free', 'paid': 'paid', 'freemium': 'freemium', '热门': 'hot', '开源': 'oss' };
+
+    const detailUrl = window.location.protocol === 'file:'
+      ? 'detail.html?tool=' + tool.id
+      : '/tool/' + tool.id;
+
+    return `<div class="tool-card" onclick="window.location.href='${detailUrl}'">
       <div class="icon-wrap">${tool.icon}</div>
       <h3>${tool.name}</h3>
       <p>${tool.desc}</p>
       <div class="tags">
-        ${displayTags.map(t => `<span class="tag ${t}">${t === 'free' ? '免费' : t === 'paid' ? '付费' : t === 'freemium' ? '免费增值' : t === '热门' ? '🔥 热门' : t === '开源' ? '📂 开源' : t}</span>`).join('')}
+        ${displayTags.map(t => `<span class="tag ${tagStyles[t] || ''}">${tagLabels[t] || t}</span>`).join('')}
       </div>
-    </div>
-  `;
-}
+    </div>`;
+  }
 
-// ========== 搜索 ==========
-document.getElementById('searchInput').addEventListener('input', (e) => {
-  const q = e.target.value.trim();
-  updatePlan(q);
-});
+  // ========== Search ==========
+  let searchTimer = null;
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      currentSearch = e.target.value.trim();
+      buildPage();
+    }, 200);
+  });
 
-let searchTimer = null;
-function updatePlan(q) {
-  clearTimeout(searchTimer);
-  searchTimer = setTimeout(() => {
-    // Find currently active category
-    const activeCat = document.querySelector('.cat-item.active')?.dataset.cat || 'all';
-    buildPage(activeCat, q);
-  }, 200);
-}
+  // ========== Sort ==========
+  document.querySelector('.sort-bar').addEventListener('click', (e) => {
+    const btn = e.target.closest('.sort-btn');
+    if (!btn) return;
+    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentSort = btn.dataset.sort;
+    buildPage();
+  });
 
-// ========== Init ==========
-buildPage('all', '');
+  // ========== Modal ==========
+  const modal = document.getElementById('submitModal');
+  const openBtns = [document.getElementById('openSubmitBtn'), document.getElementById('openSubmitLink')];
+  const closeBtns = [
+    document.getElementById('closeModalBtn'),
+    document.getElementById('cancelModalBtn')
+  ];
+
+  function openModal() {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  openBtns.forEach(b => b.addEventListener('click', (e) => { e.preventDefault(); openModal(); }));
+  closeBtns.forEach(b => b.addEventListener('click', closeModal));
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+  // Submit form
+  document.getElementById('submitForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('fieldName').value.trim();
+    const url = document.getElementById('fieldUrl').value.trim();
+    const cat = document.getElementById('fieldCat').value;
+    const desc = document.getElementById('fieldDesc').value.trim();
+    const tagsStr = document.getElementById('fieldTags').value.trim();
+
+    if (!name || !url || !cat || !desc) return;
+
+    const tags = tagsStr ? tagsStr.split(/[,，]/).map(s => s.trim()).filter(Boolean) : ['free'];
+
+    saveUserSubmission({
+      name, url, cat, desc,
+      tags: [...new Set(['free', ...tags])],
+      icon: getCatIcon(cat)
+    });
+
+    closeModal();
+    document.getElementById('submitForm').reset();
+    showToast('✅ 提交成功！工具已添加到列表中');
+    buildPage();
+  });
+
+  function getCatIcon(catId) {
+    const icons = { chat: '💬', image: '🎨', code: '💻', video: '🎬', audio: '🎵', office: '📋', search: '🔍', other: '🧩' };
+    return icons[catId] || '🧩';
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // ========== Init ==========
+  buildPage();
+})();
 </script>
 </body>
 </html>

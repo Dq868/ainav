@@ -2,5 +2,9 @@
   "version": 2,
   "buildCommand": null,
   "outputDirectory": ".",
-  "framework": null
+  "framework": null,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/tool/:id", "destination": "/detail.html?tool=:id" }
+  ]
 }
