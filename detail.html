@@ -213,13 +213,15 @@
 (function() {
   // Get tool ID from URL
   const params = new URLSearchParams(window.location.search);
-  const toolId = params.get('tool');
+  let toolId = params.get("tool");
+
+  // If not in query string, try URL path (Vercel rewrites /tool/xxx)
+  if (!toolId) {
+    const m = window.location.pathname.match(/\/tool\/([^\/]+)/);
+    if (m) toolId = m[1];
+  }
 
   if (!toolId) {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('error').style.display = 'block';
-    document.getElementById('error').querySelector('h2').textContent = '缺少工具 ID';
-    return;
   }
 
   const tool = getToolById(toolId);
