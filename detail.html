@@ -183,7 +183,7 @@
 
 <header>
   <div class="inner">
-    <a class="back-link" href="index.html">
+    <a class="back-link" href="/">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       返回首页
     </a>
@@ -199,16 +199,16 @@
     <div class="emoji">🔍</div>
     <h2>未找到该工具</h2>
     <p>请检查链接是否正确</p>
-    <a href="index.html" class="btn-visit" style="margin-top:12px;display:inline-flex;">返回首页</a>
+    <a href="/" class="btn-visit" style="margin-top:12px;display:inline-flex;">返回首页</a>
   </div>
   <div id="content" style="display:none;"></div>
 </div>
 
 <footer>
-  © 2026 AI 导航 &mdash; <a href="index.html">发现最好的 AI 工具</a>
+  © 2026 AI 导航 &mdash; <a href="/">发现最好的 AI 工具</a>
 </footer>
 
-<script src="tools.js"></script>
+<script src="/tools.js"></script>
 <script>
 (function() {
   // Get tool ID from URL
@@ -263,7 +263,7 @@
   const featuresHtml = (tool.features || []).map(f => `<li>${f}</li>`).join('');
 
   const relatedHtml = related.map(r => `
-    <a class="related-card" href="detail.html?tool=${r.id}">
+    <a class="related-card" href="${window.location.protocol === "file:" ? "detail.html?tool=" + r.id : "/tool/" + r.id}">
       <div class="r-icon">${r.icon}</div>
       <div class="r-name">${r.name}</div>
       <div class="r-desc">${r.desc}</div>
