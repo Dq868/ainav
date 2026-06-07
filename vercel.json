@@ -6,19 +6,39 @@
   "redirects": [
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "ainav-murex.vercel.app" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "ainav-murex.vercel.app"
+        }
+      ],
       "destination": "https://jzzai.cn/$1",
       "statusCode": 301
     },
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "www.jzzai.cn" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "www.jzzai.cn"
+        }
+      ],
       "destination": "https://jzzai.cn/$1",
       "statusCode": 301
     }
   ],
   "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/tool/:id", "destination": "/detail.html?tool=:id" }
+    {
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/tool/:id",
+      "destination": "/detail.html?tool=:id"
+    },
+    {
+      "source": "/blog/:id",
+      "destination": "/article.html?id=:id"
+    }
   ]
 }

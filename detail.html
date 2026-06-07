@@ -221,7 +221,8 @@
   © 2026 酱肘AI &mdash; <a href="/">酱肘AI — 发现最好的 AI 工具</a>
 </footer>
 
-<script src="/tools.js"></script>
+0
+<script src="/articles.js"></script>
 <script>
 (function() {
   // Get tool ID from URL
@@ -298,6 +299,40 @@
       </div>
     </div>
 
+    
+    <div class="detail-section">
+      <h2>⭐ 用户评分</h2>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div id="avgRating" style="font-size:2.4rem;font-weight:700;color:var(--primary);">-</div>
+          <div id="starDisplay" style="font-size:1.3rem;color:#f59e0b;letter-spacing:2px;"></div>
+          <div id="ratingCount" style="font-size:.8rem;color:var(--text-secondary);"></div>
+        </div>
+        <div>
+          <div style="font-size:.9rem;font-weight:500;margin-bottom:6px;">你的评分：</div>
+          <div id="starSelector" style="font-size:1.8rem;cursor:pointer;color:#ddd;letter-spacing:4px;">
+            <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+          </div>
+          <div id="ratingMsg" style="font-size:.8rem;color:var(--text-secondary);margin-top:4px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h2>💬 用户评价</h2>
+      <div id="commentsList" style="margin-bottom:16px;"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input id="commentName" placeholder="你的昵称" style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;max-width:160px;flex:1;">
+        <input id="commentText" placeholder="写一句评价..." style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;flex:2;min-width:200px;">
+        <button id="submitComment" class="btn-visit" style="padding:8px 20px;font-size:.85rem;border-radius:999px;">发表</button>
+      </div>
+    </div>
+
+    <div class="detail-section" id="relatedArticles" style="display:none;">
+      <h2>📝 相关文章</h2>
+      <div class="related-grid" id="relatedArticlesGrid"></div>
+    </div>
+
     <div class="ad-banner" onclick="window.open('https://vercel.com', '_blank')">
       <span class="ad-icon">⚡</span>
       <span>Vercel — 全球领先的前端部署平台，让开发更简单</span>
@@ -345,6 +380,129 @@
     let el = document.querySelector('link[rel="canonical"]');
     if (el) el.setAttribute('href', url);
   }
+
+  // ========== 评分系统 ==========
+  const RATING_KEY = 'ainav_ratings';
+  function getRatings() {
+    try { return JSON.parse(localStorage.getItem(RATING_KEY)) || {}; }
+    catch { return {}; }
+  }
+  function saveRating(toolId, star) {
+    const ratings = getRatings();
+    if (!ratings[toolId]) ratings[toolId] = { total: 0, count: 0 };
+    ratings[toolId].total += star;
+    ratings[toolId].count += 1;
+    localStorage.setItem(RATING_KEY, JSON.stringify(ratings));
+    return ratings[toolId];
+  }
+  function displayRating(toolId) {
+    const ratings = getRatings();
+    const r = ratings[toolId];
+    const el = document.getElementById('avgRating');
+    const starD = document.getElementById('starDisplay');
+    const countEl = document.getElementById('ratingCount');
+    if (r && r.count > 0) {
+      const avg = (r.total / r.count).toFixed(1);
+      el.textContent = avg;
+      const full = Math.round(r.total / r.count);
+      starD.textContent = '★'.repeat(full) + '☆'.repeat(5 - full);
+      countEl.textContent = r.count + ' 人评价';
+    } else {
+      el.textContent = '-';
+      starD.textContent = '☆☆☆☆☆';
+      countEl.textContent = '暂无评分';
+    }
+  }
+
+  // Star selector
+  const starSelector = document.getElementById('starSelector');
+  if (starSelector) {
+    let selectedStar = 0;
+    starSelector.querySelectorAll('span').forEach(s => {
+      s.addEventListener('mouseenter', function() {
+        const star = parseInt(this.dataset.star);
+        starSelector.querySelectorAll('span').forEach((sp, i) => {
+          sp.style.color = i < star ? '#f59e0b' : '#ddd';
+        });
+      });
+      s.addEventListener('mouseleave', function() {
+        starSelector.querySelectorAll('span').forEach((sp, i) => {
+          sp.style.color = i < selectedStar ? '#f59e0b' : '#ddd';
+        });
+      });
+      s.addEventListener('click', function() {
+        if (!toolId) return;
+        selectedStar = parseInt(this.dataset.star);
+        saveRating(toolId, selectedStar);
+        displayRating(toolId);
+        document.getElementById('ratingMsg').textContent = '✅ 评分成功！感谢你的评价';
+      });
+    });
+  }
+
+  displayRating(toolId);
+
+  // ========== 评论系统 ==========
+  const COMMENT_KEY = 'ainav_comments';
+  function getComments() {
+    try { return JSON.parse(localStorage.getItem(COMMENT_KEY)) || {}; }
+    catch { return {}; }
+  }
+  function saveComment(toolId, name, text) {
+    const all = getComments();
+    if (!all[toolId]) all[toolId] = [];
+    all[toolId].push({ name: name || '匿名', text: text, date: new Date().toLocaleDateString('zh-CN') });
+    localStorage.setItem(COMMENT_KEY, JSON.stringify(all));
+    renderComments(toolId);
+  }
+  function renderComments(toolId) {
+    const all = getComments();
+    const list = all[toolId] || [];
+    const el = document.getElementById('commentsList');
+    if (list.length === 0) {
+      el.innerHTML = '<div style="color:var(--text-secondary);font-size:.88rem;">还没有评价，来写第一条吧</div>';
+      return;
+    }
+    el.innerHTML = list.map(c => `
+      <div style="padding:10px 0;border-bottom:1px solid var(--border);font-size:.88rem;">
+        <span style="font-weight:500;">${c.name}</span>
+        <span style="color:var(--ad-label);margin-left:8px;">${c.date}</span>
+        <div style="margin-top:4px;">${c.text}</div>
+      </div>
+    `).join('');
+  }
+
+  const submitBtn = document.getElementById('submitComment');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', function() {
+      const name = document.getElementById('commentName').value.trim();
+      const text = document.getElementById('commentText').value.trim();
+      if (!text) { alert('请输入评价内容'); return; }
+      if (!toolId) { alert('工具 ID 错误'); return; }
+      saveComment(toolId, name || '匿名', text);
+      document.getElementById('commentText').value = '';
+      document.getElementById('commentName').value = '';
+    });
+  }
+  renderComments(toolId);
+
+  // ========== 相关文章 ==========
+  if (typeof getRelatedArticles !== 'undefined') {
+    const relatedArts = getRelatedArticles(toolId, 3);
+    if (relatedArts.length > 0) {
+      const grid = document.getElementById('relatedArticlesGrid');
+      const baseUrl = window.location.protocol === 'file:' ? 'article.html?id=' : '/blog/';
+      grid.innerHTML = relatedArts.map(a => `
+        <a class="related-card" href="${baseUrl}${a.id}">
+          <div class="r-icon">${a.icon}</div>
+          <div class="r-name">${a.title}</div>
+          <div class="r-desc">${a.summary}</div>
+        </a>
+      `).join('');
+      document.getElementById('relatedArticles').style.display = 'block';
+    }
+  }
+
 })();
 </script>
 </body>
