@@ -276,6 +276,16 @@
     .ad-banner { min-height: 60px; padding: 12px 16px; }
   }
 
+
+    /* 热门标签动画 */
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .tag.hot-tag {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
@@ -303,6 +313,10 @@
       <input type="text" id="searchInput" placeholder="搜索 AI 工具..." autocomplete="off">
     </div>
     <div class="header-actions">
+      
+      <button class="btn-explore" onclick="goToRandomTool()" style="display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:999px;font-size:.85rem;background:var(--bg);border:1px solid var(--border);cursor:pointer;transition:.15s;color:var(--primary);font-weight:500;">
+        🎲 随机探索
+      </button>
       <button class="btn-submit" id="openSubmitBtn">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         <span>提交工具</span>
@@ -325,6 +339,14 @@
 
   <!-- Main -->
   <main>
+    
+    <div id="statsBar" style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px;font-size:.85rem;color:var(--text-secondary);">
+      <span style="font-weight:600;color:var(--text);">📊 酱肘AI</span>
+      <span>共 <b id="totalTools" style="color:var(--primary);">0</b> 个 AI 工具</span>
+      <span>｜<b id="totalCategories" style="color:var(--primary);">0</b> 个分类</span>
+      <span>｜<b id="totalArticles" style="color:var(--primary);">0</b> 篇文章</span>
+    </div>
+
     <div class="ad-banner" onclick="window.open('https://vercel.com','_blank')">
       <span class="ad-icon">⚡</span>
       <span>Vercel — 全球领先的前端部署平台 | 本站由 Vercel 强力驱动</span>
@@ -522,7 +544,7 @@
     const extras = (tool.tags||[]).filter(t => !['free','paid','freemium'].includes(t));
     const displayTags = [priceTag, ...extras];
     const tagLabels = { 'free': '免费', 'paid': '付费', 'freemium': '免费增值', '热门': '🔥 热门', '开源': '📂 开源' };
-    const tagStyles = { 'free': 'free', 'paid': 'paid', 'freemium': 'freemium', '热门': 'hot', '开源': 'oss' };
+    const tagStyles = { 'free': 'free', 'paid': 'paid', 'freemium': 'freemium', '热门': 'hot-tag', '开源': 'oss' };
 
     const detailUrl = window.location.protocol === 'file:'
       ? 'detail.html?tool=' + tool.id
@@ -645,6 +667,8 @@
       </a>
     `).join('');
   }
+
+  updateStats();
 
   // 扩展 buildPage
   const origBuild = buildPage;
