@@ -636,14 +636,14 @@
     if (!el || typeof getAllArticles === 'undefined') return;
     const arts = getAllArticles().slice(0, 3);
     const baseUrl = window.location.protocol === 'file:' ? 'article.html?id=' : '/blog/';
-    el.innerHTML = arts.map(a => \`
-      <a class="article-list-item" href="\${baseUrl}\${a.id}" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-decoration:none;color:inherit;display:block;transition:box-shadow .2s;">
-        <div style="font-size:1.6rem;margin-bottom:8px;">\${a.icon}</div>
-        <h3 style="font-size:.95rem;font-weight:600;margin-bottom:4px;">\${a.title}</h3>
-        <p style="font-size:.82rem;color:var(--text-secondary);">\${a.summary}</p>
-        <div style="font-size:.75rem;color:var(--ad-label);margin-top:6px;">\${a.date}</div>
+    el.innerHTML = arts.map(a => `
+      <a class="article-list-item" href="${baseUrl}${a.id}" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-decoration:none;color:inherit;display:block;transition:box-shadow .2s;">
+        <div style="font-size:1.6rem;margin-bottom:8px;">${a.icon}</div>
+        <h3 style="font-size:.95rem;font-weight:600;margin-bottom:4px;">${a.title}</h3>
+        <p style="font-size:.82rem;color:var(--text-secondary);">${a.summary}</p>
+        <div style="font-size:.75rem;color:var(--ad-label);margin-top:6px;">${a.date}</div>
       </a>
-    \`).join('');
+    `).join('');
   }
 
   // 扩展 buildPage
