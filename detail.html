@@ -385,12 +385,11 @@
     if (el) el.setAttribute('href', url);
   }
 
-
   function goToRandomTool() {
     const all = getAllTools();
-    const r = all[Math.floor(Math.random() * all.length)];
-    const baseUrl = window.location.protocol === 'file:' ? 'detail.html?tool=' : '/tool/';
-    window.location.href = baseUrl + r.id;
+    const item = all[Math.floor(Math.random() * all.length)];
+    const baseUrl = window.location.protocol === "file:" ? "detail.html?tool=" : "/tool/";
+    window.location.href = baseUrl + item.id;
   }
 
   // ========== 评分系统 ==========
