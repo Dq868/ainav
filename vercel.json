@@ -33,6 +33,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
       "source": "/tool/:id",
       "destination": "/detail.html?tool=:id"
     },
