@@ -689,3 +689,49 @@ const TOOLS = [
 ];
 
 // ========== 导出 ==========
+
+// ========== 用户提交工具 ==========
+const SUBMISSIONS_KEY = 'ainav_user_submissions';
+
+function getUserSubmissions() {
+  try { return JSON.parse(localStorage.getItem(SUBMISSIONS_KEY)) || []; }
+  catch { return []; }
+}
+
+function saveUserSubmission(tool) {
+  const subs = getUserSubmissions();
+  tool.id = 'user-' + Date.now();
+  tool.addedAt = new Date().toISOString();
+  subs.push(tool);
+  localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(subs));
+  return tool;
+}
+
+function getAllTools() {
+  return [...TOOLS, ...getUserSubmissions()];
+}
+
+function getToolById(id) {
+  return getAllTools().find(t => t.id === id);
+}
+
+function getToolsByCategory(catId) {
+  if (catId === 'all') return getAllTools();
+  return getAllTools().filter(t => t.cat === catId);
+}
+
+function getRelatedTools(tool, limit = 4) {
+  if (!tool.related || tool.related.length === 0) {
+    return getToolsByCategory(tool.cat).filter(t => t.id !== tool.id).slice(0, limit);
+  }
+  return tool.related.map(id => getToolById(id)).filter(Boolean).slice(0, limit);
+}
+
+// ========== URL 工具 ==========
+function getDetailUrl(toolId) {
+  return '/tool/' + toolId;
+}
+
+function getLocalDetailUrl(toolId) {
+  return 'detail.html?tool=' + toolId;
+}
