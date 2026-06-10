@@ -501,7 +501,6 @@ const TOOLS = [
     features: ['Figma 原生集成', 'AI 生成 UI', '智能图层命名', '自动切图'],
     related: ['v0', 'midjourney', 'ideogram']
   },
-];
   // -- 2026 新增工具 --
   {
     id: 'manus', name: 'Manus', url: 'https://manus.im',
