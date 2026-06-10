@@ -502,49 +502,191 @@ const TOOLS = [
     related: ['v0', 'midjourney', 'ideogram']
   },
 ];
+  // -- 2026 新增工具 --
+  {
+    id: 'manus', name: 'Manus', url: 'https://manus.im',
+    desc: '通用 AI Agent，可自主完成复杂的多步骤任务。',
+    cat: 'other', icon: '🤖', tags: ['new', '热门'],
+    useCases: ['自动化任务', '数据分析', '报告生成', '多步骤工作流'],
+    features: ['自主 Agent', '多工具调用', '任务规划', '结果交付'],
+    related: ['dify', 'coze', 'autoai']
+  },
+  {
+    id: 'autoai', name: 'AutoAI', url: 'https://autoai.com',
+    desc: 'AI 自动化平台，让重复工作自动完成。',
+    cat: 'other', icon: '⚡', tags: ['new'],
+    useCases: ['工作流自动化', '数据抓取', '报告生成', '定时任务'],
+    features: ['可视化工作流', 'AI 驱动', '多平台集成', '定时执行'],
+    related: ['manus', 'dify', 'coze']
+  },
+  {
+    id: 'grok', name: 'Grok', url: 'https://grok.com',
+    desc: 'xAI 出品的 AI 助手，实时连接 X 平台数据。',
+    cat: 'chat', icon: '🚀', tags: ['new', '热门'],
+    useCases: ['实时新闻分析', 'X 平台数据', '幽默对话', '深度研究'],
+    features: ['X 平台实时数据', '深度研究模式', '图像理解', '语音交互'],
+    related: ['chatgpt', 'claude', 'perplexity']
+  },
+  {
+    id: 'ideogram', name: 'Ideogram', url: 'https://ideogram.ai',
+    desc: 'AI 图像生成，文字渲染能力出色。',
+    cat: 'image', icon: '🖼️', tags: ['new', '热门'],
+    useCases: ['Logo 设计', '海报制作', '文字排版图像', '品牌视觉'],
+    features: ['文字渲染', '风格控制', '高分辨率', 'Remix 功能'],
+    related: ['midjourney', 'dalle', 'flux']
+  },
+  {
+    id: 'recraft', name: 'Recraft', url: 'https://recraft.ai',
+    desc: 'AI 设计工具，可生成矢量图、图标、品牌素材。',
+    cat: 'image', icon: '🎯', tags: ['new'],
+    useCases: ['矢量图生成', '图标设计', '品牌素材', 'UI 设计'],
+    features: ['矢量图输出', '风格一致性', '品牌色管理', 'SVG 导出'],
+    related: ['ideogram', 'midjourney', 'figma-ai']
+  },
+  {
+    id: 'kling', name: '可灵 AI', url: 'https://kling.kuaishou.com',
+    desc: '快手出品的视频生成模型，支持文本/图像转视频。',
+    cat: 'video', icon: '🎞️', tags: ['new', '热门'],
+    useCases: ['文生视频', '图生视频', '短视频创作', '广告素材'],
+    features: ['高清视频生成', '运动控制', '风格化', '中文场景优化'],
+    related: ['sora', 'runway', 'pika']
+  },
+  {
+    id: 'vidu', name: 'Vidu', url: 'https://www.vidu.cn',
+    desc: '生数科技的视频生成工具，支持多种创作模式。',
+    cat: 'video', icon: '🎥', tags: ['new'],
+    useCases: ['视频创作', '动画制作', '广告制作', '内容营销'],
+    features: ['文生视频', '图生视频', '风格迁移', '快速生成'],
+    related: ['kling', 'runway', 'pika']
+  },
+  {
+    id: 'minimax', name: 'MiniMax', url: 'https://www.minimaxi.com',
+    desc: 'AI 视频与音频生成平台，海螺 AI 视频能力突出。',
+    cat: 'video', icon: '🐚', tags: ['new'],
+    useCases: ['视频生成', '语音合成', '对话 AI', '音乐创作'],
+    features: ['视频生成', 'TTS 语音', '大语言模型', '音乐生成'],
+    related: ['kling', 'suno', 'vidu']
+  },
+  {
+    id: 'elevenlabs', name: 'ElevenLabs', url: 'https://elevenlabs.io',
+    desc: 'AI 语音合成，支持多语言、情感化的语音生成。',
+    cat: 'audio', icon: '🎙️', tags: ['new', '热门'],
+    useCases: ['语音合成', '有声书制作', '配音', '语音克隆'],
+    features: ['情感语音', '多语言', '语音克隆', '声音库'],
+    related: ['fish-audio', 'suno', 'voicebox']
+  },
+  {
+    id: 'fish-audio', name: 'Fish Audio', url: 'https://fish.audio',
+    desc: '开源 AI 语音合成工具，支持语音克隆与 TTS。',
+    cat: 'audio', icon: '🐟', tags: ['new', '开源'],
+    useCases: ['语音合成', '语音克隆', '配音制作', '有声内容'],
+    features: ['开源', '语音克隆', '多语言', 'API 接入', '免费额度'],
+    related: ['elevenlabs', 'suno', 'voicebox']
+  },
+  {
+    id: 'udio', name: 'Udio', url: 'https://www.udio.com',
+    desc: 'AI 音乐生成，支持歌词、风格、乐器控制。',
+    cat: 'audio', icon: '🎶', tags: ['new', '热门'],
+    useCases: ['音乐创作', '配乐制作', '歌曲生成', 'Demo 制作'],
+    features: ['高质量音乐', '歌词控制', '风格选择', '音频编辑'],
+    related: ['suno', 'elevenlabs', 'riffusion']
+  },
+  {
+    id: 'bolt', name: 'Bolt.new', url: 'https://bolt.new',
+    desc: 'AI 全栈 Web 应用生成器，从描述到部署。',
+    cat: 'code', icon: '⚡', tags: ['new', '热门'],
+    useCases: ['快速原型', '全栈开发', 'MVP 构建', 'Web 应用生成'],
+    features: ['全栈生成', '实时预览', '代码可导出', '一键部署'],
+    related: ['v0', 'lovable', 'cursor']
+  },
+  {
+    id: 'lovable', name: 'Lovable', url: 'https://lovable.dev',
+    desc: 'AI 应用构建器，自然语言描述生成完整应用。',
+    cat: 'code', icon: '💕', tags: ['new'],
+    useCases: ['Web 应用生成', '数据库集成', '用户认证', '全栈应用'],
+    features: ['自然语言构建', 'Supabase 集成', '用户系统', '代码导出'],
+    related: ['bolt', 'v0', 'replit-agent']
+  },
+  {
+    id: 'replit-agent', name: 'Replit Agent', url: 'https://replit.com',
+    desc: 'Replit 的 AI 编程代理，浏览器内全栈开发。',
+    cat: 'code', icon: '🔮', tags: ['new'],
+    useCases: ['云端开发', '快速原型', '协作编程', '部署上线'],
+    features: ['浏览器 IDE', 'AI Agent', '一键部署', '协作编辑'],
+    related: ['bolt', 'lovable', 'cursor']
+  },
+  {
+    id: 'granica', name: 'Granica', url: 'https://granica.ai',
+    desc: 'AI 数据处理平台，优化数据管道与成本。',
+    cat: 'office', icon: '📊', tags: ['new'],
+    useCases: ['数据管道', '成本优化', '数据治理', 'AI 数据准备'],
+    features: ['数据压缩', '成本分析', '存储优化', 'AI 集成'],
+    related: ['notion-ai', 'gamma', 'beautiful']
+  },
+  {
+    id: 'gamma', name: 'Gamma', url: 'https://gamma.app',
+    desc: 'AI 演示文稿生成，从大纲到精美幻灯片。',
+    cat: 'office', icon: '📑', tags: ['new', '热门'],
+    useCases: ['PPT 生成', '演示文稿', '报告制作', '提案设计'],
+    features: ['AI 生成', '美观模板', '在线协作', '多格式导出'],
+    related: ['beautiful', 'notion-ai', 'canva']
+  },
+  {
+    id: 'beautiful', name: 'Beautiful.ai', url: 'https://www.beautiful.ai',
+    desc: 'AI 智能排版 PPT，内容决定设计。',
+    cat: 'office', icon: '✨', tags: ['new'],
+    useCases: ['PPT 设计', '品牌模板', '团队协作', '演示制作'],
+    features: ['智能排版', '品牌一致性', '团队协作', '在线编辑'],
+    related: ['gamma', 'canva', 'notion-ai']
+  },
+  {
+    id: 'notion-ai', name: 'Notion AI', url: 'https://www.notion.so/product/ai',
+    desc: 'Notion 内置 AI，写作、总结、知识管理。',
+    cat: 'office', icon: '📝', tags: ['new', '热门'],
+    useCases: ['智能写作', '文档总结', '知识库管理', '项目协作'],
+    features: ['AI 写作助手', '自动总结', '知识问答', 'Notion 集成'],
+    related: ['gamma', 'beautiful', 'granica']
+  },
+  {
+    id: 'microsoft-copilot', name: 'Microsoft Copilot', url: 'https://copilot.microsoft.com',
+    desc: '微软 AI 助手，集成 Office 365 与 Windows。',
+    cat: 'office', icon: '🪟', tags: ['new', '热门'],
+    useCases: ['Office 自动化', 'Windows 辅助', '会议总结', '文档处理'],
+    features: ['Office 集成', 'Windows 集成', '会议摘要', 'DALL·E 绘图'],
+    related: ['notion-ai', 'chatgpt', 'gemini']
+  },
+  {
+    id: 'heygen', name: 'HeyGen', url: 'https://www.heygen.com',
+    desc: 'AI 数字人视频生成，支持多语言口型同步。',
+    cat: 'video', icon: '👤', tags: ['new', '热门'],
+    useCases: ['数字人视频', '多语言配音', '营销视频', '培训视频'],
+    features: ['数字人生成', '口型同步', '多语言翻译', '视频模板'],
+    related: ['kling', 'runway', 'vidu']
+  },
+  {
+    id: 'veed', name: 'VEED.io', url: 'https://www.veed.io',
+    desc: '在线视频编辑平台，AI 字幕、翻译、剪辑。',
+    cat: 'video', icon: '✂️', tags: ['new'],
+    useCases: ['视频编辑', '字幕生成', '多语言翻译', '视频压缩'],
+    features: ['在线剪辑', 'AI 字幕', '自动翻译', '录屏编辑'],
+    related: ['heygen', 'jieshi', 'canva']
+  },
+  {
+    id: 'jieshi', name: '即事 AI', url: 'https://jishi.ai',
+    desc: 'AI 视频剪辑工具，智能识别片段自动剪辑。',
+    cat: 'video', icon: '🎬', tags: ['new'],
+    useCases: ['自动剪辑', '精彩片段提取', '短视频制作', '直播切片'],
+    features: ['智能识别', '自动剪辑', '模板生成', '批量处理'],
+    related: ['veed', 'jianying', 'runway']
+  },
+  {
+    id: 'check-ai', name: 'Check AI', url: 'https://check-ai.com',
+    desc: 'AI 内容检测与事实核查工具。',
+    cat: 'search', icon: '✅', tags: ['new'],
+    useCases: ['事实核查', 'AI 内容识别', '信息验证', '来源追踪'],
+    features: ['AI 检测', '事实核实', '来源分析', '偏见识别'],
+    related: ['perplexity', 'consensus', 'elicit']
+  },
+];
 
-// ========== 用户提交工具 ==========
-const SUBMISSIONS_KEY = 'ainav_user_submissions';
-
-function getUserSubmissions() {
-  try { return JSON.parse(localStorage.getItem(SUBMISSIONS_KEY)) || []; }
-  catch { return []; }
-}
-
-function saveUserSubmission(tool) {
-  const subs = getUserSubmissions();
-  tool.id = 'user-' + Date.now();
-  tool.addedAt = new Date().toISOString();
-  subs.push(tool);
-  localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(subs));
-  return tool;
-}
-
-function getAllTools() {
-  return [...TOOLS, ...getUserSubmissions()];
-}
-
-function getToolById(id) {
-  return getAllTools().find(t => t.id === id);
-}
-
-function getToolsByCategory(catId) {
-  if (catId === 'all') return getAllTools();
-  return getAllTools().filter(t => t.cat === catId);
-}
-
-function getRelatedTools(tool, limit = 4) {
-  if (!tool.related || tool.related.length === 0) {
-    return getToolsByCategory(tool.cat).filter(t => t.id !== tool.id).slice(0, limit);
-  }
-  return tool.related.map(id => getToolById(id)).filter(Boolean).slice(0, limit);
-}
-
-// ========== URL 工具 ==========
-function getDetailUrl(toolId) {
-  return '/tool/' + toolId;
-}
-
-function getLocalDetailUrl(toolId) {
-  return 'detail.html?tool=' + toolId;
-}
+// ========== 导出 ==========

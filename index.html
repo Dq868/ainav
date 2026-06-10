@@ -356,9 +356,19 @@
 ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+</style><style>
+  .ad-container { text-align: center; margin: 24px 0; min-height: 90px; background: var(--surface); border-radius: var(--radius-sm); border: 1px solid var(--border); overflow: hidden; }
+  .ad-container .ad-label { display: block; font-size: 11px; color: var(--ad-label); padding: 4px 0; letter-spacing: 1px; text-transform: uppercase; }
+  .ad-side { background: var(--surface); border-radius: var(--radius-sm); padding: 16px; margin-top: 20px; text-align: center; font-size: .85rem; color: var(--text-secondary); cursor: pointer; border: 1px dashed var(--border); transition: all .2s; }
+  .ad-side:hover { border-color: var(--primary); background: var(--primary-light); }
+  .ad-banner { background: var(--surface); border-radius: var(--radius-sm); padding: 12px 20px; margin-bottom: 20px; text-align: center; font-size: .85rem; color: var(--text-secondary); cursor: pointer; border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s; }
+  .ad-banner:hover { border-color: var(--primary); background: var(--primary-light); }
+  .ad-icon { font-size: 1.2rem; }
 </style>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9519141393679331" crossorigin="anonymous"></script>
-  <script src="/tools.js"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9519141393679331" crossorigin="anonymous"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script><script src="/tools.js"></script>
   <script src="/articles.js"></script>
 </head>
 <body>
@@ -417,6 +427,19 @@
       <span class="ad-icon">⚡</span>
       <span>Vercel — 全球领先的前端部署平台 | 本站由 Vercel 强力驱动</span>
     </div>
+    <!-- AdSense 横幅广告 -->
+    <div class="ad-container">
+      <span class="ad-label">—— 广告 ——</span>
+      <ins class="adsbygoogle"
+           style="display:block;min-height:90px"
+           data-ad-client="ca-pub-9519141393679331"
+           data-ad-slot="1234567890"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 
     
     

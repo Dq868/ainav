@@ -119,26 +119,81 @@ const ARTICLES = [
 `
   }
 ];
+  {
+    id: 'ai-video-generation-2026',
+    title: '2026 AI 视频生成哪家强？可灵 / Vidu / Sora 对比实测',
+    summary: '可灵 AI、Vidu、Sora、Runway 几大视频生成工具实测对比，看看哪个最能打。',
+    date: '2026-06-09',
+    cat: 'video',
+    icon: '🎬',
+    relatedTools: ['kling', 'vidu', 'sora', 'runway'],
+    content: `
+<p>AI 视频生成是 2025-2026 年最火热的 AI 赛道之一。国内的可灵 AI、Vidu，国外的 Sora、Runway 几家各有千秋。今天从几个常用维度做对比实测。</p>
 
-// 获取所有文章
-function getAllArticles() {
-  return ARTICLES;
-}
+<h2>对比一览</h2>
+<table>
+  <tr><th>维度</th><th>可灵 AI</th><th>Vidu</th><th>Sora</th><th>Runway</th></tr>
+  <tr><td>开发商</td><td>快手</td><td>生数科技</td><td>OpenAI</td><td>Runway</td></tr>
+  <tr><td>文生视频</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+  <tr><td>图生视频</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+  <tr><td>免费额度</td><td>每日免费</td><td>注册送积分</td><td>限时免费</td><td>免费试用</td></tr>
+  <tr><td>最长时长</td><td>10 秒</td><td>8 秒</td><td>20 秒</td><td>10 秒</td></tr>
+  <tr><td>中文理解</td><td>优秀</td><td>良好</td><td>一般</td><td>一般</td></tr>
+</table>
 
-// 根据 ID 获取文章
-function getArticleById(id) {
-  return ARTICLES.find(a => a.id === id);
-}
+<h2>实测感受</h2>
 
-// 获取某个分类下的文章
-function getArticlesByCategory(cat) {
-  return ARTICLES.filter(a => a.cat === cat);
-}
+<p><strong>可灵 AI</strong>：国内首选，中文 prompt 理解准确，人物动作流畅度不错。运动控制功能让用户可以指定物体运动轨迹。视频质量在国产工具里属于第一梯队。</p>
 
-// 获取相关文章（关联工具）
-function getRelatedArticles(toolId, limit = 3) {
-  const tool = getToolById(toolId);
-  if (!tool) return [];
-  const catArticles = ARTICLES.filter(a => a.cat === tool.cat);
-  return catArticles.slice(0, limit);
-}
+<p><strong>Vidu</strong>：风格化能力强，可以生成动漫、绘画等多种风格的视频。速度较快，4K 清晰度高。适合创意内容制作。</p>
+
+<p><strong>Sora</strong>：OpenAI 的王牌。虽然还没大规模开放，但从已发布的 demo 看，画面真实感和物理模拟能力是最强的。适合高端广告、影视级别的制作。</p>
+
+<p><strong>Runway</strong>：功能最全面，除了视频生成还有绿幕抠图、运动追踪、视频修复等工具。Gen-3 模型画质提升明显。$12/月起的价格居中。</p>
+
+<h2>推荐</h2>
+<p>国内使用首选 <strong>可灵 AI</strong>，免费额度够用，中文友好。做创意视频可以搭配 <strong>Vidu</strong> 的多种风格。专业制作考虑 <strong>Runway</strong> 的全套工具链。</p>
+`
+  },
+  {
+    id: 'deepseek-vs-tongyi-vs-doubao',
+    title: '国产 AI 大模型横评：DeepSeek / 通义千问 / 豆包 / Kimi 谁更强？',
+    summary: '国内四大 AI 助手深度对比，中文能力、功能、价格一网打尽。',
+    date: '2026-06-08',
+    cat: 'chat',
+    icon: '🇨🇳',
+    relatedTools: ['deepseek', 'tongyi', 'doubao', 'kimi'],
+    content: `
+<p>国产大模型在 2025-2026 年进步显著。DeepSeek、通义千问、豆包、Kimi 四家各有所长，今天做个全面的对比测评。</p>
+
+<h2>基本对比</h2>
+<table>
+  <tr><th>维度</th><th>DeepSeek</th><th>通义千问</th><th>豆包</th><th>Kimi</th></tr>
+  <tr><td>开发商</td><td>深度求索</td><td>阿里云</td><td>字节跳动</td><td>月之暗面</td></tr>
+  <tr><td>免费</td><td>✅ 完全免费</td><td>✅ 完全免费</td><td>✅ 完全免费</td><td>✅ 完全免费</td></tr>
+  <tr><td>联网搜索</td><td>✅ 默认开启</td><td>✅ 手动开启</td><td>✅ 默认开启</td><td>✅ 默认开启</td></tr>
+  <tr><td>文件上传</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+  <tr><td>上下文</td><td>64K</td><td>128K</td><td>128K</td><td>200K</td></tr>
+  <tr><td>多模态</td><td>图像理解</td><td>图像+文档</td><td>图像+语音</td><td>图像+文档</td></tr>
+  <tr><td>深度思考</td><td>✅ R1 模式</td><td>❌</td><td>❌</td><td>❌</td></tr>
+</table>
+
+<h2>各自优势</h2>
+
+<h3>DeepSeek — 推理能力最强</h3>
+<p>DeepSeek 的 R1 深度思考模式在复杂推理任务上表现亮眼，数学、逻辑、代码撰写能力在国产模型中属于顶尖水平。唯一支持"深度思考"功能的国产免费 AI。完全免费使用。</p>
+
+<h3>通义千问 — 阿里全家桶</h3>
+<p>依托阿里云生态，通义千问的文档处理能力很强，可以直接读取 PDF、Excel、PPT。多模态能力覆盖全面，还可以通过插件扩展功能。阿里系用户最方便。</p>
+
+<h3>豆包 — 最接地气</h3>
+<p>字节跳动的豆包凭借抖音、飞书等流量入口，用户量最大。语音交互体验好，集成在剪映里还能辅助视频创作。功能更新快、界面友好。</p>
+
+<h3>Kimi — 长文档阅读</h3>
+<p>月之暗面的 Kimi 以超长上下文著称，可以一次性处理超长文档。联网搜索能力强，特别适合做研究报告、论文分析类任务。</p>
+
+<h2>总结</h2>
+<p>四个全免费，不存在"选错了浪费钱"的问题。<strong>DeepSeek</strong> 适合深度推理和编程，<strong>通义千问</strong>适合阿里生态用户，<strong>豆包</strong>最方便日常，<strong>Kimi</strong>适合长文档阅读。建议四个都试试，不同场景切换着用。</p>
+`
+  },
+];
