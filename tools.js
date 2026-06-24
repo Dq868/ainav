@@ -13,6 +13,13 @@ const CATEGORIES = [
 
 // ========== 工具数据 ==========
 const TOOLS = [
+  {
+    id: 'auferet', name: 'Auferet', url: 'https://auferet.com',
+    desc: '免费 AI 角色扮演游戏，AI 游戏主持人能记住你的世界与上传的设定。',
+    cat: 'other', icon: '🎲', tags: ['freemium'],
+    useCases: ['单人角色扮演冒险', '无需真人主持的桌游战役', '与好友协作讲故事'],
+    features: ['持久记忆（事件库与角色库）', '上传自定义设定', '支持 5e 与 Pathfinder 2e', '骰子与数值追踪', '单人或多人游玩']
+  },
   // -- 聊天对话 --
   {
     id: 'chatgpt', name: 'ChatGPT', url: 'https://chat.openai.com',
