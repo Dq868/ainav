@@ -31,6 +31,10 @@
       "destination": "/detail.html?tool=:id"
     },
     {
+      "source": "/blog",
+      "destination": "/article.html"
+    },
+    {
       "source": "/blog/:id",
       "destination": "/article.html?id=:id"
     }
