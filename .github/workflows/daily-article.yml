@@ -5,9 +5,6 @@ on:
     - cron: '0 2 * * *'
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
   generate:
     runs-on: ubuntu-latest
@@ -19,33 +16,85 @@ jobs:
         with:
           python-version: '3.11'
           
-      - name: Generate article
+      - name: Generate article with DeepSeek
         run: |
-          curl -s -X POST "https://models.inference.ai.azure.com/chat/completions" \
+          curl -s -X POST "https://api.deepseek.com/chat/completions" \
             -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "User-Agent: ainav-bot" \
-            -d '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"写一篇AI工具原创文章，只输出JSON"},{"role":"user","content":"写一篇AI工具相关的原创实用文章，不要写已有主题：ChatGPT vs Claude vs Gemini、AI代码助手对比、免费AI工具推荐"}],"temperature":0.8,"max_tokens":4096}' > /tmp/r.json
-          
-      - name: Parse JSON
+            -H "Authorization: Bearer ${{ secrets.DEEPSEEK_KEY }}" \
+            -d '{
+              "model": "deepseek-chat",
+              "messages": [
+                {"role": "system", "content": "你是一个AI工具领域的写手。生成一篇原创文章，只输出JSON：{\"title\":\"标题\",\"summary\":\"一句话摘要\",\"cat\":\"chat/image/code/video/audio/office/search/other\",\"icon\":\"emoji\",\"relatedTools\":[\"id\"],\"content\":\"HTML内容\"}"},
+                {"role": "user", "content": "写一篇AI工具原创文章，主题从这些选：AI写作技巧、AI翻译工具对比、AI PPT生成、AI数据可视化、AI图片后期处理、AI视频字幕、AI思维导图。不要写已有主题：ChatGPT vs Claude vs Gemini、AI代码助手对比、免费AI工具、AI视频生成、国产AI大模型、Midjourney教程、Cursor IDE、AI营销工具、AI语音合成、AI视频创作流程、Perplexity教程、AI代码审查、AI绘图工具对比、AI学习工具、AI工具价格大全"}
+              ],
+              "temperature": 0.8,
+              "max_tokens": 4096
+            }' > /tmp/response.json
+
+      - name: Save article to file
         run: |
-          python3 << 'PYEOF'
+          python3 << 'EOF'
 import json
-with open('/tmp/r.json') as f:
+with open('/tmp/response.json') as f:
     data = json.load(f)
 content = data['choices'][0]['message']['content'].strip()
 if content.startswith('```'):
     content = content.split('\n', 1)[1].rsplit('```', 1)[0].strip()
-with open('/tmp/a.json', 'w') as f:
+with open('/tmp/article.json', 'w') as f:
     f.write(content)
-print("OK: article parsed")
-PYEOF
-          
-      - name: Add article to site
+print("OK")
+EOF
+
+      - name: Add to articles.js
         run: |
-          cat /tmp/a.json | python3 scripts/add_article.py
-          
-      - name: Push to GitHub
+          python3 << 'EOF'
+import json, re, datetime, sys
+
+with open('/tmp/article.json') as f:
+    article = json.load(f)
+
+today = datetime.date.today().isoformat()
+article.setdefault('id', 'auto-' + today)
+article.setdefault('date', today)
+article.setdefault('cat', 'other')
+article.setdefault('icon', '🤖')
+article.setdefault('summary', '')
+article.setdefault('relatedTools', [])
+article['id'] = re.sub(r'[^a-z0-9\-]', '', article['id'].lower().replace(' ', '-'))
+
+with open('articles.js', encoding='utf-8') as f:
+    js = f.read()
+
+last_idx = js.rfind('\n];')
+if last_idx == -1:
+    print("No array end found")
+    sys.exit(1)
+
+def esc(s):
+    s = str(s).replace('\\', '\\\\').replace('`', '\\`').replace('${', '\\${')
+    return s
+
+fields = []
+for key, val in article.items():
+    if key == 'content':
+        fields.append(f"    content: `\n{esc(val)}\n    `")
+    elif key == 'relatedTools' and val:
+        fields.append(f"    relatedTools: [{', '.join(repr(v) for v in val)}]")
+    elif isinstance(val, str):
+        fields.append(f"    {key}: '{esc(val)}'")
+    elif isinstance(val, list):
+        fields.append(f"    {key}: [{', '.join(repr(v) for v in val)}]")
+
+entry = "  {\n" + ",\n".join(fields) + "\n  },\n"
+js = js[:last_idx] + entry + js[last_idx:]
+
+with open('articles.js', 'w', encoding='utf-8') as f:
+    f.write(js)
+
+print(f"Article added: {article['title']}")
+EOF
+
+      - name: Commit & Push
         run: |
           node --check articles.js
           git config user.name "ainav-bot"
