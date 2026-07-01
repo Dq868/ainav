@@ -1,0 +1,43 @@
+name: Daily AI Article
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Generate article
+        run: |
+          curl -s -X POST "https://models.inference.ai.azure.com/chat/completions" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "User-Agent: ainav-bot" \
+            -d '{"model":"gpt-4o-mini","messages":[{"role":"system","content":"你是一个AI工具领域的专业写手。请生成一篇关于AI工具的原创文章，只输出JSON，不要其他文字。JSON格式：{\"title\": \"标题\", \"summary\": \"一句话摘要\", \"cat\": \"分类id(chat/image/code/video/audio/office/search/other)\", \"icon\": \"emoji\", \"relatedTools\": [\"工具id\"], \"content\": \"文章HTML内容，1000-1500字，用<h2><h3><p><ul><li>标签\"}"},{"role":"user","content":"写一篇AI工具相关的原创实用文章，不要写已有主题：ChatGPT vs Claude vs Gemini、AI代码助手对比、免费AI工具推荐、AI视频生成、国产AI大模型、Midjourney教程、Cursor IDE、AI营销工具、AI语音合成、AI视频创作流程、Perplexity教程、AI代码审查、AI绘图工具对比、AI学习工具、AI工具价格大全、Midjourney指南、AI创作全流程"}],"temperature":0.8,"max_tokens":4096}' > /tmp/r.json
+          python3 -c "
+import json
+data=json.load(open('/tmp/r.json'))
+c=data['choices'][0]['message']['content'].strip()
+if c.startswith('\x60\x60\x60'): c=c.split('\n',1)[1].rsplit('\x60\x60\x60',1)[0].strip()
+json.loads(c)
+print(c)" > /tmp/a.json
+      - name: Add article
+        run: |
+          cat /tmp/a.json | python3 scripts/add_article.py
+      - name: Push
+        run: |
+          node --check articles.js
+          git config user.name "ainav-bot"
+          git config user.email "bot@ainav.local"
+          git add articles.js
+          git diff --cached --quiet || (git commit -m "auto: $(date +%Y-%m-%d)" && git push)
