@@ -118,7 +118,7 @@ const ARTICLES = [
 <p>这 10 个工具加起来覆盖了大部分常见 AI 需求场景。先用免费的，等有更深入需求了再考虑升级付费版。</p>
 `
   }
-];
+,
   {
     id: 'ai-video-generation-2026',
     title: '2026 AI 视频生成哪家强？可灵 / Vidu / Sora 对比实测',
@@ -196,4 +196,432 @@ const ARTICLES = [
 <p>四个全免费，不存在"选错了浪费钱"的问题。<strong>DeepSeek</strong> 适合深度推理和编程，<strong>通义千问</strong>适合阿里生态用户，<strong>豆包</strong>最方便日常，<strong>Kimi</strong>适合长文档阅读。建议四个都试试，不同场景切换着用。</p>
 `
   },
+,
+  {
+    id: 'how-to-use-midjourney-2026',
+    title: 'Midjourney 2026 完全指南：从入门到精通',
+    summary: 'Midjourney 的提示词技巧、参数设置、风格控制，一篇搞懂怎么用好这个最强的 AI 绘图工具。',
+    date: '2026-06-20',
+    cat: 'image',
+    icon: '🎨',
+    relatedTools: ['midjourney', 'dalle', 'stable-diffusion'],
+    content: `
+<p>Midjourney 是当前最流行的 AI 图像生成工具之一，以其高质量的艺术风格著称。2026 年 Midjourney 已经更新到 V7 版本，功能和画质都有了巨大提升。</p>
+
+<h2>基础用法</h2>
+<p>在 Discord 中进入 Midjourney 频道，使用 <code>/imagine prompt</code> 命令开始生成。提示词是你描述想要画面的文字，越精确越好。</p>
+
+<h2>提示词结构</h2>
+<p>一个好的提示词通常包含：</p>
+<ul>
+  <li><strong>主体</strong>：什么人/物/场景</li>
+  <li><strong>环境</strong>：背景、光线、氛围</li>
+  <li><strong>风格</strong>：摄影/插画/3D/油画等</li>
+  <li><strong>参数</strong>：宽高比、风格化程度等</li>
+</ul>
+
+<h2>常用参数</h2>
+<table>
+  <tr><th>参数</th><th>作用</th><th>示例</th></tr>
+  <tr><td>--ar</td><td>宽高比</td><td>--ar 16:9 或 --ar 9:16</td></tr>
+  <tr><td>--s</td><td>风格化程度 (0-1000)</td><td>--s 250 默认</td></tr>
+  <tr><td>--v</td><td>版本号</td><td>--v 7 最新版</td></tr>
+  <tr><td>--style</td><td>风格预设</td><td>--style raw 更真实</td></tr>
+</table>
+
+<h2>V7 版本新特性</h2>
+<p>Midjourney V7 在人物细节、手部处理、文字渲染方面有了质的飞跃。新增了 Personalization 功能，AI 会学习你的审美偏好，生成更符合你口味的图片。</p>
+
+<h2>常见问题</h2>
+<p><strong>Q：生成的图片有版权吗？</strong><br>付费用户拥有商业使用权，生成的图片可以商用。</p>
+<p><strong>Q：为什么我的图不好看？</strong><br>提示词不够详细。试试加上 lighting, composition, color palette 等描述词。</p>
+<p><strong>Q：怎么参考别人的好图？</strong><br>在 Discord 的 #showcase 频道浏览，点击图片可以看到完整的提示词。</p>
+`
+  },
+  {
+    id: 'cursor-ide-deep-dive',
+    title: 'Cursor IDE 深度教程：程序员必备的 AI 编程工具',
+    summary: '从安装到高级技巧，Cursor 的功能详解、快捷键、Composer 用法全攻略。',
+    date: '2026-06-22',
+    cat: 'code',
+    icon: '💻',
+    relatedTools: ['cursor', 'copilot', 'windsurf'],
+    content: `
+<p>Cursor 是目前最受欢迎的 AI 编程 IDE，它基于 VS Code 深度集成了 AI 能力。这篇文章带你全面了解 Cursor 的功能和最佳实践。</p>
+
+<h2>为什么选择 Cursor？</h2>
+<p>传统的代码补全只能预测下一行，Cursor 的 AI 能理解整个项目的上下文。它知道你的代码库结构、函数调用关系、API 定义，给出更精准的建议。</p>
+
+<h2>核心功能详解</h2>
+
+<h3>Tab 补全</h3>
+<p>写代码时 Cursor 会预测你的下一步操作，按 Tab 即可接受建议。不只是单行补全，它能预测多行代码块、函数体甚至整个文件。</p>
+
+<h3>Ctrl+K 编辑</h3>
+<p>选中一段代码按 Ctrl+K，用自然语言描述你想怎么改。比如"把这个函数改成异步的"或"添加参数校验"。AI 会自动修改选中的代码。</p>
+
+<h3>Composer（Ctrl+I）</h3>
+<p>Composer 是 Cursor 的杀手锏。按 Ctrl+I 打开对话面板，你可以描述一个完整的功能需求，AI 会一次性修改多个文件。比如"加一个用户登录功能"，它会创建路由、控制器、模板、数据库迁移文件。</p>
+
+<h3>Chat 面板</h3>
+<p>按 Ctrl+L 打开 Chat 面板，问关于项目的问题。比如"这个函数是干什么的？"、"数据库表结构是什么样的？"。AI 会自动参考你当前的代码上下文。</p>
+
+<h2>最佳实践</h2>
+<ul>
+  <li>在项目根目录加一个 .cursorrules 文件，告诉 Cursor 你的技术栈和编码规范</li>
+  <li>使用 @file、@folder 引用具体文件，让 AI 理解相关代码</li>
+  <li>Composer 模式选择"Edit"，可以让 AI 修改已有代码而不是从头生成</li>
+  <li>Agent 模式下 Cursor 能自动运行命令、安装依赖、调试错误</li>
+</ul>
+
+<h2>性价比分析</h2>
+<p>Cursor Pro $20/月，对比 GitHub Copilot $10/月，Cursor 贵一倍但能力强很多。对于专业开发者来说，这 $10 的差价能每天省下至少 1-2 小时的编码时间，非常值得。</p>
+`
+  },
+  {
+    id: 'ai-marketing-tools-2026',
+    title: '2026 年最值得关注的 8 个 AI 营销工具',
+    summary: 'AI 正在改变营销方式，从文案到广告投放，这 8 个工具能让你的营销效率翻倍。',
+    date: '2026-06-24',
+    cat: 'office',
+    icon: '📈',
+    relatedTools: ['chatgpt', 'canva', 'gamma', 'notion-ai'],
+    content: `
+<p>2026 年 AI 已经深入营销的方方面面。这篇文章精选了 8 个实测好用的 AI 营销工具，覆盖文案、设计、数据分析、广告投放四大板块。</p>
+
+<h2>1. ChatGPT — 全能营销助手</h2>
+<p>ChatGPT 可以写文案、想标题、做用户画像分析。给 AI 一个产品描述，它能生成 10 个不同的广告语方案。品牌调性、目标人群、卖点喂进去，输出的文案基本可以直接用。</p>
+
+<h2>2. Canva AI — 设计零门槛</h2>
+<p>Canva 的 AI 功能越来越强。输入"小红书封面"就能生成多套模板，支持智能抠图、AI 背景生成、文字美化。团队协作功能很方便，适合小团队快速出图。</p>
+
+<h2>3. Gamma — AI 提案生成</h2>
+<p>以前做提案要花半天排版，Gamma 几分钟生成一套精美的 PPT。把大纲填进去，AI 自动配图、排版、调整配色。品牌色可以预设，保持一致性。</p>
+
+<h2>4. Notion AI — 内容管理与写作</h2>
+<p>Notion AI 内置在文档中，写营销文案、会议纪要、周报都很快。特色是可以把你零散的想法整理成有条理的文档，支持多人在线协作。</p>
+
+<h2>5. Descript — AI 视频编辑</h2>
+<p>做视频营销的人必备。直接编辑文字就能剪视频，AI 自动去除口头禅和停顿。支持多轨音频降噪，生成字幕准确率很高。</p>
+
+<h2>6. Perplexity — 竞品调研助手</h2>
+<p>做竞品调研时直接问 Perplexity，它会给出带引用的分析结果。比百度和 Google 搜索效率高很多，省去了翻页找答案的时间。</p>
+
+<h2>7. Copy.ai — 营销文案生成</h2>
+<p>专注营销文案的工具。输入产品名称和目标用户，一键生成广告文案、邮件标题、社交媒体文案。针对不同平台（小红书、抖音、公众号）有专门的风格模板。</p>
+
+<h2>8. Jasper — 长文内容创作</h2>
+<p>Jasper 擅长写长文，比如博客文章、白皮书、产品介绍。支持品牌声音设置，AI 会学习你的品牌语气和用词习惯，输出的文章风格统一。</p>
+
+<p>这 8 个工具覆盖了营销工作的主要环节。建议从 ChatGPT + Canva 开始，免费版就够用了。随着需求深入再逐步引入其他工具。</p>
+`
+  },
+  {
+    id: 'ai-voice-cloning-guide',
+    title: 'AI 语音合成与克隆：ElevenLabs 等工具实测对比',
+    summary: 'AI 语音技术发展到什么程度了？ElevenLabs、Fish Audio、微软语音等工具实测。',
+    date: '2026-06-26',
+    cat: 'audio',
+    icon: '🎙️',
+    relatedTools: ['elevenlabs', 'fish-audio', 'suno'],
+    content: `
+<p>AI 语音合成在 2026 年已经到了几乎以假乱真的程度。无论是做有声书、视频配音、还是虚拟主播，现在的 AI 工具都能满足需求。</p>
+
+<h2>ElevenLabs — 行业标杆</h2>
+<p>ElevenLabs 是目前音质最好的 AI 语音合成工具。支持 29 种语言，情感表达丰富，从平静叙述到激情演讲都能驾驭。声音克隆功能也很成熟，克隆一段 3 分钟的语音就能生成一个全新的数字声音。</p>
+
+<h3>核心功能</h3>
+<ul>
+  <li>语音合成：文字转语音，支持语速、音调、停顿调节</li>
+  <li>声音库：100+ 预设声音可选，覆盖不同性别、年龄、风格</li>
+  <li>声音克隆：上传音频样本生成专属声音</li>
+  <li>语音转语音：用你的声音读任意文案</li>
+  <li>Projects：长篇内容项目管理，适合有声书制作</li>
+</ul>
+
+<h2>Fish Audio — 开源之选</h2>
+<p>Fish Audio 是完全开源的中文语音合成工具。如果你有技术能力，可以在本地部署，完全免费。中文语音效果接近 ElevenLabs，特别适合国内用户。</p>
+
+<h2>Microsoft Azure Speech — 企业级</h2>
+<p>微软的语音服务支持数百种声音，中文语音质量很高。适合集成到企业应用中，API 稳定，延迟低。缺点是配置复杂，需要 Azure 账号。</p>
+
+<h2>实测对比</h2>
+<table>
+  <tr><th>维度</th><th>ElevenLabs</th><th>Fish Audio</th><th>Azure Speech</th></tr>
+  <tr><td>中文效果</td><td>优秀</td><td>优秀</td><td>优秀</td></tr>
+  <tr><td>音质</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td></tr>
+  <tr><td>价格</td><td>$5-$99/月</td><td>免费/开源</td><td>按量计费</td></tr>
+  <tr><td>声音克隆</td><td>✅ 在线</td><td>✅ 本地</td><td>✅ 定制服务</td></tr>
+  <tr><td>适合场景</td><td>个人/专业创作</td><td>开发者/技术用户</td><td>企业集成</td></tr>
+</table>
+
+<h2>使用建议</h2>
+<p>如果你是个人创作者，ElevenLabs 是最优选，$5/月的 Starter 计划就够用了。做有声书或长内容可以用 Projects 功能。如果你是开发者，Fish Audio 的开源方案值得试试。</p>
+`
+  },
+  {
+    id: 'video-creation-with-ai',
+    title: 'AI 视频创作全流程：从脚本到成品一个工具搞定',
+    summary: '用 AI 完成视频制作的每一个环节：脚本、素材、配音、剪辑。一篇看懂全流程。',
+    date: '2026-06-28',
+    cat: 'video',
+    icon: '🎬',
+    relatedTools: ['runway', 'kling', 'heygen', 'veed', 'jianying'],
+    content: `
+<p>2026 年，用 AI 做视频已经不是什么新鲜事了。从脚本、配图、配音到剪辑，每个环节都有专门的 AI 工具。这篇文章带你走一遍完整的 AI 视频创作流程。</p>
+
+<h2>第一步：写脚本 — ChatGPT / Claude</h2>
+<p>不管做口播、科普还是营销视频，脚本是第一步。用 ChatGPT 或者 Claude 生成脚本大纲，只要告诉 AI 视频主题、目标受众、时长要求。比如"写一篇 3 分钟的 AI 科普视频脚本，目标受众是普通上班族"。AI 会生成完整的脚本，包括开场、正文、结尾。</p>
+
+<h2>第二步：生成素材 — Midjourney / Flux / Kling</h2>
+<p>视频需要的图片素材可以用 Midjourney 生成。需要动起来的画面可以用可灵 AI 或者 Runway 生成视频片段。Kling 支持文生视频和图生视频，生成的画面质量接近实拍。</p>
+
+<h2>第三步：数字人配音 — HeyGen</h2>
+<p>如果你不想真人出镜，HeyGen 的 AI 数字人是最佳选择。上传一段 2 分钟的真人视频训练，AI 就能生成一个外形和口型都和你一样的数字人。输入文案后自动生成口型同步的视频。多语言翻译功能也很实用，中文视频一键转换成英文。</p>
+
+<h2>第四步：视频编辑 — 剪映 / VEED</h2>
+<p>剪映内置了大量 AI 功能：智能字幕准确率 99%、AI 数字人、自动特效、曲线变速。VEED 则是在线方案，直接在浏览器里剪辑，AI 字幕支持 100+ 语言翻译。</p>
+
+<h2>第五步：音效与配乐 — Suno / Udio</h2>
+<p>用 Suno 或者 Udio 生成背景音乐。输入"轻快的科技感电子音乐，2 分钟"就能生成。还可以生成音效，适合给视频增加氛围。</p>
+
+<h2>完整工作流示例</h2>
+<p>以制作一个 3 分钟的"ChatGPT 使用教程"视频为例：</p>
+<ol>
+  <li>ChatGPT 生成脚本（5 分钟）</li>
+  <li>Kling 生成演示视频片段（10 分钟）</li>
+  <li>HeyGen 生成数字人解说（15 分钟）</li>
+  <li>剪映合成 AI 字幕 + 特效（20 分钟）</li>
+  <li>Suno 生成背景音乐（3 分钟）</li>
+</ol>
+<p>总耗时不到 1 小时，传统方式至少需要半天到一天。</p>
+`
+  },
+  {
+    id: 'how-to-use-perplexity-ai',
+    title: 'Perplexity AI 使用教程：最好用的 AI 搜索引擎',
+    summary: 'Perplexity 怎么用？搜索技巧、Pro 功能、学术模式全解析。',
+    date: '2026-06-30',
+    cat: 'search',
+    icon: '🔎',
+    relatedTools: ['perplexity', 'consensus', 'elicit'],
+    content: `
+<p>Perplexity 被称为"Google 的 AI 替代品"。它不只是给出搜索结果，而是直接生成带引用的答案。这篇文章教你充分发挥 Perplexity 的潜力。</p>
+
+<h2>基本使用</h2>
+<p>Perplexity 的使用方式和搜索引擎一样，在搜索框输入问题即可。不同的是它会给出一个综合性的回答，并在答案旁边标注信息来源。</p>
+
+<h2>搜索模式</h2>
+<ul>
+  <li><strong>普通搜索</strong>：日常问题，速度快</li>
+  <li><strong>Pro 搜索</strong>：复杂问题，多角度分析，消耗更多计算资源</li>
+  <li><strong>深度搜索</strong>：深入调研，生成详细报告</li>
+</ul>
+
+<h2>Pro 搜索的优势</h2>
+<p>开启 Pro 搜索后，Perplexity 会从多个来源交叉验证信息，给出更全面的答案。对于"ChatGPT 和 Claude 哪个更适合写代码"这样的对比问题，Pro 搜索会列出多个角度的分析。</p>
+
+<h2>文件上传功能</h2>
+<p>Perplexity 支持上传 PDF、图片、CSV 等文件。你可以上传一份研究报告，直接问 AI 关于这份报告的问题，它会自动读取文件内容。</p>
+
+<h2>Collection 功能</h2>
+<p>收藏重要的搜索结果，按主题整理。比如创建一个"AI 行业研究"收藏夹，把所有相关搜索汇总到一起。方便回顾和分享。</p>
+
+<h2>学术研究专属用法</h2>
+<p>Perplexity 引用的来源包括学术论文，非常适合做文献调研。输入研究问题，AI 会给出带论文引用的答案。点击引用可以查看论文原文。</p>
+
+<h2>实用提示</h2>
+<ul>
+  <li>问题越具体，答案越精准。与其问"AI 工具有哪些"，不如问"2026 年最好的 AI 写代码工具推荐"</li>
+  <li>点来源链接核实信息，尤其是做重要决策时</li>
+  <li>免费版每天有 5 次 Pro 搜索额度，合理分配</li>
+  <li>手机 App 支持语音输入，出门在外也很方便</li>
+</ul>
+`
+  },
+  {
+    id: 'ai-code-review-tools',
+    title: 'AI 代码审查工具推荐：自动帮你找 Bug 和优化代码',
+    summary: 'CodeRabbit、Codeium、Code Review 等 AI 代码审查工具哪个好用。',
+    date: '2026-07-02',
+    cat: 'code',
+    icon: '🔍',
+    relatedTools: ['cursor', 'copilot', 'chatgpt'],
+    content: `
+<p>代码审查是保证代码质量的关键环节。AI 代码审查工具能自动发现潜在 Bug、安全漏洞和性能问题。这篇文章对比几款主流的 AI 代码审查工具。</p>
+
+<h2>CodeRabbit — 最全面的 PR 审查</h2>
+<p>CodeRabbit 是目前最受欢迎的 AI 代码审查工具。集成到 GitHub 后，每次提交 Pull Request 它都会自动审查。能发现逻辑错误、安全问题、代码风格问题，还会给出优化建议。每个 PR 它都会总结变更内容、风险分析、测试覆盖率变化。</p>
+
+<h2>Codeium — 轻量级审查</h2>
+<p>Codeium 提供了代码审查功能，同时也做代码补全。审查速度很快，几秒钟就能完成。主要关注代码质量和安全性。免费版功能很全面。</p>
+
+<h2>GitHub Copilot 代码审查</h2>
+<p>Copilot 在 2026 年新增了代码审查功能。在 PR 中"@copilot review"就能触发 AI 审查。审查结果直接作为 PR 评论展示。Copilot 的审查偏向于发现逻辑错误和潜在风险。</p>
+
+<h2>ChatGPT / Claude 手动审查</h2>
+<p>最灵活的方式是把代码贴给 AI 对话助手审查。上传文件或粘贴代码，直接问"这段代码有什么问题？"。Claude 的 200K 上下文可以一次审查整个代码库。</p>
+
+<h2>对比表格</h2>
+<table>
+  <tr><th>工具</th><th>自动化程度</th><th>主要特点</th><th>价格</th></tr>
+  <tr><td>CodeRabbit</td><td>全自动</td><td>PR 自动审查、安全分析、对话式修复</td><td>$12/月起</td></tr>
+  <tr><td>Codeium</td><td>全自动</td><td>审查 + 补全一体、速度快</td><td>免费版够用</td></tr>
+  <tr><td>Copilot Review</td><td>手动触发</td><td>GitHub 原生集成、团队协作</td><td>$10/月</td></tr>
+  <tr><td>Claude</td><td>手动</td><td>超长上下文、深度分析</td><td>$20/月 Pro</td></tr>
+</table>
+
+<h2>推荐</h2>
+<p>团队用 CodeRabbit 性价比最高，个人开发者用 Copilot 就够了。深度学习分析可以用 Claude 手动审查。</p>
+`
+  },
+  {
+    id: 'ai-picture-generator-compare',
+    title: 'Midjourney / DALL·E / Flux / Stable Diffusion 绘图工具选哪个',
+    summary: '四大主流 AI 绘图工具横向对比，帮你选出最适合你的那一款。',
+    date: '2026-07-04',
+    cat: 'image',
+    icon: '🖼️',
+    relatedTools: ['midjourney', 'dalle', 'flux', 'stable-diffusion'],
+    content: `
+<p>AI 绘图工具的选择越来越多了。Midjourney、DALL·E、Flux、Stable Diffusion 四大主流工具各有优劣，这篇文章帮你理清选择思路。</p>
+
+<h2>核心维度对比</h2>
+<table>
+  <tr><th>维度</th><th>Midjourney</th><th>DALL·E</th><th>Flux</th><th>Stable Diffusion</th></tr>
+  <tr><td>画质</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐（看模型）</td></tr>
+  <tr><td>易用性</td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐</td></tr>
+  <tr><td>可控性</td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td></tr>
+  <tr><td>价格</td><td>$10-60/月</td><td>按用量</td><td>免费/开源</td><td>免费/开源</td></tr>
+  <tr><td>文字渲染</td><td>一般</td><td>好</td><td>好</td><td>一般</td></tr>
+  <tr><td>中国风</td><td>一般</td><td>一般</td><td>好</td><td>优秀</td></tr>
+</table>
+
+<h2>Midjourney — 艺术感最强</h2>
+<p>Midjourney 的画质依然是最好的，特别适合做艺术感强的图片。光影、构图、色彩表现力很强。缺点是控制力弱，难以精确指定某个物体的位置或形状。在 Discord 中使用，界面不太友好。</p>
+
+<h2>DALL·E 3 — 最听话</h2>
+<p>DALL·E 3 最擅长的是"理解提示词"。你描述什么它就画什么，很少偏离。特别适合做写实的插图、产品图。文字渲染能力比 Midjourney 强。ChatGPT Plus 用户直接内置。</p>
+
+<h2>Flux — 开源的挑战者</h2>
+<p>Black Forest Labs 出品的 Flux 在 2025 年底开源后迅速崛起。画质接近 Midjourney，而且是开源免费的。可以在本地运行，也可以在线使用。Replicate、Hugging Face 上都可在线体验。</p>
+
+<h2>Stable Diffusion — 自由度最高</h2>
+<p>Stable Diffusion 生态最丰富，社区有上万个微调模型。配合 ComfyUI 或 Automatic1111 可以做出 Midjourney 无法实现的效果。如果你愿意花时间学习，SD 的上限最高。</p>
+
+<h2>选哪个？</h2>
+<p>新手推荐 <strong>DALL·E</strong>（最简单）或 <strong>Midjourney</strong>（画质最好）。技术用户推荐 <strong>Flux</strong>（开源免费）。进阶用户推荐 <strong>Stable Diffusion</strong>（自由度最高）。</p>
+`
+  },
+  {
+    id: 'ai-study-assistant-tools',
+    title: '用 AI 提高学习效率：6 个必备的学习辅助工具',
+    summary: '从做笔记到复习，AI 学习助手帮你事半功倍。Notion AI、ChatGPT、Kimi 各有妙用。',
+    date: '2026-07-06',
+    cat: 'other',
+    icon: '📚',
+    relatedTools: ['notion-ai', 'chatgpt', 'kimi', 'consensus', 'perplexity'],
+    content: `
+<p>AI 正在改变学习方式。这篇文章分享 6 个我用过的 AI 学习工具，每个都在真实的学习场景中经过验证。</p>
+
+<h2>1. ChatGPT — 万能学习伙伴</h2>
+<p>遇到不懂的概念直接问 ChatGPT，它会从最基础的层面给你讲起。不懂可以继续追问，直到完全理解。比翻书和百度效率高很多。学编程时特别有用，直接贴代码让它解释每一行的作用。</p>
+
+<h2>2. Kimi — 长文档阅读</h2>
+<p>Kimi 的 200K 上下文窗口可以一次性处理数百页的 PDF。上传教材或论文，直接问"第三章的核心论点是什么""第四章的公式推导过程"。省去了自己翻书总结的时间。</p>
+
+<h2>3. Notion AI — 智能笔记</h2>
+<p>Notion AI 可以帮你整理笔记、生成大纲、写总结。上课时录下语音转文字，AI 帮你整理成结构化的笔记。复习时 AI 可以帮你生成卡片式问题，方便自测。</p>
+
+<h2>4. Perplexity — 研究搜索</h2>
+<p>做课题研究时 Perplexity 比百度好用太多。搜索"量子计算最新进展"，它会给出知识科普 + 最新研究动态。每个回答都有来源，可以直接引用到论文里。</p>
+
+<h2>5. Consensus — 论文搜索</h2>
+<p>专门做学术搜索的 AI 工具。输入问题，它从学术论文中提取答案。每个答案都标注了论文标题、作者、发表年份。还能一键导出引用格式。</p>
+
+<h2>6. 语言学习 — 多邻国 AI + ChatGPT</h2>
+<p>多邻国 2026 年加入了 AI 对话功能，可以跟 AI 练口语。ChatGPT 可以做更灵活的语言练习，让它用你学的外语对话，遇到不会的词直接让它解释。</p>
+
+<h2>学习流程推荐</h2>
+<ol>
+  <li>预习：Kimi 读教材快速了解框架</li>
+  <li>听课：Notion AI 做笔记整理</li>
+  <li>复习：ChatGPT 问答加深理解</li>
+  <li>拓展：Perplexity / Consensus 深入研究</li>
+</ol>
+`
+  },
+  {
+    id: 'ai-tools-price-comparison-2026',
+    title: '2026 年主流 AI 工具价格大全：免费和付费怎么选',
+    summary: 'ChatGPT、Claude、Midjourney、Cursor 等主流 AI 工具的价格、免费额度全面汇总。',
+    date: '2026-07-08',
+    cat: 'chat',
+    icon: '💰',
+    relatedTools: ['chatgpt', 'claude', 'gemini', 'deepseek', 'cursor', 'midjourney'],
+    content: `
+<p>AI 工具越用越多，每个都付费的话一个月也不少钱。这篇文章整理了主流 AI 工具的价格，帮你规划最划算的组合方案。</p>
+
+<h2>完全免费的选择</h2>
+<table>
+  <tr><th>工具</th><th>免费内容</th><th>适合场景</th></tr>
+  <tr><td>DeepSeek</td><td>完全免费，无限制</td><td>日常对话、编程、中文写作</td></tr>
+  <tr><td>豆包</td><td>完全免费</td><td>日常问答、娱乐</td></tr>
+  <tr><td>通义千问</td><td>完全免费</td><td>文档处理、阿里生态</td></tr>
+  <tr><td>Gemini</td><td>完全免费</td><td>多模态、Google 集成</td></tr>
+  <tr><td>Kimi</td><td>完全免费</td><td>长文档阅读</td></tr>
+  <tr><td>Flux</td><td>开源免费（需GPU）</td><td>图像生成</td></tr>
+  <tr><td>剪映</td><td>完全免费</td><td>视频剪辑</td></tr>
+  <tr><td>Coze</td><td>完全免费</td><td>AI Bot 开发</td></tr>
+</table>
+
+<h2>免费增值（有免费额度）</h2>
+<table>
+  <tr><th>工具</th><th>免费额度</th><th>付费版</th></tr>
+  <tr><td>ChatGPT</td><td>GPT-4o mini 无限</td><td>$20/月 Plus</td></tr>
+  <tr><td>Claude</td><td>Sonnet 有限</td><td>$20/月 Pro</td></tr>
+  <tr><td>Perplexity</td><td>5 次 Pro/天</td><td>$20/月 Pro</td></tr>
+  <tr><td>Suno</td><td>5 首/天</td><td>$10/月</td></tr>
+  <tr><td>ElevenLabs</td><td>1 万字/月</td><td>$5/月起</td></tr>
+  <tr><td>Midjourney</td><td>25 张免费</td><td>$10/月起</td></tr>
+</table>
+
+<h2>付费工具价格对比</h2>
+<table>
+  <tr><th>工具</th><th>价格</th><th>核心价值</th></tr>
+  <tr><td>ChatGPT Plus</td><td>$20/月</td><td>GPT-4o、DALL·E、数据分析</td></tr>
+  <tr><td>Claude Pro</td><td>$20/月</td><td>超长上下文、深度写作</td></tr>
+  <tr><td>Cursor Pro</td><td>$20/月</td><td>AI 编程 IDE</td></tr>
+  <tr><td>GitHub Copilot</td><td>$10/月</td><td>AI 代码补全</td></tr>
+  <tr><td>Midjourney</td><td>$10-60/月</td><td>高质量 AI 绘图</td></tr>
+  <tr><td>Canva Pro</td><td>$13/月</td><td>AI 设计工具</td></tr>
+  <tr><td>Notion AI</td><td>$10/月</td><td>AI 写作 + 知识管理</td></tr>
+</table>
+
+<h2>最省钱套餐推荐</h2>
+<p><strong>月支出 0 元方案</strong>：DeepSeek + Gemini + Kimi + 剪映，完全免费覆盖日常需求。</p>
+<p><strong>月支出 $30 方案</strong>：ChatGPT Plus（$20）+ GitHub Copilot（$10），覆盖写作 + 编程核心需求。</p>
+<p><strong>月支出 $50 方案</strong>：ChatGPT Plus（$20）+ Cursor（$20）+ Midjourney 基础版（$10），全能方案。</p>
+`
+  },
 ];
+
+// ========== 文章辅助函数 ==========
+function getAllArticles() {
+  return ARTICLES;
+}
+
+function getArticleById(id) {
+  return ARTICLES.find(a => a.id === id);
+}
+
+function getArticlesByCategory(cat) {
+  return ARTICLES.filter(a => a.cat === cat);
+}
+
+function getRelatedArticles(toolId, limit) {
+  if (typeof toolId !== 'string') return [];
+  const tool = getToolById ? getToolById(toolId) : null;
+  if (!tool) return [];
+  return ARTICLES.filter(a => a.cat === tool.cat).slice(0, limit || 3);
+}
