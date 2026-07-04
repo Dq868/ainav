@@ -370,6 +370,22 @@
   (adsbygoogle = window.adsbygoogle || []).push({});
 </script><script src="/tools.js"></script>
   <script src="/articles.js"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "酱肘AI",
+  "url": "https://jzzai.cn",
+  "description": "酱肘AI 是一个 AI 工具导航与评测平台，收录国内外主流 AI 工具，提供评分、对比和使用指南。",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://jzzai.cn/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
 </head>
 <body>
 
@@ -474,6 +490,47 @@
       <div class="article-list-mini" id="articleListMini" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;"></div>
     </div>
 
+    
+  <!-- SEO FAQ Section -->
+  <div class="seo-faq" style="max-width:900px;margin:48px auto;padding:0 20px;">
+    <h2 style="font-size:1.3rem;margin-bottom:24px;color:var(--text);">🤖 AI 工具常见问题</h2>
+    
+    <div class="faq-item" style="margin-bottom:20px;background:var(--surface);border-radius:var(--radius-sm);padding:20px 24px;border:1px solid var(--border);cursor:pointer;" onclick="this.querySelector('.faq-a').style.display=this.querySelector('.faq-a').style.display==='none'?'block':'none'">
+      <h3 style="font-size:1rem;font-weight:600;margin-bottom:4px;">2026 年最值得用的免费 AI 工具有哪些？</h3>
+      <div class="faq-a" style="display:none;margin-top:10px;color:var(--text-secondary);line-height:1.7;font-size:.92rem;">
+        <p>2026 年免费 AI 工具的选择非常多。ChatGPT 免费版使用 GPT-4o mini 模型，足以应对日常对话和写作需求。Claude 免费版提供 Sonnet 模型，长文处理能力出色。Gemini 免费版集成 Google 生态，搜索和文档处理很方便。编程方面，GitHub Copilot 对学生免费，Cursor 有免费额度。图像生成推荐 Bing Image Creator（DALL·E 3）和 Leonardo.ai。这些工具组合使用基本能满足大部分场景。</p>
+      </div>
+    </div>
+    
+    <div class="faq-item" style="margin-bottom:20px;background:var(--surface);border-radius:var(--radius-sm);padding:20px 24px;border:1px solid var(--border);cursor:pointer;" onclick="this.querySelector('.faq-a').style.display=this.querySelector('.faq-a').style.display==='none'?'block':'none'">
+      <h3 style="font-size:1rem;font-weight:600;margin-bottom:4px;">ChatGPT、Claude 和 Gemini 哪个更好用？</h3>
+      <div class="faq-a" style="display:none;margin-top:10px;color:var(--text-secondary);line-height:1.7;font-size:.92rem;">
+        <p>三者各有优势：ChatGPT 生态最丰富，有 GPTs 商店和 DALL·E 绘图，通用性最强；Claude 上下文 200K，长文分析和写作质量最高；Gemini 与 Google 全家桶深度集成，1M 上下文可处理超大文件。建议日常使用 ChatGPT，写作分析用 Claude，Google 用户选 Gemini。具体对比可查看我们的 <a href="/article?id=chatgpt-vs-claude-vs-gemini" style="color:var(--primary);">ChatGPT vs Claude vs Gemini 详细评测</a>。</p>
+      </div>
+    </div>
+    
+    <div class="faq-item" style="margin-bottom:20px;background:var(--surface);border-radius:var(--radius-sm);padding:20px 24px;border:1px solid var(--border);cursor:pointer;" onclick="this.querySelector('.faq-a').style.display=this.querySelector('.faq-a').style.display==='none'?'block':'none'">
+      <h3 style="font-size:1rem;font-weight:600;margin-bottom:4px;">AI 编程助手哪个最好用？Cursors 还是 Copilot？</h3>
+      <div class="faq-a" style="display:none;margin-top:10px;color:var(--text-secondary);line-height:1.7;font-size:.92rem;">
+        <p>Cursor 和 GitHub Copilot 是目前最主流的 AI 编程工具。Cursor 基于 VS Code 深度改造，支持多文件编辑的 Agent 模式，适合全栈开发和重构；Copilot 无缝集成 VS Code、JetBrains 等 IDE，补全速度快，适合日常编码辅助。此外 Windsurf 是新兴选项，原生 AI Flow 体验不错。对于专业开发者，建议 Cursor + Copilot 组合使用。详细对比请参考我们的 <a href="/article?id=ai-code-tools-comparison" style="color:var(--primary);">AI 代码助手横评文章</a>。</p>
+      </div>
+    </div>
+    
+    <div class="faq-item" style="margin-bottom:20px;background:var(--surface);border-radius:var(--radius-sm);padding:20px 24px;border:1px solid var(--border);cursor:pointer;" onclick="this.querySelector('.faq-a').style.display=this.querySelector('.faq-a').style.display==='none'?'block':'none'">
+      <h3 style="font-size:1rem;font-weight:600;margin-bottom:4px;">AI 视频生成工具有哪些推荐？</h3>
+      <div class="faq-a" style="display:none;margin-top:10px;color:var(--text-secondary);line-height:1.7;font-size:.92rem;">
+        <p>目前主流的 AI 视频工具有：Runway Gen-3 在视频生成质量和可控性上领先；Pika Labs 操作简单适合快速原型；可灵和 Vidu 是国内优秀选手，中文理解好；CapCut（剪映）集成大量 AI 功能，适合抖音短视频创作者。根据需求选择：专业创作用 Runway，国内用户用可灵/剪映，快速实验用 Pika。每种工具的详细评测可以在我们的工具页面找到。</p>
+      </div>
+    </div>
+    
+    <div class="faq-item" style="margin-bottom:20px;background:var(--surface);border-radius:var(--radius-sm);padding:20px 24px;border:1px solid var(--border);cursor:pointer;" onclick="this.querySelector('.faq-a').style.display=this.querySelector('.faq-a').style.display==='none'?'block':'none'">
+      <h3 style="font-size:1rem;font-weight:600;margin-bottom:4px;">如何选择适合自己的 AI 工具？</h3>
+      <div class="faq-a" style="display:none;margin-top:10px;color:var(--text-secondary);line-height:1.7;font-size:.92rem;">
+        <p>选 AI 工具三步走：1️⃣ 明确需求——你是要写代码、做设计、写文章还是做视频？不同领域有各自的头部工具。2️⃣ 看预算——很多优秀的 AI 工具都有免费版或免费额度，建议先从免费版开始试用。3️⃣ 对比体验——我们网站收录了 90+ 款主流 AI 工具，每款都有详细的功能介绍、评分和标签，还有用户评论和横评文章，帮你快速找到最适合的那一个。</p>
+      </div>
+    </div>
+  </div>
+
     <div class="empty-state" id="emptyState" style="display:none;">
       <div class="emoji">🔍</div>
       <h3>未找到相关工具</h3>
@@ -483,7 +540,7 @@
 </div>
 
 <footer>
-  © 2026 酱肘AI &mdash; 发现最好的 AI 工具 &nbsp;·&nbsp; <a href="#" id="openSubmitLink" style="color:var(--primary);">提交工具</a> &nbsp;·&nbsp; <a href="/about">关于我们</a>
+  © 2026 酱肘AI &mdash; 发现最好的 AI 工具 &nbsp;·&nbsp; <a href="#" id="openSubmitLink" style="color:var(--primary);">提交工具</a> &nbsp;·&nbsp; <a href="/about">关于我们</a> &nbsp;·&nbsp; <a href="/about#privacy" style="color:var(--text-secondary);">隐私政策</a>
 </footer>
 
 <!-- Submit Modal -->
