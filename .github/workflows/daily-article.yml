@@ -5,6 +5,9 @@ on:
     - cron: '0 2 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   generate:
     runs-on: ubuntu-latest
@@ -22,9 +25,15 @@ jobs:
         run: python3 scripts/generate_article.py
       
       - name: Commit & Push
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT || github.token }}
         run: |
           node --check articles.js
           git config user.name "ainav-bot"
           git config user.email "bot@ainav.local"
           git add articles.js
-          git diff --cached --quiet || (git commit -m "auto: $(date +%Y-%m-%d)" && git push)
+          git diff --cached --quiet || (
+            git commit -m "auto: $(date +%Y-%m-%d)"
+            git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
+            git push
+          )
