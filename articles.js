@@ -675,6 +675,18 @@ const ARTICLES = [
     id: 'auto-20260709',
     date: '2026-07-09'
   },
+  {
+    title: 'AI写作编辑工具深度评测：从草稿到成品的实用工作流',
+    summary: '本文深入评测三款AI写作编辑工具（Grammarly、Hemingway Editor、ProWritingAid），提供从初稿到最终稿的完整工作流，帮助中文读者提升英文写作效率与质量。',
+    cat: 'writing',
+    icon: '✍️',
+    relatedTools: ['grammarly', 'hemingway-editor', 'prowritingaid'],
+    content: `
+<h2>为什么需要专门的AI写作编辑工具？</h2><p>在AI工具泛滥的今天，许多人误以为通用型AI（如ChatGPT）能替代所有写作需求。然而，对于需要精确语法检查、风格优化、可读性提升的写作任务，专门的AI写作编辑工具——如Grammarly、Hemingway Editor、ProWritingAid——依然不可替代。它们不生成创意，但能像资深编辑一样，帮你打磨每一个句子，让初稿变成专业级成品。</p><h2>三款核心工具对比</h2><h3>Grammarly：全能型语法与风格助手</h3><p>Grammarly是目前最流行的AI写作辅助工具，支持浏览器扩展、桌面应用、移动端。它不仅能检测基础语法错误，还能提供语气建议（正式/友好）、清晰度优化、词汇替换。核心优势：实时反馈、多平台集成、学术与商务场景适配。不足：高级功能需付费，中文用户可能偶遇误报。</p><ul><li><strong>适用场景</strong>：日常邮件、论文、博客、商务文档</li><li><strong>价格</strong>：免费版基础功能，Premium版约$12/月</li><li><strong>亮点</strong>：语气检测（如“自信”“友好”）和抄袭检查</li></ul><h3>Hemingway Editor：提升可读性的利器</h3><p>Hemingway Editor专注于让文章更清晰、简洁。它通过颜色标记长句、被动语态、副词、难读段落，鼓励用户砍掉赘词。它的AI核心在于可读性评分（Grade Level），目标是将文章控制在六年级水平（适合大众阅读）。</p><ul><li><strong>适用场景</strong>：博客、新闻稿、营销文案、任何需要高可读性的内容</li><li><strong>价格</strong>：网页版免费（可保存为TXT），桌面版$19.99一次购买</li><li><strong>亮点</strong>：直观的颜色编码系统，一键定位问题</li></ul><h3>ProWritingAid：深度写作分析引擎</h3><p>ProWritingAid提供20+种报告，包括过度使用词、句子长度变化、粘性句子、过渡词、重复性、风格一致性。其AI擅长发现隐藏的写作模式问题，适合长文档（如书籍、学术论文）。</p><ul><li><strong>适用场景</strong>：小说、学术论文、长报告、需要深度编辑的文本</li><li><strong>价格</strong>：免费版受限，Premium版约$10/月，终身版$399</li><li><strong>亮点</strong>：综合报告（如“写作风格”“句子结构”）、与Scrivener集成</li></ul><h2>从草稿到成品的实用工作流</h2><p>以下工作流结合三款工具优势，适用于英文写作（中文用户可翻译后适配）。</p><h3>第一步：初稿撰写（自由写作）</h3><p>使用任何编辑器（如Word、Google Docs）完成初稿。此时不要关心语法或风格，重点是把想法写出来。完成后，复制到Hemingway Editor。</p><p><strong>操作</strong>：粘贴文本，查看可读性评分。如果Grade Level高于10，标记为黄色/红色的句子需要拆分。</p><h3>第二步：可读性优化（Hemingway Editor）</h3><p>根据颜色标记修改：<ul><li>红色句子：拆分或缩短</li><li>黄色句子：简化或调整</li><li>紫色副词：删除或替换</li><li>绿色被动语态：改为主动（如非必要）</li></ul>修改后，再次检查评分，目标达到Grade 8以下。</p><h3>第三步：语法与风格精修（Grammarly）</h3><p>将修改后的文本粘贴到Grammarly（或安装浏览器扩展）。重点关注：<ul><li>红色错误（语法、拼写）</li><li>蓝色建议（清晰度、词汇）</li><li>绿色反馈（语气、包容性）</li></ul>Grammarly Premium用户可利用“完整性检查”功能。</p><h3>第四步：深度分析（ProWritingAid）</h3><p>将文本导入ProWritingAid，运行“风格报告”和“过度使用词报告”。常见问题：<ul><li>过度使用“very”“really”“important”</li><li>句子长度变化小（全部短句或长句）</li><li>缺乏过渡词（如“however”“therefore”）</li></ul>根据报告调整，确保文章节奏自然。</p><h3>第五步：最终校对</h3><p>最后，通读全文，注意AI工具可能漏掉的上下文错误（如时态一致性、专有名词拼写）。建议间隔一段时间再读，或使用语音朗读功能。</p><h2>实用技巧与注意事项</h2><h3>针对中文用户的特别建议</h3><ul><li><strong>语言切换</strong>：Grammarly和ProWritingAid默认针对英文，确保设置English (US/UK) 以避免误报。Hemingway Editor无语言设置，但适用于任何英文文本。</li><li><strong>翻译工具结合</strong>：如果先用中文撰写，使用DeepL翻译后，再按上述流程处理。注意：翻译后检查术语一致性。</li><li><strong>避免过度依赖</strong>：AI工具不能理解创造性的写作意图。例如，Hemingway Editor会标记被动语态，但在科学写作中被动语态是必要的。Grammarly的“清晰度”建议可能改变原意。</li></ul><h3>三款工具的协同使用场景</h3><ul><li><strong>学术论文</strong>：ProWritingAid（深度分析）+ Grammarly（语法/引用检查）</li><li><strong>博客文章</strong>：Hemingway Editor（可读性）+ Grammarly（风格）</li><li><strong>小说章节</strong>：ProWritingAid（风格一致性）+ Hemingway Editor（节奏）</li></ul><h2>结语</h2><p>AI写作编辑工具不是取代人类创造力，而是放大你的表达能力。通过Grammarly的精准、Hemingway Editor的简洁、ProWritingAid的深度，你可以构建一个从混乱初稿到专业成品的完整流水线。记住：工具只是辅助，最终的判断力在你手中。尝试今天的工作流，你会发现你的英文写作质量提升一个台阶。</p>
+    `,
+    id: 'auto-20260710',
+    date: '2026-07-10'
+  },
 
 ];
 
