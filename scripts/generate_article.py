@@ -30,7 +30,7 @@ SYSTEM_PROMPT = """你是一个AI工具领域的专业写手。请生成一篇�
 
 def call_deepseek(api_key: str) -> dict:
     payload = json.dumps({
-        "model": "deepseek-chat",
+        "model": "deepseek-v4-flash",
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": f"写一篇AI工具相关的原创实用文章。禁止写的主题：{'、'.join(EXISTING_TOPICS)}"}
