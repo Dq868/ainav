@@ -1,1 +1,2 @@
 google.com, pub-9519141393679331, DIRECT, f08c47fec0942fa0
+# ads.txt for jzzai.cn - 酱肘AI
