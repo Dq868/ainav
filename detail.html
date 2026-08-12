@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-006K3L3V06"></script>
 <script>
@@ -23,6 +24,7 @@
     const btn = document.querySelector(".theme-btn");
     if (btn) btn.textContent = document.documentElement.getAttribute("data-theme") === "dark" ? "☀️" : "🌙";
   }, 0);
+</script>
 
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -40,7 +42,7 @@
 <meta property="og:site_name" content="酱肘AI">
 <meta name="twitter:card" content="summary_large_image">
 <title>酱肘AI — AI 工具导航</title>
-<link rel="canonical" href="https://jzzai.cn/detail" />
+<link rel="canonical" href="https://jzzai.cn/" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -173,6 +175,42 @@
     content: '✓'; color: var(--primary); font-weight: 700; font-size: .85rem;
   }
 
+  /* 深度内容 */
+  .deep-content h3 { font-size: .95rem; font-weight: 600; margin-bottom: 10px; }
+  .deep-intro { color: var(--text-secondary); line-height: 1.85; font-size: .93rem; }
+  .deep-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 18px 0; }
+  .deep-grid h3 { margin-top: 0; }
+  .audience-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .audience-tag {
+    font-size: .8rem; background: var(--primary-light); color: var(--primary);
+    padding: 4px 12px; border-radius: 999px;
+  }
+  .deep-pricing { color: var(--text-secondary); font-size: .9rem; line-height: 1.7; }
+  .deep-two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+  .pros-box, .cons-box {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 16px 18px;
+  }
+  .deep-content ul { display: grid; grid-template-columns: 1fr; gap: 8px; list-style: none; padding: 0; margin: 0; }
+  .deep-content ul li {
+    padding: 5px 0 5px 22px; position: relative; background: transparent;
+    font-size: .88rem; line-height: 1.6;
+  }
+  .deep-content ul li::before {
+    content: ''; position: absolute; left: 2px; top: 12px;
+    width: 8px; height: 8px; border-radius: 50%; background: var(--primary);
+  }
+  .deep-content .cons-box ul li::before { background: #f59e0b; }
+  .deep-step { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .deep-step p, .deep-step ul li { color: var(--text-secondary); }
+  .alt-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .alt-chip {
+    display: inline-flex; align-items: center; gap: 6px; font-size: .82rem;
+    background: var(--primary-light); color: var(--primary);
+    padding: 6px 14px; border-radius: 999px; text-decoration: none;
+  }
+  .alt-chip:hover { background: var(--primary); color: #fff; }
+
   /* Related */
   .related-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;
@@ -208,11 +246,13 @@
     .tool-hero .tags { justify-content: center; }
     .detail-section ul { grid-template-columns: 1fr; }
     .detail-section { padding: 20px; }
+    .deep-grid, .deep-two { grid-template-columns: 1fr; }
   }
 </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9519141393679331" crossorigin="anonymous"></script>
   <script src="/tools.js"></script>
   <script src="/articles.js"></script>
+  <script src="/tool-content.js"></script>
 </head>
 <body>
 
@@ -244,7 +284,12 @@
 </div>
 
 <footer>
-  © 2026 酱肘AI &mdash; <a href="/">酱肘AI — 发现最好的 AI 工具</a> &nbsp;·&nbsp; <a href="/about">关于我们</a>
+  © 2026 酱肘AI &mdash; <a href="/">发现最好的 AI 工具</a> &nbsp;·&nbsp;
+  <a href="/about">关于我们</a> &nbsp;·&nbsp;
+  <a href="/contact">联系我们</a> &nbsp;·&nbsp;
+  <a href="/privacy">隐私政策</a> &nbsp;·&nbsp;
+  <a href="/terms">服务条款</a> &nbsp;·&nbsp;
+  <a href="/editorial">编辑准则</a>
 </footer>
 
 0
@@ -301,6 +346,55 @@
   const useCasesHtml = (tool.useCases || []).map(uc => `<li>${uc}</li>`).join('');
   const featuresHtml = (tool.features || []).map(f => `<li>${f}</li>`).join('');
 
+  // ========== 深度内容 ==========
+  function escHtml(str) {
+    return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function buildDeepContent(tool) {
+    const c = (typeof TOOL_CONTENT !== 'undefined' && TOOL_CONTENT[tool.id]) || null;
+    if (!c) return '';
+    const prosHtml = (c.pros || []).map(p => `<li class="pro">${escHtml(p)}</li>`).join('');
+    const consHtml = (c.cons || []).map(p => `<li class="con">${escHtml(p)}</li>`).join('');
+    const audienceHtml = (c.audience || []).map(p => `<span class="audience-tag">${escHtml(p)}</span>`).join('');
+    const tipsHtml = (c.tips || []).map(p => `<li>${escHtml(p)}</li>`).join('');
+    const altNames = (c.alternatives || []).map(id => getToolById(id)).filter(Boolean).slice(0, 3);
+    const altHtml = altNames.map(t => `<a class="alt-chip" href="/tool/${t.id}">${t.icon} ${t.name}</a>`).join('');
+    return `
+    <div class="detail-section deep-content">
+      <h2>📖 ${escHtml(tool.name)} 深度介绍</h2>
+      <div class="deep-intro"><p>${escHtml(c.intro)}</p></div>
+      <div class="deep-grid">
+        <div>
+          <h3>🎯 适合人群</h3>
+          <div class="audience-tags">${audienceHtml}</div>
+        </div>
+        <div>
+          <h3>💰 价格模式</h3>
+          <p class="deep-pricing">${escHtml(c.pricing)}</p>
+        </div>
+      </div>
+      <div class="deep-two">
+        <div class="pros-box">
+          <h3>✅ 优点</h3>
+          <ul>${prosHtml}</ul>
+        </div>
+        <div class="cons-box">
+          <h3>⚠️ 缺点</h3>
+          <ul>${consHtml}</ul>
+        </div>
+      </div>
+      <div class="deep-step">
+        <h3>🚀 快速上手</h3>
+        <p>${escHtml(c.quickstart)}</p>
+      </div>
+      ${tipsHtml ? `<div class="deep-step"><h3>💡 实用技巧</h3><ul>${tipsHtml}</ul></div>` : ''}
+      ${altHtml ? `<div class="deep-step"><h3>🔁 同类替代</h3><div class="alt-row">${altHtml}</div></div>` : ''}
+    </div>
+    `;
+  }
+  const deepHtml = buildDeepContent(tool);
+
   const relatedHtml = related.map(r => `
     <a class="related-card" href="${window.location.protocol === "file:" ? "detail.html?tool=" + r.id : "/tool/" + r.id}">
       <div class="r-icon">${r.icon}</div>
@@ -324,7 +418,8 @@
       </div>
     </div>
 
-    
+    ${deepHtml}
+
     <div class="detail-section">
       <h2>⭐ 用户评分</h2>
       <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
@@ -358,11 +453,6 @@
       <div class="related-grid" id="relatedArticlesGrid"></div>
     </div>
 
-    <div class="ad-banner" onclick="window.open('https://vercel.com', '_blank')">
-      <span class="ad-icon">⚡</span>
-      <span>Vercel — 全球领先的前端部署平台，让开发更简单</span>
-    </div>
-
     <div class="detail-section">
       <h2>🎯 适用场景</h2>
       <ul>${useCasesHtml}</ul>
@@ -380,11 +470,26 @@
     </div>
     ` : ''}
 
-    <div class="ad-banner" onclick="window.open('https://replicate.com', '_blank')">
-      <span class="ad-icon">🔄</span>
-      <span>Replicate — 云端运行数千个 AI 模型，按量计费</span>
-    </div>
   `;
+
+  // JSON-LD 结构化数据
+  const ld = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": tool.name,
+    "url": "https://jzzai.cn/tool/" + tool.id,
+    "description": tool.desc,
+    "applicationCategory": cat ? cat.label.replace(/^[^A-Za-z\u4e00-\u9fa5]+/, '') + 'AI' : 'AI工具',
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  };
+  let ldEl = document.querySelector('script[data-tool-ld]');
+  if (!ldEl) {
+    ldEl = document.createElement('script');
+    ldEl.type = 'application/ld+json';
+    ldEl.setAttribute('data-tool-ld', '1');
+    document.head.appendChild(ldEl);
+  }
+  ldEl.textContent = JSON.stringify(ld);
 
   // Show content
   document.getElementById('loading').style.display = 'none';

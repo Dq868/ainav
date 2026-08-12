@@ -10,6 +10,17 @@
       "has": [
         {
           "type": "host",
+          "value": "ainav-murex.vercel.app"
+        }
+      ],
+      "destination": "https://jzzai.cn/$1",
+      "statusCode": 301
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
           "value": "www.jzzai.cn"
         }
       ],
@@ -25,6 +36,22 @@
     {
       "source": "/about",
       "destination": "/about.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
+      "source": "/editorial",
+      "destination": "/editorial.html"
     },
     {
       "source": "/tool/:id",

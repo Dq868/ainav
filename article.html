@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
 <meta property="og:type" content="article">
@@ -151,9 +152,6 @@
   .ad-container .ad-label { display: block; font-size: 11px; color: var(--ad-label); padding: 4px 0; letter-spacing: 1px; text-transform: uppercase; }
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9519141393679331" crossorigin="anonymous"></script>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-006K3L3V06"></script>
 <script>
@@ -187,7 +185,13 @@
   <div id="content" style="display:none;"></div>
 </div>
 
-<footer>© 2026 酱肘AI &mdash; <a href="/">发现最好的 AI 工具</a> &nbsp;·&nbsp; <a href="/about">关于我们</a></footer>
+<footer>© 2026 酱肘AI &mdash; <a href="/">发现最好的 AI 工具</a> &nbsp;·&nbsp;
+  <a href="/about">关于我们</a> &nbsp;·&nbsp;
+  <a href="/contact">联系我们</a> &nbsp;·&nbsp;
+  <a href="/privacy">隐私政策</a> &nbsp;·&nbsp;
+  <a href="/terms">服务条款</a> &nbsp;·&nbsp;
+  <a href="/editorial">编辑准则</a>
+</footer>
 
 <script src="/tools.js"></script>
 <script src="/articles.js"></script>
@@ -238,6 +242,28 @@
   setMeta('og:title', article.title);
   setMeta('og:description', article.summary);
   setMeta('og:url', window.location.href);
+  setCanonical(window.location.href);
+
+  // Article JSON-LD
+  const ld = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article.title,
+    "description": article.summary,
+    "datePublished": article.date,
+    "dateModified": article.date,
+    "author": { "@type": "Organization", "name": "酱肘AI" },
+    "publisher": { "@type": "Organization", "name": "酱肘AI", "url": "https://jzzai.cn" },
+    "mainEntityOfPage": "https://jzzai.cn/blog/" + article.id
+  };
+  let ldEl = document.querySelector('script[data-article-ld]');
+  if (!ldEl) {
+    ldEl = document.createElement('script');
+    ldEl.type = 'application/ld+json';
+    ldEl.setAttribute('data-article-ld', '1');
+    document.head.appendChild(ldEl);
+  }
+  ldEl.textContent = JSON.stringify(ld);
 
   // Related tools
   const relatedTools = (article.relatedTools || [])
@@ -285,6 +311,11 @@
       document.head.appendChild(el);
     }
     el.setAttribute('content', content);
+  }
+
+  function setCanonical(url) {
+    let el = document.querySelector('link[rel="canonical"]');
+    if (el) el.setAttribute('href', url);
   }
 })();
 </script>

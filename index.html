@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-006K3L3V06"></script>
 <script>
@@ -365,11 +366,17 @@
   .ad-banner { background: var(--surface); border-radius: var(--radius-sm); padding: 12px 20px; margin-bottom: 20px; text-align: center; font-size: .85rem; color: var(--text-secondary); cursor: pointer; border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s; }
   .ad-banner:hover { border-color: var(--primary); background: var(--primary-light); }
   .ad-icon { font-size: 1.2rem; }
+  .site-intro {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 24px 28px; margin-bottom: 24px;
+  }
+  .site-intro h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; }
+  .site-intro p { color: var(--text-secondary); font-size: .92rem; line-height: 1.8; margin-bottom: 8px; }
+  .site-intro .site-intro-links { font-size: .85rem; margin-top: 6px; }
+  .site-intro .site-intro-links a { color: var(--primary); margin-right: 10px; }
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9519141393679331" crossorigin="anonymous"></script>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({});
-</script><script src="/tools.js"></script>
+<script src="/tools.js"></script>
   <script src="/articles.js"></script>
 
 <script type="application/ld+json">
@@ -423,10 +430,14 @@
   <!-- Sidebar -->
   <aside>
     <nav class="cat-list" id="categoryList"></nav>
-    <div class="ad-side" onclick="window.open('https://replicate.com','_blank')">
-      <div class="ad-icon">🤖</div>
-      <div style="font-weight:500;color:var(--text);margin-bottom:4px;">Replicate</div>
-      <div>云端运行 5000+ AI 模型</div>
+    <div class="ad-side" style="cursor:default;border-style:solid;">
+      <div style="font-weight:600;color:var(--text);margin-bottom:6px;">🏷️ 站内导航</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
+        <a href="/about" style="color:var(--text-secondary);text-decoration:none;">关于我们</a>
+        <a href="/contact" style="color:var(--text-secondary);text-decoration:none;">联系我们</a>
+        <a href="/editorial" style="color:var(--text-secondary);text-decoration:none;">编辑准则</a>
+        <a href="/privacy" style="color:var(--text-secondary);text-decoration:none;">隐私政策</a>
+      </div>
     </div>
   </aside>
 
@@ -440,25 +451,11 @@
       <span>｜ <b id="totalArticles" style="color:var(--primary);font-weight:700;">0</b> 篇文章</span>
       <span style="margin-left:auto;"><a href="/blog" style="color:var(--primary);text-decoration:none;">📝 全部文章 →</a></span>
     </div>
-<div class="ad-banner" onclick="window.open('https://vercel.com','_blank')">
-      <span class="ad-icon">⚡</span>
-      <span>Vercel — 全球领先的前端部署平台 | 本站由 Vercel 强力驱动</span>
+    <div class="site-intro">
+      <h2>发现真正好用的 AI 工具</h2>
+      <p>酱肘AI 从全球数百款 AI 产品中筛选出真正有价值、口碑好的工具，按聊天对话、图像生成、代码开发、视频创作、办公效率等场景分类整理。每一款工具都配有功能说明、适用人群、优缺点和快速上手指南，帮你省去逐个搜索和试错的成本。</p>
+      <p class="site-intro-links"><a href="/editorial">了解我们的收录标准</a> · <a href="/blog">阅读 AI 工具评测</a> · <a href="/contact">推荐新工具</a></p>
     </div>
-    <!-- AdSense 横幅广告 -->
-    <div class="ad-container">
-      <span class="ad-label">—— 广告 ——</span>
-      <ins class="adsbygoogle"
-           style="display:block;min-height:90px"
-           data-ad-client="ca-pub-9519141393679331"
-           data-ad-slot="1234567890"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </div>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-
-    
     
     <div class="section" id="favSection" style="display:none;">
       <div class="section-title">⭐ 我的收藏</div>
@@ -506,14 +503,14 @@
     <div class="faq-item" style="margin-bottom:20px;background:var(--surface);border-radius:var(--radius-sm);padding:20px 24px;border:1px solid var(--border);cursor:pointer;" onclick="this.querySelector('.faq-a').style.display=this.querySelector('.faq-a').style.display==='none'?'block':'none'">
       <h3 style="font-size:1rem;font-weight:600;margin-bottom:4px;">ChatGPT、Claude 和 Gemini 哪个更好用？</h3>
       <div class="faq-a" style="display:none;margin-top:10px;color:var(--text-secondary);line-height:1.7;font-size:.92rem;">
-        <p>三者各有优势：ChatGPT 生态最丰富，有 GPTs 商店和 DALL·E 绘图，通用性最强；Claude 上下文 200K，长文分析和写作质量最高；Gemini 与 Google 全家桶深度集成，1M 上下文可处理超大文件。建议日常使用 ChatGPT，写作分析用 Claude，Google 用户选 Gemini。具体对比可查看我们的 <a href="/article?id=chatgpt-vs-claude-vs-gemini" style="color:var(--primary);">ChatGPT vs Claude vs Gemini 详细评测</a>。</p>
+        <p>三者各有优势：ChatGPT 生态最丰富，有 GPTs 商店和 DALL·E 绘图，通用性最强；Claude 上下文 200K，长文分析和写作质量最高；Gemini 与 Google 全家桶深度集成，1M 上下文可处理超大文件。建议日常使用 ChatGPT，写作分析用 Claude，Google 用户选 Gemini。具体对比可查看我们的 <a href="/blog/chatgpt-vs-claude-vs-gemini" style="color:var(--primary);">ChatGPT vs Claude vs Gemini 详细评测</a>。</p>
       </div>
     </div>
     
     <div class="faq-item" style="margin-bottom:20px;background:var(--surface);border-radius:var(--radius-sm);padding:20px 24px;border:1px solid var(--border);cursor:pointer;" onclick="this.querySelector('.faq-a').style.display=this.querySelector('.faq-a').style.display==='none'?'block':'none'">
-      <h3 style="font-size:1rem;font-weight:600;margin-bottom:4px;">AI 编程助手哪个最好用？Cursors 还是 Copilot？</h3>
+      <h3 style="font-size:1rem;font-weight:600;margin-bottom:4px;">AI 编程助手哪个最好用？Cursor 还是 Copilot？</h3>
       <div class="faq-a" style="display:none;margin-top:10px;color:var(--text-secondary);line-height:1.7;font-size:.92rem;">
-        <p>Cursor 和 GitHub Copilot 是目前最主流的 AI 编程工具。Cursor 基于 VS Code 深度改造，支持多文件编辑的 Agent 模式，适合全栈开发和重构；Copilot 无缝集成 VS Code、JetBrains 等 IDE，补全速度快，适合日常编码辅助。此外 Windsurf 是新兴选项，原生 AI Flow 体验不错。对于专业开发者，建议 Cursor + Copilot 组合使用。详细对比请参考我们的 <a href="/article?id=ai-code-tools-comparison" style="color:var(--primary);">AI 代码助手横评文章</a>。</p>
+        <p>Cursor 和 GitHub Copilot 是目前最主流的 AI 编程工具。Cursor 基于 VS Code 深度改造，支持多文件编辑的 Agent 模式，适合全栈开发和重构；Copilot 无缝集成 VS Code、JetBrains 等 IDE，补全速度快，适合日常编码辅助。此外 Windsurf 是新兴选项，原生 AI Flow 体验不错。对于专业开发者，建议 Cursor + Copilot 组合使用。详细对比请参考我们的 <a href="/blog/ai-code-tools-comparison" style="color:var(--primary);">AI 代码助手横评文章</a>。</p>
       </div>
     </div>
     
@@ -527,7 +524,7 @@
     <div class="faq-item" style="margin-bottom:20px;background:var(--surface);border-radius:var(--radius-sm);padding:20px 24px;border:1px solid var(--border);cursor:pointer;" onclick="this.querySelector('.faq-a').style.display=this.querySelector('.faq-a').style.display==='none'?'block':'none'">
       <h3 style="font-size:1rem;font-weight:600;margin-bottom:4px;">如何选择适合自己的 AI 工具？</h3>
       <div class="faq-a" style="display:none;margin-top:10px;color:var(--text-secondary);line-height:1.7;font-size:.92rem;">
-        <p>选 AI 工具三步走：1️⃣ 明确需求——你是要写代码、做设计、写文章还是做视频？不同领域有各自的头部工具。2️⃣ 看预算——很多优秀的 AI 工具都有免费版或免费额度，建议先从免费版开始试用。3️⃣ 对比体验——我们网站收录了 90+ 款主流 AI 工具，每款都有详细的功能介绍、评分和标签，还有用户评论和横评文章，帮你快速找到最适合的那一个。</p>
+        <p>选 AI 工具三步走：1️⃣ 明确需求——你是要写代码、做设计、写文章还是做视频？不同领域有各自的头部工具。2️⃣ 看预算——很多优秀的 AI 工具都有免费版或免费额度，建议先从免费版开始试用。3️⃣ 对比体验——我们网站收录了 80+ 款主流 AI 工具，每款都有详细的功能介绍、评分和标签，还有用户评论和深度文章，帮你快速找到最适合的那一个。</p>
       </div>
     </div>
   </div>
@@ -541,7 +538,7 @@
 </div>
 
 <footer>
-  © 2026 酱肘AI &mdash; 发现最好的 AI 工具 &nbsp;·&nbsp; <a href="#" id="openSubmitLink" style="color:var(--primary);">提交工具</a> &nbsp;·&nbsp; <a href="/about">关于我们</a> &nbsp;·&nbsp; <a href="/about#privacy" style="color:var(--text-secondary);">隐私政策</a>
+  © 2026 酱肘AI &mdash; 发现最好的 AI 工具 &nbsp;·&nbsp; <a href="#" id="openSubmitLink" style="color:var(--primary);">提交工具</a> &nbsp;·&nbsp; <a href="/about">关于我们</a> &nbsp;·&nbsp; <a href="/contact">联系我们</a> &nbsp;·&nbsp; <a href="/privacy">隐私政策</a> &nbsp;·&nbsp; <a href="/terms">服务条款</a> &nbsp;·&nbsp; <a href="/editorial">编辑准则</a>
 </footer>
 
 <!-- Submit Modal -->
