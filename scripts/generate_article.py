@@ -228,10 +228,7 @@ def load_tools():
         return []
 
 
-def build_template_article(tools):
-    """无可用模型时的本地模板兜底，保证每日文章不中断且内容可控"""
-    today = datetime.date.today()
-    day = today.toordinal()
+def _pick_pair(tools, day):
     cats = [c for c in VALID_CATS if sum(1 for t in tools if t["cat"] == c) >= 2]
     if not cats:
         raise RuntimeError("tools.js 数据不足，无法生成模板文章")
@@ -241,17 +238,14 @@ def build_template_article(tools):
     t2 = pool[(day + 3) % len(pool)]
     if t1["id"] == t2["id"]:
         t2 = pool[(day + 5) % len(pool)]
+    return t1, t2, cat, CAT_LABELS.get(cat, "AI 工具")
 
-    label = CAT_LABELS.get(cat, "AI 工具")
-    u1 = (t1.get("useCases") or [])[:3]
-    u2 = (t2.get("useCases") or [])[:3]
-    f1 = (t1.get("features") or [])[:3]
-    f2 = (t2.get("features") or [])[:3]
-    u1_html = "".join(f"<li>{u}</li>" for u in u1)
-    u2_html = "".join(f"<li>{u}</li>" for u in u2)
-    f1_html = "".join(f"<li>{f}</li>" for f in f1)
-    f2_html = "".join(f"<li>{f}</li>" for f in f2)
 
+def _template_compare(t1, t2, cat, label):
+    u1 = "".join(f"<li>{u}</li>" for u in (t1.get("useCases") or [])[:3])
+    u2 = "".join(f"<li>{u}</li>" for u in (t2.get("useCases") or [])[:3])
+    f1 = "".join(f"<li>{f}</li>" for f in (t1.get("features") or [])[:3])
+    f2 = "".join(f"<li>{f}</li>" for f in (t2.get("features") or [])[:3])
     title = f"{t1['name']} 和 {t2['name']} 怎么选：{label}场景实用指南"
     summary = f"从适用人群、核心场景、功能差异到组合用法，帮你快速判断 {t1['name']} 与 {t2['name']} 哪个更适合自己。"
     content = f"""
@@ -262,16 +256,16 @@ def build_template_article(tools):
 
 <h2>{t1['name']}：适合谁，核心能力是什么</h2>
 <p>{t1['name']} 的核心价值在于：{t1['desc']}它的典型使用场景包括：</p>
-<ul>{u1_html}</ul>
+<ul>{u1}</ul>
 <h3>值得注意的功能点</h3>
-<ul>{f1_html}</ul>
+<ul>{f1}</ul>
 <p>如果你经常需要{u1[0] if u1 else '快速产出内容'}，并且希望流程简单、上手成本低，{t1['name']} 会是不错的起点。</p>
 
 <h2>{t2['name']}：适合谁，核心能力是什么</h2>
 <p>{t2['name']} 则更强调：{t2['desc']}适合以下使用习惯的用户：</p>
-<ul>{u2_html}</ul>
+<ul>{u2}</ul>
 <h3>值得注意的功能点</h3>
-<ul>{f2_html}</ul>
+<ul>{f2}</ul>
 <p>当你的任务更偏向{u2[0] if u2 else '深度处理'}，或者团队协作要求更高时，{t2['name']} 的差异化能力会更有价值。</p>
 
 <h2>两者如何组合使用</h2>
@@ -294,6 +288,123 @@ def build_template_article(tools):
         "relatedTools": [t1["id"], t2["id"]],
         "content": content,
     }
+
+
+def _template_workflow(t1, t2, cat, label):
+    u1 = "".join(f"<li>{u}</li>" for u in (t1.get("useCases") or [])[:4])
+    u2 = "".join(f"<li>{u}</li>" for u in (t2.get("useCases") or [])[:4])
+    f1 = "".join(f"<li>{f}</li>" for f in (t1.get("features") or [])[:4])
+    f2 = "".join(f"<li>{f}</li>" for f in (t2.get("features") or [])[:4])
+    title = f"用 {t1['name']} 和 {t2['name']} 搭一条{label}工作流：从入门到进阶"
+    summary = f"把 {t1['name']} 与 {t2['name']} 放进同一条流程，用五步方法从零搭出可复用的{label}工作流。"
+    content = f"""
+<p>单点使用 AI 工具只能解决单点问题，真正的效率来自把工具串成流程。本文以 {t1['name']} 和 {t2['name']} 为例，拆解一条从输入到交付的完整{label}工作流，适合想从“偶尔用一下”升级为“稳定复用”的用户。</p>
+
+<h2>为什么要搭工作流而不是单点使用</h2>
+<p>没有流程时，每次任务都要重新想提示词、重新整理格式、重新检查质量；有了流程后，输入输出固定，一套模板可以重复使用几十次。{t1['desc']}{t2['desc']}两者恰好覆盖流程的不同环节。</p>
+
+<h2>第一步：明确输入与输出</h2>
+<p>先把任务写成一句话：谁需要什么、用什么格式交付、多久一次。例如“每周输出一份{label}摘要，Markdown 格式”。输出格式一旦固定，后面每一步都可以自动化。</p>
+
+<h2>第二步：让 {t1['name']} 负责前半程</h2>
+<p>{t1['name']} 适合承担创意和初稿环节，例如：</p>
+<ul>{u1}</ul>
+<h3>可以重点使用的能力</h3>
+<ul>{f1}</ul>
+<p>在这个环节，把提示词模板保存下来，确保每次输入结构一致。</p>
+
+<h2>第三步：让 {t2['name']} 负责后半程</h2>
+<p>初稿产生后，用 {t2['name']} 做整理、校验和润色：</p>
+<ul>{u2}</ul>
+<h3>可以重点使用的能力</h3>
+<ul>{f2}</ul>
+<p>这一步的关键是给 {t2['name']} 明确的检查清单，而不是简单说“帮我改一下”。</p>
+
+<h2>第四步：把流程固化成模板</h2>
+<ul>
+<li>提示词模板：每个环节保存一份带变量的提示词。</li>
+<li>输出模板：统一标题、段落和列表格式。</li>
+<li>检查清单：发布前逐项核对事实、链接和格式。</li>
+</ul>
+
+<h2>第五步：每周复盘优化</h2>
+<p>每周回看一次流程，找出耗时最长的环节，看看是提示词不够具体，还是两个工具的分工不合理。持续迭代两周，流程就会稳定下来。</p>
+
+<h2>注意事项</h2>
+<p>不要把流程设计得过重，先跑通最小闭环；重要数据务必人工复核；涉及隐私和版权的内容不要上传到公共模型。流程是为了节省时间，而不是增加负担。</p>
+
+<p>从今天开始，先跑一轮完整流程，再把每一步的模板保存下来，一周后你会明显感受到效率的变化。</p>
+"""
+    return {
+        "title": title,
+        "summary": summary,
+        "cat": cat,
+        "icon": t1.get("icon") or "🤖",
+        "relatedTools": [t1["id"], t2["id"]],
+        "content": content,
+    }
+
+
+def _template_mistakes(t1, t2, cat, label):
+    u1 = "".join(f"<li>{u}</li>" for u in (t1.get("useCases") or [])[:3])
+    u2 = "".join(f"<li>{u}</li>" for u in (t2.get("useCases") or [])[:3])
+    title = f"{label}新手最容易犯的 5 个错：用 {t1['name']} 和 {t2['name']} 的正确姿势"
+    summary = f"总结新手使用 {t1['name']}、{t2['name']} 时最常见的五个错误和对应解法，帮你少走弯路。"
+    content = f"""
+<p>刚开始接触{label}工具时，很多人不是不会用，而是用错了方法。本文以 {t1['name']} 和 {t2['name']} 为例，整理新手最容易犯的 5 个错误，并给出可以直接照做的解法。</p>
+
+<h2>错误一：上来就问太宽泛的问题</h2>
+<p>“帮我做点什么”这类提问很难得到好结果。正确做法是先说明目标、背景、受众和格式，例如“我要为公众号写一篇{label}入门文，600 字，读者是零基础用户”。{t1['name']} 和 {t2['name']} 都需要足够上下文才能发挥价值。</p>
+
+<h2>错误二：一次生成全文，不检查就发布</h2>
+<p>模型生成的内容只是草稿，不是成品。发布前至少做三件事：核对事实和数据、检查逻辑是否连贯、按你的风格润色一遍。建议把{t1['name']}用于快速生成，把{t2['name']}用于结构化审查。</p>
+
+<h2>错误三：忽视输入数据的质量</h2>
+<p>输入模糊，输出必然模糊。给工具喂的资料越规范，结果越可控。{t1['name']}的典型用法包括：</p>
+<ul>{u1}</ul>
+<p>{t2['name']}则更擅长：</p>
+<ul>{u2}</ul>
+<p>无论是哪种用法，都先把任务拆成清晰的小步骤。</p>
+
+<h2>错误四：看到新工具就换，从不沉淀</h2>
+<p>频繁换工具会不断重置学习成本。建议一次只引入一个工具，稳定使用两周后再评估；把好用的提示词和流程保存下来，形成自己的资料库。</p>
+
+<h2>错误五：忽略安全与版权</h2>
+<p>不要把密码、身份证号、未公开数据上传到公共模型；商用生成内容前确认工具的授权条款；涉及他人肖像和商标时先取得许可。安全习惯越早建立，后面越省心。</p>
+
+<h2>正确的打开方式</h2>
+<ul>
+<li>先明确任务边界，再选择工具。</li>
+<li>把工具放进固定流程，而不是每次从零开始。</li>
+<li>重要产出人工复核，关键决策以官方信息为准。</li>
+</ul>
+<p>避开这五个坑，你对{t1['name']}和{t2['name']}的使用水平会超过大多数新手用户。</p>
+"""
+    return {
+        "title": title,
+        "summary": summary,
+        "cat": cat,
+        "icon": t1.get("icon") or "🤖",
+        "relatedTools": [t1["id"], t2["id"]],
+        "content": content,
+    }
+
+
+def build_template_article(tools):
+    """无可用模型时的本地模板兜底，多套风格按当天已生成数量轮换，避免重复"""
+    today = datetime.date.today()
+    day = today.toordinal()
+    t1, t2, cat, label = _pick_pair(tools, day)
+    today_prefix = "auto-" + today.strftime("%Y%m%d")
+    run_count = 0
+    try:
+        with open("articles.js", encoding="utf-8") as f:
+            run_count = len(re.findall(re.escape(today_prefix) + r"(-\d+)?'", f.read()))
+    except Exception:
+        pass
+    variants = [_template_compare, _template_workflow, _template_mistakes]
+    builder = variants[run_count % len(variants)]
+    return builder(t1, t2, cat, label)
 
 
 def providers():
