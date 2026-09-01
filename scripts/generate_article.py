@@ -6,6 +6,7 @@ import sys
 import json
 import re
 import datetime
+import subprocess
 import urllib.request
 import urllib.error
 
@@ -27,6 +28,12 @@ CAT_ALIASES = {
     "technology": "chat", "ai": "other", "tool": "other", "tools": "other",
     "workflow": "office", "productivity": "office", "writing": "chat",
     "3": "office", "2": "search", "1": "chat",
+}
+
+CAT_LABELS = {
+    "chat": "对话助手", "code": "编程开发", "image": "图像生成",
+    "video": "视频创作", "audio": "音频处理", "office": "办公效率",
+    "search": "搜索工具", "other": "其他工具",
 }
 
 SYSTEM_PROMPT = """你是一个AI工具领域的专业写手。请生成一篇关于AI工具的原创实用文章。
@@ -183,12 +190,110 @@ def append_article(article):
         elif isinstance(val, list):
             fields.append(f"    {key}: [{', '.join(repr(v) for v in val)}]")
 
-    entry = "  {\n" + ",\n".join(fields) + "\n  },\n"
-    js = js[:last_idx] + entry + js[last_idx:]
+    entry = "  {\n" + ",\n".join(fields) + "\n  },"
+    prefix = js[:last_idx].rstrip()
+    if not prefix.endswith(","):
+        prefix += ","
+    js = prefix + "\n" + entry + "\n" + js[last_idx:].lstrip("\n")
 
     with open("articles.js", "w", encoding="utf-8") as f:
         f.write(js)
     print(f"OK: {article['title']}")
+
+
+def load_tools():
+    """通过 Node 读取 tools.js，返回精简工具列表，供模板兜底使用"""
+    code = (
+        "const fs=require('fs');const vm=require('vm');"
+        "const s=fs.readFileSync('tools.js','utf8');const sandbox={};"
+        "vm.createContext(sandbox);vm.runInContext(s+';globalThis.__t=TOOLS;',sandbox);"
+        "console.log(JSON.stringify(sandbox.__t.map(t=>({id:t.id,name:t.name,desc:t.desc,"
+        "cat:t.cat,icon:t.icon,useCases:t.useCases||[],features:t.features||[]}))));"
+    )
+    try:
+        out = subprocess.run(
+            ["node", "-e", code], capture_output=True, text=True, timeout=30, check=True
+        )
+        data = json.loads(out.stdout)
+        seen = set()
+        tools = []
+        for t in data:
+            if t["id"] in seen:
+                continue
+            seen.add(t["id"])
+            tools.append(t)
+        return tools
+    except Exception as e:
+        print(f"load_tools failed: {e}", file=sys.stderr)
+        return []
+
+
+def build_template_article(tools):
+    """无可用模型时的本地模板兜底，保证每日文章不中断且内容可控"""
+    today = datetime.date.today()
+    day = today.toordinal()
+    cats = [c for c in VALID_CATS if sum(1 for t in tools if t["cat"] == c) >= 2]
+    if not cats:
+        raise RuntimeError("tools.js 数据不足，无法生成模板文章")
+    cat = cats[day % len(cats)]
+    pool = [t for t in tools if t["cat"] == cat]
+    t1 = pool[day % len(pool)]
+    t2 = pool[(day + 3) % len(pool)]
+    if t1["id"] == t2["id"]:
+        t2 = pool[(day + 5) % len(pool)]
+
+    label = CAT_LABELS.get(cat, "AI 工具")
+    u1 = (t1.get("useCases") or [])[:3]
+    u2 = (t2.get("useCases") or [])[:3]
+    f1 = (t1.get("features") or [])[:3]
+    f2 = (t2.get("features") or [])[:3]
+    u1_html = "".join(f"<li>{u}</li>" for u in u1)
+    u2_html = "".join(f"<li>{u}</li>" for u in u2)
+    f1_html = "".join(f"<li>{f}</li>" for f in f1)
+    f2_html = "".join(f"<li>{f}</li>" for f in f2)
+
+    title = f"{t1['name']} 和 {t2['name']} 怎么选：{label}场景实用指南"
+    summary = f"从适用人群、核心场景、功能差异到组合用法，帮你快速判断 {t1['name']} 与 {t2['name']} 哪个更适合自己。"
+    content = f"""
+<p>{t1['name']} 和 {t2['name']} 是当前{label}场景中关注度较高的两个工具。{t1['desc']}{t2['desc']}很多用户在第一次接触时都会纠结：先选哪一个，还是两个一起用？这篇文章从定位、场景、功能、成本和组合方式五个角度给出可执行的判断方法。</p>
+
+<h2>先明确你的使用场景</h2>
+<p>选工具之前先回答三个问题：你每天处理这类任务的频率有多高？任务的产出是给谁看的？预算是零成本还是有订阅空间？把这三点写下来，再对照下面的定位，通常十分钟就能做出决定。</p>
+
+<h2>{t1['name']}：适合谁，核心能力是什么</h2>
+<p>{t1['name']} 的核心价值在于：{t1['desc']}它的典型使用场景包括：</p>
+<ul>{u1_html}</ul>
+<h3>值得注意的功能点</h3>
+<ul>{f1_html}</ul>
+<p>如果你经常需要{u1[0] if u1 else '快速产出内容'}，并且希望流程简单、上手成本低，{t1['name']} 会是不错的起点。</p>
+
+<h2>{t2['name']}：适合谁，核心能力是什么</h2>
+<p>{t2['name']} 则更强调：{t2['desc']}适合以下使用习惯的用户：</p>
+<ul>{u2_html}</ul>
+<h3>值得注意的功能点</h3>
+<ul>{f2_html}</ul>
+<p>当你的任务更偏向{u2[0] if u2 else '深度处理'}，或者团队协作要求更高时，{t2['name']} 的差异化能力会更有价值。</p>
+
+<h2>两者如何组合使用</h2>
+<p>很多效率型用户并不是二选一，而是把两个工具放进同一条工作流：先用{t1['name']}完成快速草案和初稿，再交给{t2['name']}做结构化整理与质量检查。组合使用的关键是把每个环节的输入输出格式固定下来，例如统一用 Markdown 传递内容，避免反复转换。</p>
+
+<h2>选择建议</h2>
+<ul>
+<li><strong>预算有限</strong>：先分别用两个工具处理同一个真实任务，对比三天后的产出质量。</li>
+<li><strong>追求效率</strong>：优先选择与你现有软件生态集成度更高的那个。</li>
+<li><strong>团队协作</strong>：把权限、模板和历史记录纳入考虑，选择便于多人共用的方案。</li>
+<li><strong>避免囤积</strong>：一次只新增一个工具，稳定使用两周后再评估是否补充第二个。</li>
+</ul>
+<p>工具没有绝对的好坏，只有适不适合你的工作流。把上面的方法执行一遍，你就能得到自己的答案。</p>
+"""
+    return {
+        "title": title,
+        "summary": summary,
+        "cat": cat,
+        "icon": t1.get("icon") or "🤖",
+        "relatedTools": [t1["id"], t2["id"]],
+        "content": content,
+    }
 
 
 def providers():
@@ -233,8 +338,19 @@ def main():
         except Exception as e:
             attempts.append(f"{name}: {type(e).__name__} {str(e)[:120]}")
     if not found:
-        print("ALL FREE PROVIDERS FAILED: " + "; ".join(attempts), file=sys.stderr)
-        sys.exit(1)
+        print("FREE PROVIDERS FAILED, falling back to template: " + "; ".join(attempts), file=sys.stderr)
+        tools = load_tools()
+        try:
+            art = build_template_article(tools)
+        except Exception as e:
+            print(f"TEMPLATE FAILED: {e}", file=sys.stderr)
+            sys.exit(1)
+        ok, reason = validate_article(art)
+        if not ok:
+            print(f"TEMPLATE QUALITY FAILED: {reason}", file=sys.stderr)
+            sys.exit(1)
+        print("provider=template")
+        append_article(art)
 
 
 if __name__ == "__main__":
