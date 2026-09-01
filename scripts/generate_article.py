@@ -229,7 +229,8 @@ def load_tools():
 
 
 def _pick_pair(tools, day):
-    cats = [c for c in VALID_CATS if sum(1 for t in tools if t["cat"] == c) >= 2]
+    cats = [c for c in ("chat", "code", "image", "video", "audio", "office", "search", "other")
+            if sum(1 for t in tools if t["cat"] == c) >= 2]
     if not cats:
         raise RuntimeError("tools.js 数据不足，无法生成模板文章")
     cat = cats[day % len(cats)]
