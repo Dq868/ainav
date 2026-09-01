@@ -41,8 +41,9 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="酱肘AI">
 <meta name="twitter:card" content="summary_large_image">
-<title>酱肘AI — AI 工具导航</title>
-<link rel="canonical" href="https://jzzai.cn/" />
+<meta name="description" content="Flux：BlackForest Labs 出品的高质量图像生成模型。 了解功能、使用场景、优缺点、价格模式与快速上手，发现更多 AI 工具。">
+<title>Flux — 酱肘AI</title>
+<link rel="canonical" href="https://jzzai.cn/tool/flux" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -253,6 +254,21 @@
   <script src="/tools.js"></script>
   <script src="/articles.js"></script>
   <script src="/tool-content.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Flux",
+  "url": "https://jzzai.cn/tool/flux",
+  "description": "BlackForest Labs 出品的高质量图像生成模型。",
+  "applicationCategory": "图像生成AI",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -270,7 +286,7 @@
 </header>
 
 <div class="container">
-  <div id="loading" class="loading-state">
+  <div id="loading" class="loading-state" style="display:none;">
     <div class="spinner"></div>
     <span>加载中...</span>
   </div>
@@ -280,7 +296,93 @@
     <p>请检查链接是否正确</p>
     <a href="/" class="btn-visit" style="margin-top:12px;display:inline-flex;">返回首页</a>
   </div>
-  <div id="content" style="display:none;"></div>
+  <div id="content">
+<div class="tool-hero">
+      <div class="icon-wrap">⚡</div>
+      <div class="info">
+        <div class="cat-tag">🎨 图像生成</div>
+        <h1>Flux</h1>
+        <p>BlackForest Labs 出品的高质量图像生成模型。</p>
+        <div class="tags"><span class="tag free">免费</span><span class="tag oss">📂 开源</span></div>
+        <a class="btn-visit" href="https://blackforestlabs.ai" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          访问官网
+        </a>
+      </div>
+    </div>
+<div class="detail-section deep-content">
+      <h2>📖 Flux 深度介绍</h2>
+      <div class="deep-intro"><p>Flux 是 Black Forest Labs 推出的高质量图像生成模型，以逼真细节、稳定构图和强大文字理解著称，开源版本受到本地部署用户欢迎，API 版本也广泛应用于商业产品。</p></div>
+      <div class="deep-grid">
+        <div><h3>🎯 适合人群</h3><div class="audience-tags"><span class="audience-tag">追求画质的 AI 创作者</span><span class="audience-tag">本地部署用户与开发者</span><span class="audience-tag">需要商业级图像的团队</span><span class="audience-tag">研究最新文生图模型的工程师</span></div></div>
+        <div><h3>💰 价格模式</h3><p class="deep-pricing">开源版本免费；云端 API 按生成次数计费。</p></div>
+      </div>
+      <div class="deep-two">
+        <div class="pros-box"><h3>✅ 优点</h3><ul><li class="pro">图像细节和真实感强</li><li class="pro">文字与提示词理解准确</li><li class="pro">开源版本可本地部署</li></ul></div>
+        <div class="cons-box"><h3>⚠️ 缺点</h3><ul><li class="con">完整版本对硬件要求高</li><li class="con">生态插件仍在完善</li><li class="con">部分风格需要微调</li></ul></div>
+      </div>
+      <div class="deep-step"><h3>🚀 快速上手</h3><p>本地用户可通过 ComfyUI 或扩散工具加载 Flux 模型；开发者可直接调用 API，传入提示词和参数获得图像。</p></div>
+      <div class="deep-step"><h3>💡 实用技巧</h3><ul><li>用细节描述词提升真实感</li><li>出图后放大查看细节避免伪影</li><li>批量测试不同种子和引导参数</li></ul></div>
+      <div class="deep-step"><h3>🔁 同类替代</h3><div class="alt-row"><a class="alt-chip" href="/tool/stable-diffusion">🌈 Stable Diffusion</a><a class="alt-chip" href="/tool/midjourney">🎨 Midjourney</a><a class="alt-chip" href="/tool/ideogram">🔤 Ideogram</a></div></div>
+    </div>
+<div class="detail-section">
+      <h2>⭐ 用户评分</h2>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div id="avgRating" style="font-size:2.4rem;font-weight:700;color:var(--primary);">-</div>
+          <div id="starDisplay" style="font-size:1.3rem;color:#f59e0b;letter-spacing:2px;">☆☆☆☆☆</div>
+          <div id="ratingCount" style="font-size:.8rem;color:var(--text-secondary);">暂无评分</div>
+        </div>
+        <div>
+          <div style="font-size:.9rem;font-weight:500;margin-bottom:6px;">你的评分：</div>
+          <div id="starSelector" style="font-size:1.8rem;cursor:pointer;color:#ddd;letter-spacing:4px;">
+            <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+          </div>
+          <div id="ratingMsg" style="font-size:.8rem;color:var(--text-secondary);margin-top:4px;"></div>
+        </div>
+      </div>
+    </div>
+<div class="detail-section">
+      <h2>💬 用户评价</h2>
+      <div id="commentsList" style="margin-bottom:16px;"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input id="commentName" placeholder="你的昵称" style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;max-width:160px;flex:1;">
+        <input id="commentText" placeholder="写一句评价..." style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;flex:2;min-width:200px;">
+        <button id="submitComment" class="btn-visit" style="padding:8px 20px;font-size:.85rem;border-radius:999px;">发表</button>
+      </div>
+    </div>
+<div class="detail-section" id="relatedArticles">
+      <h2>📝 相关文章</h2>
+      <div class="related-grid" id="relatedArticlesGrid"><a class="related-card" href="/blog/how-to-use-midjourney-2026">
+          <div class="r-icon">🎨</div>
+          <div class="r-name">Midjourney 2026 完全指南：从入门到精通</div>
+          <div class="r-desc">Midjourney 的提示词技巧、参数设置、风格控制，一篇搞懂怎么用好这个最强的 AI 绘图工具。</div>
+        </a><a class="related-card" href="/blog/ai-picture-generator-compare">
+          <div class="r-icon">🖼️</div>
+          <div class="r-name">Midjourney / DALL·E / Flux / Stable Diffusion 绘图工具选哪个</div>
+          <div class="r-desc">四大主流 AI 绘图工具横向对比，帮你选出最适合你的那一款。</div>
+        </a><a class="related-card" href="/blog/ai-style-consistency-2026">
+          <div class="r-icon">🎨</div>
+          <div class="r-name">AI 绘画风格一致性实战：从参考图到系列海报</div>
+          <div class="r-desc">品牌物料最怕风格漂移，本文用参考图、风格提示词和固定参数三个方法，让 AI 产出统一风格的系列图。</div>
+        </a></div>
+    </div>
+<div class="detail-section"><h2>🎯 适用场景</h2><ul><li>高质量图像生成</li><li>设计原型</li><li>创意视觉</li><li>商业应用</li></ul></div>
+<div class="detail-section"><h2>⭐ 核心功能</h2><ul><li>开源模型</li><li>高速生成</li><li>高美学质量</li><li>提示词准确</li></ul></div>
+<div class="detail-section"><h2>🔗 相关工具</h2><div class="related-grid"><a class="related-card" href="/tool/stable-diffusion">
+          <div class="r-icon">🌈</div>
+          <div class="r-name">Stable Diffusion</div>
+          <div class="r-desc">开源图像生成模型，可本地部署，社区生态丰富。</div>
+        </a><a class="related-card" href="/tool/midjourney">
+          <div class="r-icon">🎨</div>
+          <div class="r-name">Midjourney</div>
+          <div class="r-desc">顶尖 AI 图像生成工具，艺术风格出众。</div>
+        </a><a class="related-card" href="/tool/dalle">
+          <div class="r-icon">🖼️</div>
+          <div class="r-name">DALL·E 3</div>
+          <div class="r-desc">OpenAI 文字生成图像模型，集成于 ChatGPT。</div>
+        </a></div></div>
+</div>
 </div>
 
 <footer>

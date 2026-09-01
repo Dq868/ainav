@@ -41,8 +41,9 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="酱肘AI">
 <meta name="twitter:card" content="summary_large_image">
-<title>酱肘AI — AI 工具导航</title>
-<link rel="canonical" href="https://jzzai.cn/" />
+<meta name="description" content="Stable Diffusion：开源图像生成模型，可本地部署，社区生态丰富。 了解功能、使用场景、优缺点、价格模式与快速上手，发现更多 AI 工具。">
+<title>Stable Diffusion — 酱肘AI</title>
+<link rel="canonical" href="https://jzzai.cn/tool/stable-diffusion" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -253,6 +254,21 @@
   <script src="/tools.js"></script>
   <script src="/articles.js"></script>
   <script src="/tool-content.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Stable Diffusion",
+  "url": "https://jzzai.cn/tool/stable-diffusion",
+  "description": "开源图像生成模型，可本地部署，社区生态丰富。",
+  "applicationCategory": "图像生成AI",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -270,7 +286,7 @@
 </header>
 
 <div class="container">
-  <div id="loading" class="loading-state">
+  <div id="loading" class="loading-state" style="display:none;">
     <div class="spinner"></div>
     <span>加载中...</span>
   </div>
@@ -280,7 +296,93 @@
     <p>请检查链接是否正确</p>
     <a href="/" class="btn-visit" style="margin-top:12px;display:inline-flex;">返回首页</a>
   </div>
-  <div id="content" style="display:none;"></div>
+  <div id="content">
+<div class="tool-hero">
+      <div class="icon-wrap">🌈</div>
+      <div class="info">
+        <div class="cat-tag">🎨 图像生成</div>
+        <h1>Stable Diffusion</h1>
+        <p>开源图像生成模型，可本地部署，社区生态丰富。</p>
+        <div class="tags"><span class="tag free">免费</span><span class="tag oss">📂 开源</span></div>
+        <a class="btn-visit" href="https://stability.ai" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          访问官网
+        </a>
+      </div>
+    </div>
+<div class="detail-section deep-content">
+      <h2>📖 Stable Diffusion 深度介绍</h2>
+      <div class="deep-intro"><p>Stable Diffusion 是开源图像生成模型的代表，支持本地部署、LoRA 微调和 ControlNet 精细控制，社区模型库极其庞大。它适合追求自定义、隐私和低成本批量出图的用户。</p></div>
+      <div class="deep-grid">
+        <div><h3>🎯 适合人群</h3><div class="audience-tags"><span class="audience-tag">有显卡的创作者与开发者</span><span class="audience-tag">需要批量生成或定制模型的团队</span><span class="audience-tag">AI 绘画爱好者</span><span class="audience-tag">研究图像生成的开发者</span></div></div>
+        <div><h3>💰 价格模式</h3><p class="deep-pricing">软件与基础模型免费；云端算力服务按小时或按次收费。</p></div>
+      </div>
+      <div class="deep-two">
+        <div class="pros-box"><h3>✅ 优点</h3><ul><li class="pro">开源免费，可完全本地运行</li><li class="pro">生态丰富，模型和插件海量</li><li class="pro">可训练专属 LoRA 保持角色一致</li></ul></div>
+        <div class="cons-box"><h3>⚠️ 缺点</h3><ul><li class="con">部署配置有一定门槛</li><li class="con">默认模型审美需调优</li><li class="con">需要一定显卡算力</li></ul></div>
+      </div>
+      <div class="deep-step"><h3>🚀 快速上手</h3><p>先安装 ComfyUI 或 AUTOMATIC1111 WebUI，下载基础模型后输入提示词出图。建议先用社区整理好的工作流模板快速上手。</p></div>
+      <div class="deep-step"><h3>💡 实用技巧</h3><ul><li>负面提示词填 blurry、lowres 等提升画质</li><li>ControlNet 可以锁定构图和动作</li><li>用 LoRA 固定角色风格，批量出图更统一</li></ul></div>
+      <div class="deep-step"><h3>🔁 同类替代</h3><div class="alt-row"><a class="alt-chip" href="/tool/comfyui">🔗 ComfyUI</a><a class="alt-chip" href="/tool/flux">⚡ Flux</a><a class="alt-chip" href="/tool/fooocus">🖌️ Fooocus</a></div></div>
+    </div>
+<div class="detail-section">
+      <h2>⭐ 用户评分</h2>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div id="avgRating" style="font-size:2.4rem;font-weight:700;color:var(--primary);">-</div>
+          <div id="starDisplay" style="font-size:1.3rem;color:#f59e0b;letter-spacing:2px;">☆☆☆☆☆</div>
+          <div id="ratingCount" style="font-size:.8rem;color:var(--text-secondary);">暂无评分</div>
+        </div>
+        <div>
+          <div style="font-size:.9rem;font-weight:500;margin-bottom:6px;">你的评分：</div>
+          <div id="starSelector" style="font-size:1.8rem;cursor:pointer;color:#ddd;letter-spacing:4px;">
+            <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+          </div>
+          <div id="ratingMsg" style="font-size:.8rem;color:var(--text-secondary);margin-top:4px;"></div>
+        </div>
+      </div>
+    </div>
+<div class="detail-section">
+      <h2>💬 用户评价</h2>
+      <div id="commentsList" style="margin-bottom:16px;"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input id="commentName" placeholder="你的昵称" style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;max-width:160px;flex:1;">
+        <input id="commentText" placeholder="写一句评价..." style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;flex:2;min-width:200px;">
+        <button id="submitComment" class="btn-visit" style="padding:8px 20px;font-size:.85rem;border-radius:999px;">发表</button>
+      </div>
+    </div>
+<div class="detail-section" id="relatedArticles">
+      <h2>📝 相关文章</h2>
+      <div class="related-grid" id="relatedArticlesGrid"><a class="related-card" href="/blog/how-to-use-midjourney-2026">
+          <div class="r-icon">🎨</div>
+          <div class="r-name">Midjourney 2026 完全指南：从入门到精通</div>
+          <div class="r-desc">Midjourney 的提示词技巧、参数设置、风格控制，一篇搞懂怎么用好这个最强的 AI 绘图工具。</div>
+        </a><a class="related-card" href="/blog/ai-picture-generator-compare">
+          <div class="r-icon">🖼️</div>
+          <div class="r-name">Midjourney / DALL·E / Flux / Stable Diffusion 绘图工具选哪个</div>
+          <div class="r-desc">四大主流 AI 绘图工具横向对比，帮你选出最适合你的那一款。</div>
+        </a><a class="related-card" href="/blog/ai-style-consistency-2026">
+          <div class="r-icon">🎨</div>
+          <div class="r-name">AI 绘画风格一致性实战：从参考图到系列海报</div>
+          <div class="r-desc">品牌物料最怕风格漂移，本文用参考图、风格提示词和固定参数三个方法，让 AI 产出统一风格的系列图。</div>
+        </a></div>
+    </div>
+<div class="detail-section"><h2>🎯 适用场景</h2><ul><li>本地图像生成</li><li>模型微调</li><li>AI 研究</li><li>批量生成</li></ul></div>
+<div class="detail-section"><h2>⭐ 核心功能</h2><ul><li>完全开源</li><li>本地部署</li><li>LoRA 微调</li><li>ControlNet</li><li>社区模型</li></ul></div>
+<div class="detail-section"><h2>🔗 相关工具</h2><div class="related-grid"><a class="related-card" href="/tool/comfyui">
+          <div class="r-icon">🔗</div>
+          <div class="r-name">ComfyUI</div>
+          <div class="r-desc">基于节点工作流的 Stable Diffusion 图形界面。</div>
+        </a><a class="related-card" href="/tool/fooocus">
+          <div class="r-icon">🖌️</div>
+          <div class="r-name">Fooocus</div>
+          <div class="r-desc">极简 Stable Diffusion 前端，一键出图。</div>
+        </a><a class="related-card" href="/tool/flux">
+          <div class="r-icon">⚡</div>
+          <div class="r-name">Flux</div>
+          <div class="r-desc">BlackForest Labs 出品的高质量图像生成模型。</div>
+        </a></div></div>
+</div>
 </div>
 
 <footer>

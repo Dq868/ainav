@@ -374,6 +374,18 @@
   .site-intro p { color: var(--text-secondary); font-size: .92rem; line-height: 1.8; margin-bottom: 8px; }
   .site-intro .site-intro-links { font-size: .85rem; margin-top: 6px; }
   .site-intro .site-intro-links a { color: var(--primary); margin-right: 10px; }
+  .seo-guide {
+    max-width: 900px; margin: 48px auto 0; padding: 0 20px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 36px 40px;
+  }
+  .seo-guide h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: 18px; }
+  .seo-guide h3 { font-size: 1.05rem; font-weight: 600; margin: 24px 0 10px; }
+  .seo-guide p { color: var(--text-secondary); font-size: .93rem; line-height: 1.85; margin-bottom: 12px; }
+  .seo-guide ul { margin-bottom: 14px; padding-left: 20px; color: var(--text-secondary); font-size: .92rem; line-height: 1.8; }
+  .seo-guide li { margin-bottom: 6px; }
+  .seo-guide strong { color: var(--text); }
+  @media (max-width: 640px) { .seo-guide { padding: 24px 20px; } }
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9519141393679331" crossorigin="anonymous"></script>
 <script src="/tools.js"></script>
@@ -489,6 +501,37 @@
     </div>
 
     
+  <!-- 首页原创指南 -->
+  <div class="seo-guide">
+    <h2>📖 AI 工具使用指南</h2>
+    <p>AI 工具已经渗透到写作、编程、设计、视频、办公和研究的每一个环节。面对每天涌现的新产品，很多人不是没有工具可用，而是不知道从哪开始、怎么搭配、如何避坑。这篇指南是我们结合数百款工具的实际使用经验整理的入门到进阶路线，帮助你少走弯路。</p>
+
+    <h3>1. 先想清楚你要解决什么问题</h3>
+    <p>选工具的第一步不是看榜单，而是明确任务类型。写作与翻译优先考虑对话助手；绘图与海报需要图像生成工具；写代码适合编程助手；做视频则要区分生成与剪辑。把需求拆成“输入什么、输出什么、多久一次”，再去对应分类里挑选，效率会高很多。</p>
+
+    <h3>2. 按场景选择核心工具组合</h3>
+    <ul>
+      <li><strong>通用对话</strong>：ChatGPT、Claude、Gemini、DeepSeek 覆盖日常问答、写作与推理，中文场景可优先尝试 DeepSeek 和通义千问。</li>
+      <li><strong>图像创作</strong>：Midjourney 和 Flux 适合高质量艺术图，Ideogram 与 Recraft 适合带文字的排版和品牌素材，Stable Diffusion 适合本地部署与批量生产。</li>
+      <li><strong>编程开发</strong>：GitHub Copilot 与 Cursor 是主流选择，Windsurf、Continue 适合不同编辑器习惯，Bolt、v0、Lovable 适合快速原型。</li>
+      <li><strong>视频内容</strong>：可灵、Vidu、Sora、Runway 负责生成，剪映与 CapCut 负责剪辑和字幕，HeyGen 可制作数字人口播。</li>
+      <li><strong>办公效率</strong>：飞书、Notion AI、WPS AI 嵌入日常工具，Grammarly 负责英文润色，讯飞听见与 Otter 处理会议记录。</li>
+      <li><strong>信息检索</strong>：Perplexity 和秘塔适合带引用的联网搜索，Consensus 与 Elicit 适合论文证据检索。</li>
+    </ul>
+
+    <h3>3. 从零开始的低成本组合</h3>
+    <p>如果你是新手，先用完全免费的工具验证需求：DeepSeek 做中文对话与编程、Kimi 读长文档、秘塔搜资料、剪映剪视频、通义千问处理表格。这套组合月成本为零，已经能覆盖 80% 的日常场景。确认稳定使用后，再按需升级到付费版，避免一开始就囤一堆订阅。</p>
+
+    <h3>4. 把工具串成工作流</h3>
+    <p>单点工具只能解决单点问题，真正的效率来自组合。一个常见的自媒体工作流是：用 Perplexity 或秘塔收集素材 → 用 ChatGPT 或 Claude 生成大纲与初稿 → 用 Ideogram 或 Recraft 生成配图 → 用剪映合成视频 → 用 Grammarly 校对英文版本。把每个环节的输出格式固定下来，同样的流程可以复用上百次。</p>
+
+    <h3>5. 注意数据安全与版权</h3>
+    <p>使用 AI 工具时，不要把密码、身份证号、健康记录或未公开的商业数据上传到公共模型。企业场景优先选择有企业版数据协议的方案。生成内容的商用授权因工具而异，Midjourney、Suno 等付费订阅通常包含商用许可，开源模型也要查看模型卡的许可条款。涉及他人肖像、商标和受版权保护的素材时，务必先确认授权。</p>
+
+    <h3>6. 用评分与真实评价辅助决策</h3>
+    <p>官网介绍往往只说优点，真实使用体验才是选型的依据。我们为每个工具提供用户评分和评价区，你也可以把用过的工具评分、收藏到自己的工具箱。结合深度文章里的横向对比，能更快判断哪款工具适合你的预算和使用频率。</p>
+  </div>
+
   <!-- SEO FAQ Section -->
   <div class="seo-faq" style="max-width:900px;margin:48px auto;padding:0 20px;">
     <h2 style="font-size:1.3rem;margin-bottom:24px;color:var(--text);">🤖 AI 工具常见问题</h2>

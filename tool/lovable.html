@@ -41,8 +41,9 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="酱肘AI">
 <meta name="twitter:card" content="summary_large_image">
-<title>酱肘AI — AI 工具导航</title>
-<link rel="canonical" href="https://jzzai.cn/" />
+<meta name="description" content="Lovable：AI 应用构建器，自然语言描述生成完整应用。 了解功能、使用场景、优缺点、价格模式与快速上手，发现更多 AI 工具。">
+<title>Lovable — 酱肘AI</title>
+<link rel="canonical" href="https://jzzai.cn/tool/lovable" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -253,6 +254,21 @@
   <script src="/tools.js"></script>
   <script src="/articles.js"></script>
   <script src="/tool-content.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Lovable",
+  "url": "https://jzzai.cn/tool/lovable",
+  "description": "AI 应用构建器，自然语言描述生成完整应用。",
+  "applicationCategory": "代码开发AI",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -270,7 +286,7 @@
 </header>
 
 <div class="container">
-  <div id="loading" class="loading-state">
+  <div id="loading" class="loading-state" style="display:none;">
     <div class="spinner"></div>
     <span>加载中...</span>
   </div>
@@ -280,7 +296,93 @@
     <p>请检查链接是否正确</p>
     <a href="/" class="btn-visit" style="margin-top:12px;display:inline-flex;">返回首页</a>
   </div>
-  <div id="content" style="display:none;"></div>
+  <div id="content">
+<div class="tool-hero">
+      <div class="icon-wrap">💕</div>
+      <div class="info">
+        <div class="cat-tag">💻 代码开发</div>
+        <h1>Lovable</h1>
+        <p>AI 应用构建器，自然语言描述生成完整应用。</p>
+        <div class="tags"><span class="tag ">new</span></div>
+        <a class="btn-visit" href="https://lovable.dev" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          访问官网
+        </a>
+      </div>
+    </div>
+<div class="detail-section deep-content">
+      <h2>📖 Lovable 深度介绍</h2>
+      <div class="deep-intro"><p>Lovable 是 AI 应用构建器，用自然语言描述即可生成包含前端、后端、数据库和用户系统的完整 Web 应用，并支持在线预览和修改，适合快速把想法变成产品。</p></div>
+      <div class="deep-grid">
+        <div><h3>🎯 适合人群</h3><div class="audience-tags"><span class="audience-tag">非技术创业者</span><span class="audience-tag">产品原型验证团队</span><span class="audience-tag">独立开发者</span><span class="audience-tag">需要快速 Demo 的咨询顾问</span></div></div>
+        <div><h3>💰 价格模式</h3><p class="deep-pricing">免费版提供基础项目；付费订阅按项目规模和功能收费。</p></div>
+      </div>
+      <div class="deep-two">
+        <div class="pros-box"><h3>✅ 优点</h3><ul><li class="pro">全栈生成，包含数据库与认证</li><li class="pro">界面生成质量较高</li><li class="pro">迭代修改直观</li></ul></div>
+        <div class="cons-box"><h3>⚠️ 缺点</h3><ul><li class="con">复杂定制受限制</li><li class="con">生成成本随迭代上升</li><li class="con">需要审查生成的代码与安全</li></ul></div>
+      </div>
+      <div class="deep-step"><h3>🚀 快速上手</h3><p>描述应用目标和核心功能，例如“做一个收集客户反馈的看板应用”，生成后在线预览，再逐步补充页面与逻辑。</p></div>
+      <div class="deep-step"><h3>💡 实用技巧</h3><ul><li>先明确用户角色和核心流程</li><li>把数据模型写清楚，生成结果更准确</li><li>上线前检查权限与敏感信息</li></ul></div>
+      <div class="deep-step"><h3>🔁 同类替代</h3><div class="alt-row"><a class="alt-chip" href="/tool/bolt">⚡ Bolt.new</a><a class="alt-chip" href="/tool/v0">🎯 v0</a><a class="alt-chip" href="/tool/replit-agent">🔮 Replit Agent</a></div></div>
+    </div>
+<div class="detail-section">
+      <h2>⭐ 用户评分</h2>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div id="avgRating" style="font-size:2.4rem;font-weight:700;color:var(--primary);">-</div>
+          <div id="starDisplay" style="font-size:1.3rem;color:#f59e0b;letter-spacing:2px;">☆☆☆☆☆</div>
+          <div id="ratingCount" style="font-size:.8rem;color:var(--text-secondary);">暂无评分</div>
+        </div>
+        <div>
+          <div style="font-size:.9rem;font-weight:500;margin-bottom:6px;">你的评分：</div>
+          <div id="starSelector" style="font-size:1.8rem;cursor:pointer;color:#ddd;letter-spacing:4px;">
+            <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+          </div>
+          <div id="ratingMsg" style="font-size:.8rem;color:var(--text-secondary);margin-top:4px;"></div>
+        </div>
+      </div>
+    </div>
+<div class="detail-section">
+      <h2>💬 用户评价</h2>
+      <div id="commentsList" style="margin-bottom:16px;"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input id="commentName" placeholder="你的昵称" style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;max-width:160px;flex:1;">
+        <input id="commentText" placeholder="写一句评价..." style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;flex:2;min-width:200px;">
+        <button id="submitComment" class="btn-visit" style="padding:8px 20px;font-size:.85rem;border-radius:999px;">发表</button>
+      </div>
+    </div>
+<div class="detail-section" id="relatedArticles">
+      <h2>📝 相关文章</h2>
+      <div class="related-grid" id="relatedArticlesGrid"><a class="related-card" href="/blog/ai-code-tools-comparison">
+          <div class="r-icon">💻</div>
+          <div class="r-name">AI 代码助手怎么选？Cursor / Copilot / Windsurf 横向对比</div>
+          <div class="r-desc">2026 年最主流的三个 AI 编程工具，哪个更适合你的开发场景？</div>
+        </a><a class="related-card" href="/blog/cursor-ide-deep-dive">
+          <div class="r-icon">💻</div>
+          <div class="r-name">Cursor IDE 深度教程：程序员必备的 AI 编程工具</div>
+          <div class="r-desc">从安装到高级技巧，Cursor 的功能详解、快捷键、Composer 用法全攻略。</div>
+        </a><a class="related-card" href="/blog/ai-code-review-tools">
+          <div class="r-icon">🔍</div>
+          <div class="r-name">AI 代码审查工具推荐：自动帮你找 Bug 和优化代码</div>
+          <div class="r-desc">CodeRabbit、Codeium、Code Review 等 AI 代码审查工具哪个好用。</div>
+        </a></div>
+    </div>
+<div class="detail-section"><h2>🎯 适用场景</h2><ul><li>Web 应用生成</li><li>数据库集成</li><li>用户认证</li><li>全栈应用</li></ul></div>
+<div class="detail-section"><h2>⭐ 核心功能</h2><ul><li>自然语言构建</li><li>Supabase 集成</li><li>用户系统</li><li>代码导出</li></ul></div>
+<div class="detail-section"><h2>🔗 相关工具</h2><div class="related-grid"><a class="related-card" href="/tool/bolt">
+          <div class="r-icon">⚡</div>
+          <div class="r-name">Bolt.new</div>
+          <div class="r-desc">浏览器内 AI 全栈开发工具，即时预览与部署。</div>
+        </a><a class="related-card" href="/tool/v0">
+          <div class="r-icon">🎯</div>
+          <div class="r-name">v0</div>
+          <div class="r-desc">Vercel 的 AI 前端生成工具，文字描述生成 UI。</div>
+        </a><a class="related-card" href="/tool/replit-agent">
+          <div class="r-icon">🔮</div>
+          <div class="r-name">Replit Agent</div>
+          <div class="r-desc">Replit 的 AI 编程代理，浏览器内全栈开发。</div>
+        </a></div></div>
+</div>
 </div>
 
 <footer>

@@ -41,8 +41,9 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="酱肘AI">
 <meta name="twitter:card" content="summary_large_image">
-<title>酱肘AI — AI 工具导航</title>
-<link rel="canonical" href="https://jzzai.cn/" />
+<meta name="description" content="Otter.ai：AI 会议记录与实时转写工具。 了解功能、使用场景、优缺点、价格模式与快速上手，发现更多 AI 工具。">
+<title>Otter.ai — 酱肘AI</title>
+<link rel="canonical" href="https://jzzai.cn/tool/otter" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -253,6 +254,21 @@
   <script src="/tools.js"></script>
   <script src="/articles.js"></script>
   <script src="/tool-content.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Otter.ai",
+  "url": "https://jzzai.cn/tool/otter",
+  "description": "AI 会议记录与实时转写工具。",
+  "applicationCategory": "办公效率AI",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -270,7 +286,7 @@
 </header>
 
 <div class="container">
-  <div id="loading" class="loading-state">
+  <div id="loading" class="loading-state" style="display:none;">
     <div class="spinner"></div>
     <span>加载中...</span>
   </div>
@@ -280,7 +296,93 @@
     <p>请检查链接是否正确</p>
     <a href="/" class="btn-visit" style="margin-top:12px;display:inline-flex;">返回首页</a>
   </div>
-  <div id="content" style="display:none;"></div>
+  <div id="content">
+<div class="tool-hero">
+      <div class="icon-wrap">🦦</div>
+      <div class="info">
+        <div class="cat-tag">📋 办公效率</div>
+        <h1>Otter.ai</h1>
+        <p>AI 会议记录与实时转写工具。</p>
+        <div class="tags"><span class="tag freemium">免费增值</span></div>
+        <a class="btn-visit" href="https://otter.ai" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          访问官网
+        </a>
+      </div>
+    </div>
+<div class="detail-section deep-content">
+      <h2>📖 Otter.ai 深度介绍</h2>
+      <div class="deep-intro"><p>Otter.ai 是 AI 会议记录与实时转写工具，可接入 Zoom、Meet 等会议，自动生成逐字稿、摘要、行动项与关键词，适合远程会议密集的团队。</p></div>
+      <div class="deep-grid">
+        <div><h3>🎯 适合人群</h3><div class="audience-tags"><span class="audience-tag">远程办公团队</span><span class="audience-tag">项目管理与产品经理</span><span class="audience-tag">记者与访谈人员</span><span class="audience-tag">学生网课记录</span></div></div>
+        <div><h3>💰 价格模式</h3><p class="deep-pricing">免费版每月提供有限分钟数；付费版按档位增加时长与功能。</p></div>
+      </div>
+      <div class="deep-two">
+        <div class="pros-box"><h3>✅ 优点</h3><ul><li class="pro">会议自动转写与总结</li><li class="pro">多会议历史管理方便</li><li class="pro">行动项提取实用</li></ul></div>
+        <div class="cons-box"><h3>⚠️ 缺点</h3><ul><li class="con">中文识别支持一般</li><li class="con">免费时长有限</li><li class="con">深度定制较少</li></ul></div>
+      </div>
+      <div class="deep-step"><h3>🚀 快速上手</h3><p>连接会议日历和视频会议账号，会议开始时自动记录，结束后查看摘要与行动项。</p></div>
+      <div class="deep-step"><h3>💡 实用技巧</h3><ul><li>英文会议效果最佳</li><li>重要会议开启高保真录音</li><li>总结完成后及时分发待办</li></ul></div>
+      <div class="deep-step"><h3>🔁 同类替代</h3><div class="alt-row"><a class="alt-chip" href="/tool/iflyrec">📄 讯飞听见</a><a class="alt-chip" href="/tool/feishu">📎 飞书智能伙伴</a><a class="alt-chip" href="/tool/whisper">🎤 Whisper</a></div></div>
+    </div>
+<div class="detail-section">
+      <h2>⭐ 用户评分</h2>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div id="avgRating" style="font-size:2.4rem;font-weight:700;color:var(--primary);">-</div>
+          <div id="starDisplay" style="font-size:1.3rem;color:#f59e0b;letter-spacing:2px;">☆☆☆☆☆</div>
+          <div id="ratingCount" style="font-size:.8rem;color:var(--text-secondary);">暂无评分</div>
+        </div>
+        <div>
+          <div style="font-size:.9rem;font-weight:500;margin-bottom:6px;">你的评分：</div>
+          <div id="starSelector" style="font-size:1.8rem;cursor:pointer;color:#ddd;letter-spacing:4px;">
+            <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+          </div>
+          <div id="ratingMsg" style="font-size:.8rem;color:var(--text-secondary);margin-top:4px;"></div>
+        </div>
+      </div>
+    </div>
+<div class="detail-section">
+      <h2>💬 用户评价</h2>
+      <div id="commentsList" style="margin-bottom:16px;"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input id="commentName" placeholder="你的昵称" style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;max-width:160px;flex:1;">
+        <input id="commentText" placeholder="写一句评价..." style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;flex:2;min-width:200px;">
+        <button id="submitComment" class="btn-visit" style="padding:8px 20px;font-size:.85rem;border-radius:999px;">发表</button>
+      </div>
+    </div>
+<div class="detail-section" id="relatedArticles">
+      <h2>📝 相关文章</h2>
+      <div class="related-grid" id="relatedArticlesGrid"><a class="related-card" href="/blog/ai-marketing-tools-2026">
+          <div class="r-icon">📈</div>
+          <div class="r-name">2026 年最值得关注的 8 个 AI 营销工具</div>
+          <div class="r-desc">AI 正在改变营销方式，从文案到广告投放，这 8 个工具能让你的营销效率翻倍。</div>
+        </a><a class="related-card" href="/blog/ai-meeting-notes-2026">
+          <div class="r-icon">🗒️</div>
+          <div class="r-name">会议纪要不再手写：AI 会议记录工具怎么选怎么用</div>
+          <div class="r-desc">从录音转写、自动总结到行动项提取，一文讲清飞书、讯飞听见、Otter 等会议记录工具的选择与使用流程。</div>
+        </a><a class="related-card" href="/blog/ai-english-writing-2026">
+          <div class="r-icon">✍️</div>
+          <div class="r-name">英文写作救星：AI 工具的中文用户使用指南</div>
+          <div class="r-desc">邮件、论文、LinkedIn、英文社交媒体，中文用户如何用 Grammarly 与 AI 助手写出地道英文。</div>
+        </a></div>
+    </div>
+<div class="detail-section"><h2>🎯 适用场景</h2><ul><li>会议记录</li><li>实时转写</li><li>会议摘要</li><li>录音整理</li></ul></div>
+<div class="detail-section"><h2>⭐ 核心功能</h2><ul><li>实时转写</li><li>自动摘要</li><li>关键词提取</li><li>多平台</li></ul></div>
+<div class="detail-section"><h2>🔗 相关工具</h2><div class="related-grid"><a class="related-card" href="/tool/iflyrec">
+          <div class="r-icon">📄</div>
+          <div class="r-name">讯飞听见</div>
+          <div class="r-desc">科大讯飞语音转文字，会议记录与字幕生成。</div>
+        </a><a class="related-card" href="/tool/whisper">
+          <div class="r-icon">🎤</div>
+          <div class="r-name">Whisper</div>
+          <div class="r-desc">OpenAI 开源语音识别模型，支持多语种。</div>
+        </a><a class="related-card" href="/tool/feishu">
+          <div class="r-icon">📎</div>
+          <div class="r-name">飞书智能伙伴</div>
+          <div class="r-desc">飞书内置 AI 助手，辅助写作、总结、问答。</div>
+        </a></div></div>
+</div>
 </div>
 
 <footer>

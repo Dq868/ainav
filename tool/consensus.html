@@ -41,8 +41,9 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="酱肘AI">
 <meta name="twitter:card" content="summary_large_image">
-<title>酱肘AI — AI 工具导航</title>
-<link rel="canonical" href="https://jzzai.cn/" />
+<meta name="description" content="Consensus：AI 学术搜索引擎，从论文中提炼答案。 了解功能、使用场景、优缺点、价格模式与快速上手，发现更多 AI 工具。">
+<title>Consensus — 酱肘AI</title>
+<link rel="canonical" href="https://jzzai.cn/tool/consensus" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -253,6 +254,21 @@
   <script src="/tools.js"></script>
   <script src="/articles.js"></script>
   <script src="/tool-content.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Consensus",
+  "url": "https://jzzai.cn/tool/consensus",
+  "description": "AI 学术搜索引擎，从论文中提炼答案。",
+  "applicationCategory": "搜索知识AI",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -270,7 +286,7 @@
 </header>
 
 <div class="container">
-  <div id="loading" class="loading-state">
+  <div id="loading" class="loading-state" style="display:none;">
     <div class="spinner"></div>
     <span>加载中...</span>
   </div>
@@ -280,7 +296,93 @@
     <p>请检查链接是否正确</p>
     <a href="/" class="btn-visit" style="margin-top:12px;display:inline-flex;">返回首页</a>
   </div>
-  <div id="content" style="display:none;"></div>
+  <div id="content">
+<div class="tool-hero">
+      <div class="icon-wrap">📚</div>
+      <div class="info">
+        <div class="cat-tag">🔍 搜索知识</div>
+        <h1>Consensus</h1>
+        <p>AI 学术搜索引擎，从论文中提炼答案。</p>
+        <div class="tags"><span class="tag freemium">免费增值</span></div>
+        <a class="btn-visit" href="https://consensus.app" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          访问官网
+        </a>
+      </div>
+    </div>
+<div class="detail-section deep-content">
+      <h2>📖 Consensus 深度介绍</h2>
+      <div class="deep-intro"><p>Consensus 是面向科研证据的 AI 搜索引擎，从数百万篇同行评审论文中提取答案，并标注研究类型、样本量和作者，适合需要循证依据的医学、科学与政策问题。</p></div>
+      <div class="deep-grid">
+        <div><h3>🎯 适合人群</h3><div class="audience-tags"><span class="audience-tag">医学与科研人员</span><span class="audience-tag">循证医学学习者</span><span class="audience-tag">政策与投资研究者</span><span class="audience-tag">需要论文依据的学生</span></div></div>
+        <div><h3>💰 价格模式</h3><p class="deep-pricing">免费版提供基础搜索；付费版提供更多搜索次数与筛选功能。</p></div>
+      </div>
+      <div class="deep-two">
+        <div class="pros-box"><h3>✅ 优点</h3><ul><li class="pro">直接给出论文级证据</li><li class="pro">研究质量标注清晰</li><li class="pro">搜索效率高于传统文献库</li></ul></div>
+        <div class="cons-box"><h3>⚠️ 缺点</h3><ul><li class="con">覆盖学科以科学与医学为主</li><li class="con">免费功能有限</li><li class="con">摘要质量依赖原论文</li></ul></div>
+      </div>
+      <div class="deep-step"><h3>🚀 快速上手</h3><p>用英文输入研究问题，例如“Does exercise improve sleep?”，查看结论摘要和来源论文，再点开原文验证。</p></div>
+      <div class="deep-step"><h3>💡 实用技巧</h3><ul><li>英文提问检索结果更全</li><li>关注样本量与研究方法</li><li>结论冲突时对比多篇论文</li></ul></div>
+      <div class="deep-step"><h3>🔁 同类替代</h3><div class="alt-row"><a class="alt-chip" href="/tool/elicit">🔬 Elicit</a><a class="alt-chip" href="/tool/scispace">📖 SciSpace</a><a class="alt-chip" href="/tool/mieta">🗼 秘塔 AI</a></div></div>
+    </div>
+<div class="detail-section">
+      <h2>⭐ 用户评分</h2>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div id="avgRating" style="font-size:2.4rem;font-weight:700;color:var(--primary);">-</div>
+          <div id="starDisplay" style="font-size:1.3rem;color:#f59e0b;letter-spacing:2px;">☆☆☆☆☆</div>
+          <div id="ratingCount" style="font-size:.8rem;color:var(--text-secondary);">暂无评分</div>
+        </div>
+        <div>
+          <div style="font-size:.9rem;font-weight:500;margin-bottom:6px;">你的评分：</div>
+          <div id="starSelector" style="font-size:1.8rem;cursor:pointer;color:#ddd;letter-spacing:4px;">
+            <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+          </div>
+          <div id="ratingMsg" style="font-size:.8rem;color:var(--text-secondary);margin-top:4px;"></div>
+        </div>
+      </div>
+    </div>
+<div class="detail-section">
+      <h2>💬 用户评价</h2>
+      <div id="commentsList" style="margin-bottom:16px;"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input id="commentName" placeholder="你的昵称" style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;max-width:160px;flex:1;">
+        <input id="commentText" placeholder="写一句评价..." style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;flex:2;min-width:200px;">
+        <button id="submitComment" class="btn-visit" style="padding:8px 20px;font-size:.85rem;border-radius:999px;">发表</button>
+      </div>
+    </div>
+<div class="detail-section" id="relatedArticles">
+      <h2>📝 相关文章</h2>
+      <div class="related-grid" id="relatedArticlesGrid"><a class="related-card" href="/blog/how-to-use-perplexity-ai">
+          <div class="r-icon">🔎</div>
+          <div class="r-name">Perplexity AI 使用教程：最好用的 AI 搜索引擎</div>
+          <div class="r-desc">Perplexity 怎么用？搜索技巧、Pro 功能、学术模式全解析。</div>
+        </a><a class="related-card" href="/blog/ai-privacy-guide-2026">
+          <div class="r-icon">🛡️</div>
+          <div class="r-name">用 AI 工具前先看隐私：数据安全与使用边界指南</div>
+          <div class="r-desc">哪些数据能喂给 AI、哪些不能？企业用户和个人创作者都该了解的 AI 数据安全清单。</div>
+        </a><a class="related-card" href="/blog/ai-daily-news-2026">
+          <div class="r-icon">📡</div>
+          <div class="r-name">每天 10 分钟掌握 AI 行业动态：信息源与阅读工作流</div>
+          <div class="r-desc">AI 新闻多到看不完？用信息源分层 + AI 聚合 + 每周复盘，建立轻量的行业情报系统。</div>
+        </a></div>
+    </div>
+<div class="detail-section"><h2>🎯 适用场景</h2><ul><li>学术文献搜索</li><li>论文问答</li><li>研究助理</li><li>文献综述</li></ul></div>
+<div class="detail-section"><h2>⭐ 核心功能</h2><ul><li>论文引用提取</li><li>Study Snapshots</li><li>引用导出</li><li>研究追踪</li></ul></div>
+<div class="detail-section"><h2>🔗 相关工具</h2><div class="related-grid"><a class="related-card" href="/tool/elicit">
+          <div class="r-icon">🔬</div>
+          <div class="r-name">Elicit</div>
+          <div class="r-desc">AI 研究助手，自动提取论文关键信息。</div>
+        </a><a class="related-card" href="/tool/scispace">
+          <div class="r-icon">📖</div>
+          <div class="r-name">SciSpace</div>
+          <div class="r-desc">AI 论文阅读与解释工具，辅助科研。</div>
+        </a><a class="related-card" href="/tool/perplexity">
+          <div class="r-icon">🔎</div>
+          <div class="r-name">Perplexity</div>
+          <div class="r-desc">AI 搜索引擎，直接给出带引用的回答。</div>
+        </a></div></div>
+</div>
 </div>
 
 <footer>

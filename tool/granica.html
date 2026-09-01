@@ -41,8 +41,9 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="酱肘AI">
 <meta name="twitter:card" content="summary_large_image">
-<title>酱肘AI — AI 工具导航</title>
-<link rel="canonical" href="https://jzzai.cn/" />
+<meta name="description" content="Granica：AI 数据处理平台，优化数据管道与成本。 了解功能、使用场景、优缺点、价格模式与快速上手，发现更多 AI 工具。">
+<title>Granica — 酱肘AI</title>
+<link rel="canonical" href="https://jzzai.cn/tool/granica" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -253,6 +254,21 @@
   <script src="/tools.js"></script>
   <script src="/articles.js"></script>
   <script src="/tool-content.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Granica",
+  "url": "https://jzzai.cn/tool/granica",
+  "description": "AI 数据处理平台，优化数据管道与成本。",
+  "applicationCategory": "办公效率AI",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -270,7 +286,7 @@
 </header>
 
 <div class="container">
-  <div id="loading" class="loading-state">
+  <div id="loading" class="loading-state" style="display:none;">
     <div class="spinner"></div>
     <span>加载中...</span>
   </div>
@@ -280,7 +296,93 @@
     <p>请检查链接是否正确</p>
     <a href="/" class="btn-visit" style="margin-top:12px;display:inline-flex;">返回首页</a>
   </div>
-  <div id="content" style="display:none;"></div>
+  <div id="content">
+<div class="tool-hero">
+      <div class="icon-wrap">📊</div>
+      <div class="info">
+        <div class="cat-tag">📋 办公效率</div>
+        <h1>Granica</h1>
+        <p>AI 数据处理平台，优化数据管道与成本。</p>
+        <div class="tags"><span class="tag ">new</span></div>
+        <a class="btn-visit" href="https://granica.ai" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          访问官网
+        </a>
+      </div>
+    </div>
+<div class="detail-section deep-content">
+      <h2>📖 Granica 深度介绍</h2>
+      <div class="deep-intro"><p>Granica 是面向企业的 AI 数据处理平台，帮助优化数据管道、降低成本并满足 AI 训练与推理的数据治理需求，适合数据量大的技术团队。</p></div>
+      <div class="deep-grid">
+        <div><h3>🎯 适合人群</h3><div class="audience-tags"><span class="audience-tag">数据平台团队</span><span class="audience-tag">AI 应用开发公司</span><span class="audience-tag">关注数据成本的企业</span><span class="audience-tag">数据治理负责人</span></div></div>
+        <div><h3>💰 价格模式</h3><p class="deep-pricing">企业方案，按数据量与功能定制报价。</p></div>
+      </div>
+      <div class="deep-two">
+        <div class="pros-box"><h3>✅ 优点</h3><ul><li class="pro">数据压缩与成本优化明显</li><li class="pro">与云存储集成好</li><li class="pro">面向 AI 数据场景设计</li></ul></div>
+        <div class="cons-box"><h3>⚠️ 缺点</h3><ul><li class="con">面向企业客户</li><li class="con">个人使用不适用</li><li class="con">需要评估接入成本</li></ul></div>
+      </div>
+      <div class="deep-step"><h3>🚀 快速上手</h3><p>接入云存储和数据管道，配置优化策略，平台自动分析并压缩数据，降低 AI 相关成本。</p></div>
+      <div class="deep-step"><h3>💡 实用技巧</h3><ul><li>先做小规模试点再推广</li><li>与数据团队共同制定治理规则</li><li>定期查看成本分析报告</li></ul></div>
+      <div class="deep-step"><h3>🔁 同类替代</h3><div class="alt-row"><a class="alt-chip" href="/tool/dify">⚗️ Dify</a><a class="alt-chip" href="/tool/replicate">🔄 Replicate</a><a class="alt-chip" href="/tool/huggingface">🤗 Hugging Face</a></div></div>
+    </div>
+<div class="detail-section">
+      <h2>⭐ 用户评分</h2>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div id="avgRating" style="font-size:2.4rem;font-weight:700;color:var(--primary);">-</div>
+          <div id="starDisplay" style="font-size:1.3rem;color:#f59e0b;letter-spacing:2px;">☆☆☆☆☆</div>
+          <div id="ratingCount" style="font-size:.8rem;color:var(--text-secondary);">暂无评分</div>
+        </div>
+        <div>
+          <div style="font-size:.9rem;font-weight:500;margin-bottom:6px;">你的评分：</div>
+          <div id="starSelector" style="font-size:1.8rem;cursor:pointer;color:#ddd;letter-spacing:4px;">
+            <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+          </div>
+          <div id="ratingMsg" style="font-size:.8rem;color:var(--text-secondary);margin-top:4px;"></div>
+        </div>
+      </div>
+    </div>
+<div class="detail-section">
+      <h2>💬 用户评价</h2>
+      <div id="commentsList" style="margin-bottom:16px;"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input id="commentName" placeholder="你的昵称" style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;max-width:160px;flex:1;">
+        <input id="commentText" placeholder="写一句评价..." style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;flex:2;min-width:200px;">
+        <button id="submitComment" class="btn-visit" style="padding:8px 20px;font-size:.85rem;border-radius:999px;">发表</button>
+      </div>
+    </div>
+<div class="detail-section" id="relatedArticles">
+      <h2>📝 相关文章</h2>
+      <div class="related-grid" id="relatedArticlesGrid"><a class="related-card" href="/blog/ai-marketing-tools-2026">
+          <div class="r-icon">📈</div>
+          <div class="r-name">2026 年最值得关注的 8 个 AI 营销工具</div>
+          <div class="r-desc">AI 正在改变营销方式，从文案到广告投放，这 8 个工具能让你的营销效率翻倍。</div>
+        </a><a class="related-card" href="/blog/ai-meeting-notes-2026">
+          <div class="r-icon">🗒️</div>
+          <div class="r-name">会议纪要不再手写：AI 会议记录工具怎么选怎么用</div>
+          <div class="r-desc">从录音转写、自动总结到行动项提取，一文讲清飞书、讯飞听见、Otter 等会议记录工具的选择与使用流程。</div>
+        </a><a class="related-card" href="/blog/ai-english-writing-2026">
+          <div class="r-icon">✍️</div>
+          <div class="r-name">英文写作救星：AI 工具的中文用户使用指南</div>
+          <div class="r-desc">邮件、论文、LinkedIn、英文社交媒体，中文用户如何用 Grammarly 与 AI 助手写出地道英文。</div>
+        </a></div>
+    </div>
+<div class="detail-section"><h2>🎯 适用场景</h2><ul><li>数据管道</li><li>成本优化</li><li>数据治理</li><li>AI 数据准备</li></ul></div>
+<div class="detail-section"><h2>⭐ 核心功能</h2><ul><li>数据压缩</li><li>成本分析</li><li>存储优化</li><li>AI 集成</li></ul></div>
+<div class="detail-section"><h2>🔗 相关工具</h2><div class="related-grid"><a class="related-card" href="/tool/notion-ai">
+          <div class="r-icon">📝</div>
+          <div class="r-name">Notion AI</div>
+          <div class="r-desc">智能写作助手，嵌入 Notion 工作空间。</div>
+        </a><a class="related-card" href="/tool/gamma">
+          <div class="r-icon">📊</div>
+          <div class="r-name">Gamma</div>
+          <div class="r-desc">AI 自动生成演示文稿、文档和网页。</div>
+        </a><a class="related-card" href="/tool/beautiful">
+          <div class="r-icon">✨</div>
+          <div class="r-name">Beautiful.ai</div>
+          <div class="r-desc">AI 智能排版 PPT，内容决定设计。</div>
+        </a></div></div>
+</div>
 </div>
 
 <footer>

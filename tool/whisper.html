@@ -41,8 +41,9 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="酱肘AI">
 <meta name="twitter:card" content="summary_large_image">
-<title>酱肘AI — AI 工具导航</title>
-<link rel="canonical" href="https://jzzai.cn/" />
+<meta name="description" content="Whisper：OpenAI 开源语音识别模型，支持多语种。 了解功能、使用场景、优缺点、价格模式与快速上手，发现更多 AI 工具。">
+<title>Whisper — 酱肘AI</title>
+<link rel="canonical" href="https://jzzai.cn/tool/whisper" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -253,6 +254,21 @@
   <script src="/tools.js"></script>
   <script src="/articles.js"></script>
   <script src="/tool-content.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Whisper",
+  "url": "https://jzzai.cn/tool/whisper",
+  "description": "OpenAI 开源语音识别模型，支持多语种。",
+  "applicationCategory": "音频处理AI",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -270,7 +286,7 @@
 </header>
 
 <div class="container">
-  <div id="loading" class="loading-state">
+  <div id="loading" class="loading-state" style="display:none;">
     <div class="spinner"></div>
     <span>加载中...</span>
   </div>
@@ -280,7 +296,85 @@
     <p>请检查链接是否正确</p>
     <a href="/" class="btn-visit" style="margin-top:12px;display:inline-flex;">返回首页</a>
   </div>
-  <div id="content" style="display:none;"></div>
+  <div id="content">
+<div class="tool-hero">
+      <div class="icon-wrap">🎤</div>
+      <div class="info">
+        <div class="cat-tag">🎵 音频处理</div>
+        <h1>Whisper</h1>
+        <p>OpenAI 开源语音识别模型，支持多语种。</p>
+        <div class="tags"><span class="tag free">免费</span><span class="tag oss">📂 开源</span></div>
+        <a class="btn-visit" href="https://openai.com/whisper" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          访问官网
+        </a>
+      </div>
+    </div>
+<div class="detail-section deep-content">
+      <h2>📖 Whisper 深度介绍</h2>
+      <div class="deep-intro"><p>Whisper 是 OpenAI 开源的语音识别模型，支持数十种语言的高精度转写、翻译和时间戳对齐，可本地运行，是会议记录、字幕生成和语音数据集处理的常用基础工具。</p></div>
+      <div class="deep-grid">
+        <div><h3>🎯 适合人群</h3><div class="audience-tags"><span class="audience-tag">开发者与数据工程师</span><span class="audience-tag">需要离线转写的团队</span><span class="audience-tag">字幕组与内容创作者</span><span class="audience-tag">研究语音识别的用户</span></div></div>
+        <div><h3>💰 价格模式</h3><p class="deep-pricing">开源免费；云端 API 按音频时长计费。</p></div>
+      </div>
+      <div class="deep-two">
+        <div class="pros-box"><h3>✅ 优点</h3><ul><li class="pro">识别精度高，多语言支持好</li><li class="pro">开源免费可本地部署</li><li class="pro">自动生成时间戳便于字幕</li></ul></div>
+        <div class="cons-box"><h3>⚠️ 缺点</h3><ul><li class="con">本地运行需要一定算力</li><li class="con">长音频处理耗时</li><li class="con">中文方言支持有限</li></ul></div>
+      </div>
+      <div class="deep-step"><h3>🚀 快速上手</h3><p>安装 OpenAI Whisper 后运行命令行，指定音频文件和语言，即可获得带时间戳的转写文本。</p></div>
+      <div class="deep-step"><h3>💡 实用技巧</h3><ul><li>长音频先切分再转写效率更高</li><li>中文识别选择 zh 并开启翻译选项</li><li>用 larger 模型提升准确率</li></ul></div>
+      <div class="deep-step"><h3>🔁 同类替代</h3><div class="alt-row"><a class="alt-chip" href="/tool/iflyrec">📄 讯飞听见</a><a class="alt-chip" href="/tool/elevenlabs">🗣️ ElevenLabs</a><a class="alt-chip" href="/tool/fish-audio">🐟 Fish Audio</a></div></div>
+    </div>
+<div class="detail-section">
+      <h2>⭐ 用户评分</h2>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div id="avgRating" style="font-size:2.4rem;font-weight:700;color:var(--primary);">-</div>
+          <div id="starDisplay" style="font-size:1.3rem;color:#f59e0b;letter-spacing:2px;">☆☆☆☆☆</div>
+          <div id="ratingCount" style="font-size:.8rem;color:var(--text-secondary);">暂无评分</div>
+        </div>
+        <div>
+          <div style="font-size:.9rem;font-weight:500;margin-bottom:6px;">你的评分：</div>
+          <div id="starSelector" style="font-size:1.8rem;cursor:pointer;color:#ddd;letter-spacing:4px;">
+            <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+          </div>
+          <div id="ratingMsg" style="font-size:.8rem;color:var(--text-secondary);margin-top:4px;"></div>
+        </div>
+      </div>
+    </div>
+<div class="detail-section">
+      <h2>💬 用户评价</h2>
+      <div id="commentsList" style="margin-bottom:16px;"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input id="commentName" placeholder="你的昵称" style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;max-width:160px;flex:1;">
+        <input id="commentText" placeholder="写一句评价..." style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;flex:2;min-width:200px;">
+        <button id="submitComment" class="btn-visit" style="padding:8px 20px;font-size:.85rem;border-radius:999px;">发表</button>
+      </div>
+    </div>
+<div class="detail-section" id="relatedArticles">
+      <h2>📝 相关文章</h2>
+      <div class="related-grid" id="relatedArticlesGrid"><a class="related-card" href="/blog/ai-voice-cloning-guide">
+          <div class="r-icon">🎙️</div>
+          <div class="r-name">AI 语音合成与克隆：ElevenLabs 等工具实测对比</div>
+          <div class="r-desc">AI 语音技术发展到什么程度了？ElevenLabs、Fish Audio、微软语音等工具实测。</div>
+        </a></div>
+    </div>
+<div class="detail-section"><h2>🎯 适用场景</h2><ul><li>语音转文字</li><li>会议记录</li><li>字幕生成</li><li>多语言翻译</li></ul></div>
+<div class="detail-section"><h2>⭐ 核心功能</h2><ul><li>开源免费</li><li>多语种识别</li><li>高准确率</li><li>本地部署</li></ul></div>
+<div class="detail-section"><h2>🔗 相关工具</h2><div class="related-grid"><a class="related-card" href="/tool/elevenlabs">
+          <div class="r-icon">🗣️</div>
+          <div class="r-name">ElevenLabs</div>
+          <div class="r-desc">AI 语音合成，声音逼真，支持多语言多情感。</div>
+        </a><a class="related-card" href="/tool/iflyrec">
+          <div class="r-icon">📄</div>
+          <div class="r-name">讯飞听见</div>
+          <div class="r-desc">科大讯飞语音转文字，会议记录与字幕生成。</div>
+        </a><a class="related-card" href="/tool/otter">
+          <div class="r-icon">🦦</div>
+          <div class="r-name">Otter.ai</div>
+          <div class="r-desc">AI 会议记录与实时转写工具。</div>
+        </a></div></div>
+</div>
 </div>
 
 <footer>

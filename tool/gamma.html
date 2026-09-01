@@ -41,8 +41,9 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="酱肘AI">
 <meta name="twitter:card" content="summary_large_image">
-<title>酱肘AI — AI 工具导航</title>
-<link rel="canonical" href="https://jzzai.cn/" />
+<meta name="description" content="Gamma：AI 自动生成演示文稿、文档和网页。 了解功能、使用场景、优缺点、价格模式与快速上手，发现更多 AI 工具。">
+<title>Gamma — 酱肘AI</title>
+<link rel="canonical" href="https://jzzai.cn/tool/gamma" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -253,6 +254,21 @@
   <script src="/tools.js"></script>
   <script src="/articles.js"></script>
   <script src="/tool-content.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Gamma",
+  "url": "https://jzzai.cn/tool/gamma",
+  "description": "AI 自动生成演示文稿、文档和网页。",
+  "applicationCategory": "办公效率AI",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -270,7 +286,7 @@
 </header>
 
 <div class="container">
-  <div id="loading" class="loading-state">
+  <div id="loading" class="loading-state" style="display:none;">
     <div class="spinner"></div>
     <span>加载中...</span>
   </div>
@@ -280,7 +296,93 @@
     <p>请检查链接是否正确</p>
     <a href="/" class="btn-visit" style="margin-top:12px;display:inline-flex;">返回首页</a>
   </div>
-  <div id="content" style="display:none;"></div>
+  <div id="content">
+<div class="tool-hero">
+      <div class="icon-wrap">📊</div>
+      <div class="info">
+        <div class="cat-tag">📋 办公效率</div>
+        <h1>Gamma</h1>
+        <p>AI 自动生成演示文稿、文档和网页。</p>
+        <div class="tags"><span class="tag freemium">免费增值</span></div>
+        <a class="btn-visit" href="https://gamma.app" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          访问官网
+        </a>
+      </div>
+    </div>
+<div class="detail-section deep-content">
+      <h2>📖 Gamma 深度介绍</h2>
+      <div class="deep-intro"><p>Gamma 是 AI 演示文稿生成工具，输入大纲或一句话即可生成结构完整、设计美观的幻灯片、文档和网页，支持在线编辑、协作和导出，适合快速做提案与汇报。</p></div>
+      <div class="deep-grid">
+        <div><h3>🎯 适合人群</h3><div class="audience-tags"><span class="audience-tag">产品与商务汇报</span><span class="audience-tag">市场与咨询团队</span><span class="audience-tag">教育培训讲师</span><span class="audience-tag">需要快速做 PPT 的用户</span></div></div>
+        <div><h3>💰 价格模式</h3><p class="deep-pricing">免费版可创建有限卡片；付费版按档位提供更多生成量与导出功能。</p></div>
+      </div>
+      <div class="deep-two">
+        <div class="pros-box"><h3>✅ 优点</h3><ul><li class="pro">生成速度极快，设计在线</li><li class="pro">支持文档与网页多格式</li><li class="pro">模板风格现代</li></ul></div>
+        <div class="cons-box"><h3>⚠️ 缺点</h3><ul><li class="con">免费版有限制</li><li class="con">复杂图表编辑能力一般</li><li class="con">导出格式需适配</li></ul></div>
+      </div>
+      <div class="deep-step"><h3>🚀 快速上手</h3><p>输入标题和大纲要点，选择主题风格，AI 生成后在线调整文案、图表与配色，导出 PPT 或网页分享。</p></div>
+      <div class="deep-step"><h3>💡 实用技巧</h3><ul><li>大纲写得具体，生成质量更高</li><li>用卡片编辑快速重排内容</li><li>品牌汇报先锁定企业配色</li></ul></div>
+      <div class="deep-step"><h3>🔁 同类替代</h3><div class="alt-row"><a class="alt-chip" href="/tool/beautiful-ai">📐 Beautiful.ai</a><a class="alt-chip" href="/tool/notion-ai">📝 Notion AI</a></div></div>
+    </div>
+<div class="detail-section">
+      <h2>⭐ 用户评分</h2>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div id="avgRating" style="font-size:2.4rem;font-weight:700;color:var(--primary);">-</div>
+          <div id="starDisplay" style="font-size:1.3rem;color:#f59e0b;letter-spacing:2px;">☆☆☆☆☆</div>
+          <div id="ratingCount" style="font-size:.8rem;color:var(--text-secondary);">暂无评分</div>
+        </div>
+        <div>
+          <div style="font-size:.9rem;font-weight:500;margin-bottom:6px;">你的评分：</div>
+          <div id="starSelector" style="font-size:1.8rem;cursor:pointer;color:#ddd;letter-spacing:4px;">
+            <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+          </div>
+          <div id="ratingMsg" style="font-size:.8rem;color:var(--text-secondary);margin-top:4px;"></div>
+        </div>
+      </div>
+    </div>
+<div class="detail-section">
+      <h2>💬 用户评价</h2>
+      <div id="commentsList" style="margin-bottom:16px;"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input id="commentName" placeholder="你的昵称" style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;max-width:160px;flex:1;">
+        <input id="commentText" placeholder="写一句评价..." style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;flex:2;min-width:200px;">
+        <button id="submitComment" class="btn-visit" style="padding:8px 20px;font-size:.85rem;border-radius:999px;">发表</button>
+      </div>
+    </div>
+<div class="detail-section" id="relatedArticles">
+      <h2>📝 相关文章</h2>
+      <div class="related-grid" id="relatedArticlesGrid"><a class="related-card" href="/blog/ai-marketing-tools-2026">
+          <div class="r-icon">📈</div>
+          <div class="r-name">2026 年最值得关注的 8 个 AI 营销工具</div>
+          <div class="r-desc">AI 正在改变营销方式，从文案到广告投放，这 8 个工具能让你的营销效率翻倍。</div>
+        </a><a class="related-card" href="/blog/ai-meeting-notes-2026">
+          <div class="r-icon">🗒️</div>
+          <div class="r-name">会议纪要不再手写：AI 会议记录工具怎么选怎么用</div>
+          <div class="r-desc">从录音转写、自动总结到行动项提取，一文讲清飞书、讯飞听见、Otter 等会议记录工具的选择与使用流程。</div>
+        </a><a class="related-card" href="/blog/ai-english-writing-2026">
+          <div class="r-icon">✍️</div>
+          <div class="r-name">英文写作救星：AI 工具的中文用户使用指南</div>
+          <div class="r-desc">邮件、论文、LinkedIn、英文社交媒体，中文用户如何用 Grammarly 与 AI 助手写出地道英文。</div>
+        </a></div>
+    </div>
+<div class="detail-section"><h2>🎯 适用场景</h2><ul><li>演示文稿制作</li><li>文档编写</li><li>网页生成</li><li>商业提案</li></ul></div>
+<div class="detail-section"><h2>⭐ 核心功能</h2><ul><li>AI 自动生成</li><li>精美模板</li><li>一键换主题</li><li>协作编辑</li></ul></div>
+<div class="detail-section"><h2>🔗 相关工具</h2><div class="related-grid"><a class="related-card" href="/tool/beautiful-ai">
+          <div class="r-icon">📐</div>
+          <div class="r-name">Beautiful.ai</div>
+          <div class="r-desc">AI 设计幻灯片，自动排版与美化。</div>
+        </a><a class="related-card" href="/tool/notion-ai">
+          <div class="r-icon">📝</div>
+          <div class="r-name">Notion AI</div>
+          <div class="r-desc">智能写作助手，嵌入 Notion 工作空间。</div>
+        </a><a class="related-card" href="/tool/wps-ai">
+          <div class="r-icon">📄</div>
+          <div class="r-name">WPS AI</div>
+          <div class="r-desc">金山办公 AI 助手，支持文档、表格、演示。</div>
+        </a></div></div>
+</div>
 </div>
 
 <footer>

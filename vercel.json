@@ -55,7 +55,7 @@
     },
     {
       "source": "/tool/:id",
-      "destination": "/detail.html?tool=:id"
+      "destination": "/tool/:id.html"
     },
     {
       "source": "/blog",

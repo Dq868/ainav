@@ -41,8 +41,9 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="酱肘AI">
 <meta name="twitter:card" content="summary_large_image">
-<title>酱肘AI — AI 工具导航</title>
-<link rel="canonical" href="https://jzzai.cn/" />
+<meta name="description" content="天工 AI：昆仑万维 AI 搜索助手，支持联网。 了解功能、使用场景、优缺点、价格模式与快速上手，发现更多 AI 工具。">
+<title>天工 AI — 酱肘AI</title>
+<link rel="canonical" href="https://jzzai.cn/tool/tiangong" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -253,6 +254,21 @@
   <script src="/tools.js"></script>
   <script src="/articles.js"></script>
   <script src="/tool-content.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "天工 AI",
+  "url": "https://jzzai.cn/tool/tiangong",
+  "description": "昆仑万维 AI 搜索助手，支持联网。",
+  "applicationCategory": "搜索知识AI",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -270,7 +286,7 @@
 </header>
 
 <div class="container">
-  <div id="loading" class="loading-state">
+  <div id="loading" class="loading-state" style="display:none;">
     <div class="spinner"></div>
     <span>加载中...</span>
   </div>
@@ -280,7 +296,93 @@
     <p>请检查链接是否正确</p>
     <a href="/" class="btn-visit" style="margin-top:12px;display:inline-flex;">返回首页</a>
   </div>
-  <div id="content" style="display:none;"></div>
+  <div id="content">
+<div class="tool-hero">
+      <div class="icon-wrap">⚙️</div>
+      <div class="info">
+        <div class="cat-tag">🔍 搜索知识</div>
+        <h1>天工 AI</h1>
+        <p>昆仑万维 AI 搜索助手，支持联网。</p>
+        <div class="tags"><span class="tag free">免费</span></div>
+        <a class="btn-visit" href="https://www.tiangong.cn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          访问官网
+        </a>
+      </div>
+    </div>
+<div class="detail-section deep-content">
+      <h2>📖 天工 AI 深度介绍</h2>
+      <div class="deep-intro"><p>天工 AI 是昆仑万维推出的 AI 搜索与对话助手，支持联网搜索、多模态理解和长文本处理，能直接回答问题并给出信息摘要，适合日常查资料和写作辅助。</p></div>
+      <div class="deep-grid">
+        <div><h3>🎯 适合人群</h3><div class="audience-tags"><span class="audience-tag">日常信息查询用户</span><span class="audience-tag">中文内容创作者</span><span class="audience-tag">需要联网 AI 的学生</span><span class="audience-tag">移动端搜索用户</span></div></div>
+        <div><h3>💰 价格模式</h3><p class="deep-pricing">基础功能免费，可在网页和 App 使用。</p></div>
+      </div>
+      <div class="deep-two">
+        <div class="pros-box"><h3>✅ 优点</h3><ul><li class="pro">联网搜索方便</li><li class="pro">中文支持好</li><li class="pro">App 体验流畅</li></ul></div>
+        <div class="cons-box"><h3>⚠️ 缺点</h3><ul><li class="con">信息深度一般</li><li class="con">复杂推理能力有限</li><li class="con">来源展示不如专业搜索</li></ul></div>
+      </div>
+      <div class="deep-step"><h3>🚀 快速上手</h3><p>输入问题即可获得带联网信息的回答，需要时追问细节，或让它根据搜索结果整理成文。</p></div>
+      <div class="deep-step"><h3>💡 实用技巧</h3><ul><li>实时信息先确认搜索时间</li><li>写作任务给出主题与结构要求</li><li>引用数据回到原始页面核实</li></ul></div>
+      <div class="deep-step"><h3>🔁 同类替代</h3><div class="alt-row"><a class="alt-chip" href="/tool/mieta">🗼 秘塔 AI</a><a class="alt-chip" href="/tool/perplexity">🔎 Perplexity</a><a class="alt-chip" href="/tool/deepseek">🌊 DeepSeek</a></div></div>
+    </div>
+<div class="detail-section">
+      <h2>⭐ 用户评分</h2>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div id="avgRating" style="font-size:2.4rem;font-weight:700;color:var(--primary);">-</div>
+          <div id="starDisplay" style="font-size:1.3rem;color:#f59e0b;letter-spacing:2px;">☆☆☆☆☆</div>
+          <div id="ratingCount" style="font-size:.8rem;color:var(--text-secondary);">暂无评分</div>
+        </div>
+        <div>
+          <div style="font-size:.9rem;font-weight:500;margin-bottom:6px;">你的评分：</div>
+          <div id="starSelector" style="font-size:1.8rem;cursor:pointer;color:#ddd;letter-spacing:4px;">
+            <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+          </div>
+          <div id="ratingMsg" style="font-size:.8rem;color:var(--text-secondary);margin-top:4px;"></div>
+        </div>
+      </div>
+    </div>
+<div class="detail-section">
+      <h2>💬 用户评价</h2>
+      <div id="commentsList" style="margin-bottom:16px;"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input id="commentName" placeholder="你的昵称" style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;max-width:160px;flex:1;">
+        <input id="commentText" placeholder="写一句评价..." style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;flex:2;min-width:200px;">
+        <button id="submitComment" class="btn-visit" style="padding:8px 20px;font-size:.85rem;border-radius:999px;">发表</button>
+      </div>
+    </div>
+<div class="detail-section" id="relatedArticles">
+      <h2>📝 相关文章</h2>
+      <div class="related-grid" id="relatedArticlesGrid"><a class="related-card" href="/blog/how-to-use-perplexity-ai">
+          <div class="r-icon">🔎</div>
+          <div class="r-name">Perplexity AI 使用教程：最好用的 AI 搜索引擎</div>
+          <div class="r-desc">Perplexity 怎么用？搜索技巧、Pro 功能、学术模式全解析。</div>
+        </a><a class="related-card" href="/blog/ai-privacy-guide-2026">
+          <div class="r-icon">🛡️</div>
+          <div class="r-name">用 AI 工具前先看隐私：数据安全与使用边界指南</div>
+          <div class="r-desc">哪些数据能喂给 AI、哪些不能？企业用户和个人创作者都该了解的 AI 数据安全清单。</div>
+        </a><a class="related-card" href="/blog/ai-daily-news-2026">
+          <div class="r-icon">📡</div>
+          <div class="r-name">每天 10 分钟掌握 AI 行业动态：信息源与阅读工作流</div>
+          <div class="r-desc">AI 新闻多到看不完？用信息源分层 + AI 聚合 + 每周复盘，建立轻量的行业情报系统。</div>
+        </a></div>
+    </div>
+<div class="detail-section"><h2>🎯 适用场景</h2><ul><li>联网搜索</li><li>资讯获取</li><li>知识问答</li><li>信息整合</li></ul></div>
+<div class="detail-section"><h2>⭐ 核心功能</h2><ul><li>联网搜索</li><li>多模态</li><li>长文本生成</li><li>免费</li></ul></div>
+<div class="detail-section"><h2>🔗 相关工具</h2><div class="related-grid"><a class="related-card" href="/tool/mieta">
+          <div class="r-icon">🗼</div>
+          <div class="r-name">秘塔 AI</div>
+          <div class="r-desc">中国 AI 搜索引擎，无广告，结构化的搜索结果。</div>
+        </a><a class="related-card" href="/tool/perplexity">
+          <div class="r-icon">🔎</div>
+          <div class="r-name">Perplexity</div>
+          <div class="r-desc">AI 搜索引擎，直接给出带引用的回答。</div>
+        </a><a class="related-card" href="/tool/deepseek">
+          <div class="r-icon">🌊</div>
+          <div class="r-name">DeepSeek</div>
+          <div class="r-desc">深度求索的大语言模型，中文能力强，支持联网搜索。</div>
+        </a></div></div>
+</div>
 </div>
 
 <footer>
