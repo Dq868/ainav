@@ -63,7 +63,7 @@
     },
     {
       "source": "/blog/:id",
-      "destination": "/article.html?id=:id"
+      "destination": "/blog/:id.html"
     }
   ]
 }

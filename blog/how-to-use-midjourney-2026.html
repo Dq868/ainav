@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="酱肘AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="google-site-verification" content="uKC3K2ArEDrW3FQkAgbXPG5RfJnbqdBkfNCckyB49ok" />
+<meta name="google-site-verification" content="Wsq4c3zO5bibhXAw6kxO56XsaFS0xb9nKduMqGakfOY" />
+<meta name="description" content="Midjourney 的提示词技巧、参数设置、风格控制，一篇搞懂怎么用好这个最强的 AI 绘图工具。">
+<link rel="canonical" href="https://jzzai.cn/blog/how-to-use-midjourney-2026" />
+<title>Midjourney 2026 完全指南：从入门到精通 — 酱肘AI</title>
+<meta property="og:title" content="Midjourney 2026 完全指南：从入门到精通">
+<meta property="og:description" content="Midjourney 的提示词技巧、参数设置、风格控制，一篇搞懂怎么用好这个最强的 AI 绘图工具。">
+<meta property="og:url" content="https://jzzai.cn/blog/how-to-use-midjourney-2026">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Article", "headline": "Midjourney 2026 完全指南：从入门到精通", "description": "Midjourney 的提示词技巧、参数设置、风格控制，一篇搞懂怎么用好这个最强的 AI 绘图工具。", "datePublished": "2026-06-20", "dateModified": "2026-06-20", "author": {"@type": "Organization", "name": "酱肘AI"}, "publisher": {"@type": "Organization", "name": "酱肘AI", "url": "https://jzzai.cn"}, "mainEntityOfPage": "https://jzzai.cn/blog/how-to-use-midjourney-2026"}
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --border: #e6e8ec;
+    --text: #1a1d26;
+    --text-secondary: #6b7280;
+    --primary: #4f6cf7;
+    --primary-light: #eef1ff;
+    --primary-dark: #3b55d6;
+    --ad-label: #9ca3af;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --max-w: 800px;
+    --header-h: 64px;
+  }
+  html { font-size: 16px; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.8;
+  }
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,.85); backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    height: var(--header-h); display: flex; align-items: center;
+  }
+  header .inner {
+    max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+    width: 100%; display: flex; align-items: center; gap: 12px;
+  }
+  .back-link {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--text-secondary); font-size: .9rem; font-weight: 500;
+    text-decoration: none; padding: 6px 12px; border-radius: var(--radius-sm);
+    transition: background .15s, color .15s;
+  }
+  .back-link:hover { background: var(--primary-light); color: var(--primary); }
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 32px 24px 60px; }
+  .article-content {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 40px 44px;
+  }
+  .article-content .icon-wrap {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: var(--primary-light); display: flex; align-items: center;
+    justify-content: center; font-size: 2rem; margin-bottom: 16px;
+  }
+  .article-content h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
+  .article-meta {
+    color: var(--text-secondary); font-size: .85rem; margin-bottom: 24px;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .article-content h2 {
+    font-size: 1.2rem; font-weight: 600; margin: 32px 0 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .article-content h3 { font-size: 1.05rem; font-weight: 600; margin: 24px 0 8px; }
+  .article-content p { margin-bottom: 16px; color: var(--text); }
+  .article-content table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .9rem; }
+  .article-content th, .article-content td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+  .article-content th { background: var(--bg); font-weight: 600; }
+  .related-section { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .related-section h3 { font-size: 1rem; font-weight: 600; margin-bottom: 12px; }
+  .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+  .related-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 14px; cursor: pointer; text-decoration: none;
+    color: inherit; display: block; transition: box-shadow .2s;
+  }
+  .related-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+  .related-card .r-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 1rem; margin-bottom: 6px; }
+  .related-card .r-name { font-weight: 600; font-size: .88rem; }
+  .related-card .r-desc { font-size: .78rem; color: var(--text-secondary); }
+  footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: .82rem; }
+  footer a { color: var(--primary); text-decoration: none; }
+  @media (max-width: 640px) {
+    .article-content { padding: 24px 20px; }
+    .article-content table { font-size: .78rem; }
+    .article-content th, .article-content td { padding: 6px 8px; }
+  }
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9519141393679331" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-006K3L3V06"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-006K3L3V06');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <a class="back-link" href="/">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      返回首页
+    </a>
+  </div>
+</header>
+
+<div class="container">
+  <div id="content">
+    <div class="article-content">
+      <div class="icon-wrap">🎨</div>
+      <h1>Midjourney 2026 完全指南：从入门到精通</h1>
+      <div class="article-meta">
+        <span>📅 2026-06-20</span>
+        <span>📂 🎨 图像生成</span>
+      </div>
+      
+<p>Midjourney 是当前最流行的 AI 图像生成工具之一，以其高质量的艺术风格著称。2026 年 Midjourney 已经更新到 V7 版本，功能和画质都有了巨大提升。</p>
+
+<h2>基础用法</h2>
+<p>在 Discord 中进入 Midjourney 频道，使用 <code>/imagine prompt</code> 命令开始生成。提示词是你描述想要画面的文字，越精确越好。</p>
+
+<h2>提示词结构</h2>
+<p>一个好的提示词通常包含：</p>
+<ul>
+  <li><strong>主体</strong>：什么人/物/场景</li>
+  <li><strong>环境</strong>：背景、光线、氛围</li>
+  <li><strong>风格</strong>：摄影/插画/3D/油画等</li>
+  <li><strong>参数</strong>：宽高比、风格化程度等</li>
+</ul>
+
+<h2>常用参数</h2>
+<table>
+  <tr><th>参数</th><th>作用</th><th>示例</th></tr>
+  <tr><td>--ar</td><td>宽高比</td><td>--ar 16:9 或 --ar 9:16</td></tr>
+  <tr><td>--s</td><td>风格化程度 (0-1000)</td><td>--s 250 默认</td></tr>
+  <tr><td>--v</td><td>版本号</td><td>--v 7 最新版</td></tr>
+  <tr><td>--style</td><td>风格预设</td><td>--style raw 更真实</td></tr>
+</table>
+
+<h2>V7 版本新特性</h2>
+<p>Midjourney V7 在人物细节、手部处理、文字渲染方面有了质的飞跃。新增了 Personalization 功能，AI 会学习你的审美偏好，生成更符合你口味的图片。</p>
+
+<h2>常见问题</h2>
+<p><strong>Q：生成的图片有版权吗？</strong><br>付费用户拥有商业使用权，生成的图片可以商用。</p>
+<p><strong>Q：为什么我的图不好看？</strong><br>提示词不够详细。试试加上 lighting, composition, color palette 等描述词。</p>
+<p><strong>Q：怎么参考别人的好图？</strong><br>在 Discord 的 #showcase 频道浏览，点击图片可以看到完整的提示词。</p>
+
+      <div class="related-section">
+  <h3>🔗 相关工具</h3>
+  <div class="related-grid"><a class="related-card" href="/tool/midjourney"><div class="r-icon">🎨</div><div class="r-name">Midjourney</div><div class="r-desc">顶尖 AI 图像生成工具，艺术风格出众。</div></a><a class="related-card" href="/tool/dalle"><div class="r-icon">🖼️</div><div class="r-name">DALL·E 3</div><div class="r-desc">OpenAI 文字生成图像模型，集成于 ChatGPT。</div></a><a class="related-card" href="/tool/stable-diffusion"><div class="r-icon">🌈</div><div class="r-name">Stable Diffusion</div><div class="r-desc">开源图像生成模型，可本地部署，社区生态丰富。</div></a></div>
+</div>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 酱肘AI &mdash; <a href="/">发现最好的 AI 工具</a> &nbsp;·&nbsp;
+  <a href="/about">关于我们</a> &nbsp;·&nbsp;
+  <a href="/contact">联系我们</a> &nbsp;·&nbsp;
+  <a href="/privacy">隐私政策</a> &nbsp;·&nbsp;
+  <a href="/terms">服务条款</a> &nbsp;·&nbsp;
+  <a href="/editorial">编辑准则</a>
+</footer>
+
+</body>
+</html>

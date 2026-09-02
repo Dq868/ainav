@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="酱肘AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="google-site-verification" content="uKC3K2ArEDrW3FQkAgbXPG5RfJnbqdBkfNCckyB49ok" />
+<meta name="google-site-verification" content="Wsq4c3zO5bibhXAw6kxO56XsaFS0xb9nKduMqGakfOY" />
+<meta name="description" content="品牌物料最怕风格漂移，本文用参考图、风格提示词和固定参数三个方法，让 AI 产出统一风格的系列图。">
+<link rel="canonical" href="https://jzzai.cn/blog/ai-style-consistency-2026" />
+<title>AI 绘画风格一致性实战：从参考图到系列海报 — 酱肘AI</title>
+<meta property="og:title" content="AI 绘画风格一致性实战：从参考图到系列海报">
+<meta property="og:description" content="品牌物料最怕风格漂移，本文用参考图、风格提示词和固定参数三个方法，让 AI 产出统一风格的系列图。">
+<meta property="og:url" content="https://jzzai.cn/blog/ai-style-consistency-2026">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Article", "headline": "AI 绘画风格一致性实战：从参考图到系列海报", "description": "品牌物料最怕风格漂移，本文用参考图、风格提示词和固定参数三个方法，让 AI 产出统一风格的系列图。", "datePublished": "2026-08-12", "dateModified": "2026-08-12", "author": {"@type": "Organization", "name": "酱肘AI"}, "publisher": {"@type": "Organization", "name": "酱肘AI", "url": "https://jzzai.cn"}, "mainEntityOfPage": "https://jzzai.cn/blog/ai-style-consistency-2026"}
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --border: #e6e8ec;
+    --text: #1a1d26;
+    --text-secondary: #6b7280;
+    --primary: #4f6cf7;
+    --primary-light: #eef1ff;
+    --primary-dark: #3b55d6;
+    --ad-label: #9ca3af;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --max-w: 800px;
+    --header-h: 64px;
+  }
+  html { font-size: 16px; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.8;
+  }
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,.85); backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    height: var(--header-h); display: flex; align-items: center;
+  }
+  header .inner {
+    max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+    width: 100%; display: flex; align-items: center; gap: 12px;
+  }
+  .back-link {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--text-secondary); font-size: .9rem; font-weight: 500;
+    text-decoration: none; padding: 6px 12px; border-radius: var(--radius-sm);
+    transition: background .15s, color .15s;
+  }
+  .back-link:hover { background: var(--primary-light); color: var(--primary); }
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 32px 24px 60px; }
+  .article-content {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 40px 44px;
+  }
+  .article-content .icon-wrap {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: var(--primary-light); display: flex; align-items: center;
+    justify-content: center; font-size: 2rem; margin-bottom: 16px;
+  }
+  .article-content h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
+  .article-meta {
+    color: var(--text-secondary); font-size: .85rem; margin-bottom: 24px;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .article-content h2 {
+    font-size: 1.2rem; font-weight: 600; margin: 32px 0 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .article-content h3 { font-size: 1.05rem; font-weight: 600; margin: 24px 0 8px; }
+  .article-content p { margin-bottom: 16px; color: var(--text); }
+  .article-content table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .9rem; }
+  .article-content th, .article-content td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+  .article-content th { background: var(--bg); font-weight: 600; }
+  .related-section { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .related-section h3 { font-size: 1rem; font-weight: 600; margin-bottom: 12px; }
+  .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+  .related-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 14px; cursor: pointer; text-decoration: none;
+    color: inherit; display: block; transition: box-shadow .2s;
+  }
+  .related-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+  .related-card .r-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 1rem; margin-bottom: 6px; }
+  .related-card .r-name { font-weight: 600; font-size: .88rem; }
+  .related-card .r-desc { font-size: .78rem; color: var(--text-secondary); }
+  footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: .82rem; }
+  footer a { color: var(--primary); text-decoration: none; }
+  @media (max-width: 640px) {
+    .article-content { padding: 24px 20px; }
+    .article-content table { font-size: .78rem; }
+    .article-content th, .article-content td { padding: 6px 8px; }
+  }
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9519141393679331" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-006K3L3V06"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-006K3L3V06');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <a class="back-link" href="/">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      返回首页
+    </a>
+  </div>
+</header>
+
+<div class="container">
+  <div id="content">
+    <div class="article-content">
+      <div class="icon-wrap">🎨</div>
+      <h1>AI 绘画风格一致性实战：从参考图到系列海报</h1>
+      <div class="article-meta">
+        <span>📅 2026-08-12</span>
+        <span>📂 🎨 图像生成</span>
+      </div>
+      
+<p>做系列海报、商品主图或品牌插画时，最大的痛点是“每张图都不像一家人”。AI 绘画工具本身没有记忆，但我们可以通过参考图、风格词和参数固定三条路径，让系列作品保持一致性。</p>
+<h2>一、用参考图锁住整体气质</h2>
+<p>Midjourney 的 <strong>--sref</strong> 风格参考、Flux 的 style reference、Ideogram 的参考图模式，都可以把一张图的色彩、质感和笔触迁移到新图。方法是先生成一张“种子图”，之后所有系列图都引用它。</p>
+<h2>二、建立统一的风格词库</h2>
+<p>把视觉元素拆成固定词：主体描述、环境、光线、色彩、质感、镜头。例如“暖金色逆光、奶油质感、柔和阴影、浅景深”，每次生成都复用同一组词，风格就不会跑偏。</p>
+<h2>三、固定关键参数</h2>
+<p>同一个模型版本、同一个画幅比例、接近的 CFG 和采样参数，输出会稳定得多。升级模型版本后也要重新测试，因为版本变化往往带来风格变化。</p>
+<h2>四、后期统一处理</h2>
+<p>即便生成时已经很接近，最后仍建议在 Figma、PS 或 Canva 中做统一的裁切、加字和调色，套用同一套品牌色板与字体，系列感就出来了。</p>
+<h2>五、批量生产的落地建议</h2>
+<ul>
+<li>先做 2-3 张种子图，团队确认方向后再批量生成。</li>
+<li>每张图记录完整提示词和参数，方便复现。</li>
+<li>电商场景优先用白底/浅灰底，后期合成更灵活。</li>
+</ul>
+<p>风格一致性的本质是“可复现”。把参考、词库和参数沉淀成流程，AI 才能从玩具变成品牌级生产力。</p>
+
+      <div class="related-section">
+  <h3>🔗 相关工具</h3>
+  <div class="related-grid"><a class="related-card" href="/tool/midjourney"><div class="r-icon">🎨</div><div class="r-name">Midjourney</div><div class="r-desc">顶尖 AI 图像生成工具，艺术风格出众。</div></a><a class="related-card" href="/tool/flux"><div class="r-icon">⚡</div><div class="r-name">Flux</div><div class="r-desc">BlackForest Labs 出品的高质量图像生成模型。</div></a><a class="related-card" href="/tool/ideogram"><div class="r-icon">🖼️</div><div class="r-name">Ideogram</div><div class="r-desc">AI 图像生成，文字渲染能力出色。</div></a><a class="related-card" href="/tool/recraft"><div class="r-icon">🎯</div><div class="r-name">Recraft</div><div class="r-desc">AI 设计工具，可生成矢量图、图标、品牌素材。</div></a></div>
+</div>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 酱肘AI &mdash; <a href="/">发现最好的 AI 工具</a> &nbsp;·&nbsp;
+  <a href="/about">关于我们</a> &nbsp;·&nbsp;
+  <a href="/contact">联系我们</a> &nbsp;·&nbsp;
+  <a href="/privacy">隐私政策</a> &nbsp;·&nbsp;
+  <a href="/terms">服务条款</a> &nbsp;·&nbsp;
+  <a href="/editorial">编辑准则</a>
+</footer>
+
+</body>
+</html>

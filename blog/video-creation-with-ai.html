@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="酱肘AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="google-site-verification" content="uKC3K2ArEDrW3FQkAgbXPG5RfJnbqdBkfNCckyB49ok" />
+<meta name="google-site-verification" content="Wsq4c3zO5bibhXAw6kxO56XsaFS0xb9nKduMqGakfOY" />
+<meta name="description" content="用 AI 完成视频制作的每一个环节：脚本、素材、配音、剪辑。一篇看懂全流程。">
+<link rel="canonical" href="https://jzzai.cn/blog/video-creation-with-ai" />
+<title>AI 视频创作全流程：从脚本到成品一个工具搞定 — 酱肘AI</title>
+<meta property="og:title" content="AI 视频创作全流程：从脚本到成品一个工具搞定">
+<meta property="og:description" content="用 AI 完成视频制作的每一个环节：脚本、素材、配音、剪辑。一篇看懂全流程。">
+<meta property="og:url" content="https://jzzai.cn/blog/video-creation-with-ai">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Article", "headline": "AI 视频创作全流程：从脚本到成品一个工具搞定", "description": "用 AI 完成视频制作的每一个环节：脚本、素材、配音、剪辑。一篇看懂全流程。", "datePublished": "2026-06-28", "dateModified": "2026-06-28", "author": {"@type": "Organization", "name": "酱肘AI"}, "publisher": {"@type": "Organization", "name": "酱肘AI", "url": "https://jzzai.cn"}, "mainEntityOfPage": "https://jzzai.cn/blog/video-creation-with-ai"}
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --border: #e6e8ec;
+    --text: #1a1d26;
+    --text-secondary: #6b7280;
+    --primary: #4f6cf7;
+    --primary-light: #eef1ff;
+    --primary-dark: #3b55d6;
+    --ad-label: #9ca3af;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --max-w: 800px;
+    --header-h: 64px;
+  }
+  html { font-size: 16px; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.8;
+  }
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,.85); backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    height: var(--header-h); display: flex; align-items: center;
+  }
+  header .inner {
+    max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+    width: 100%; display: flex; align-items: center; gap: 12px;
+  }
+  .back-link {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--text-secondary); font-size: .9rem; font-weight: 500;
+    text-decoration: none; padding: 6px 12px; border-radius: var(--radius-sm);
+    transition: background .15s, color .15s;
+  }
+  .back-link:hover { background: var(--primary-light); color: var(--primary); }
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 32px 24px 60px; }
+  .article-content {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 40px 44px;
+  }
+  .article-content .icon-wrap {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: var(--primary-light); display: flex; align-items: center;
+    justify-content: center; font-size: 2rem; margin-bottom: 16px;
+  }
+  .article-content h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
+  .article-meta {
+    color: var(--text-secondary); font-size: .85rem; margin-bottom: 24px;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .article-content h2 {
+    font-size: 1.2rem; font-weight: 600; margin: 32px 0 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .article-content h3 { font-size: 1.05rem; font-weight: 600; margin: 24px 0 8px; }
+  .article-content p { margin-bottom: 16px; color: var(--text); }
+  .article-content table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .9rem; }
+  .article-content th, .article-content td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+  .article-content th { background: var(--bg); font-weight: 600; }
+  .related-section { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .related-section h3 { font-size: 1rem; font-weight: 600; margin-bottom: 12px; }
+  .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+  .related-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 14px; cursor: pointer; text-decoration: none;
+    color: inherit; display: block; transition: box-shadow .2s;
+  }
+  .related-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+  .related-card .r-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 1rem; margin-bottom: 6px; }
+  .related-card .r-name { font-weight: 600; font-size: .88rem; }
+  .related-card .r-desc { font-size: .78rem; color: var(--text-secondary); }
+  footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: .82rem; }
+  footer a { color: var(--primary); text-decoration: none; }
+  @media (max-width: 640px) {
+    .article-content { padding: 24px 20px; }
+    .article-content table { font-size: .78rem; }
+    .article-content th, .article-content td { padding: 6px 8px; }
+  }
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9519141393679331" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-006K3L3V06"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-006K3L3V06');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <a class="back-link" href="/">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      返回首页
+    </a>
+  </div>
+</header>
+
+<div class="container">
+  <div id="content">
+    <div class="article-content">
+      <div class="icon-wrap">🎬</div>
+      <h1>AI 视频创作全流程：从脚本到成品一个工具搞定</h1>
+      <div class="article-meta">
+        <span>📅 2026-06-28</span>
+        <span>📂 🎬 视频创作</span>
+      </div>
+      
+<p>2026 年，用 AI 做视频已经不是什么新鲜事了。从脚本、配图、配音到剪辑，每个环节都有专门的 AI 工具。这篇文章带你走一遍完整的 AI 视频创作流程。</p>
+
+<h2>第一步：写脚本 — ChatGPT / Claude</h2>
+<p>不管做口播、科普还是营销视频，脚本是第一步。用 ChatGPT 或者 Claude 生成脚本大纲，只要告诉 AI 视频主题、目标受众、时长要求。比如"写一篇 3 分钟的 AI 科普视频脚本，目标受众是普通上班族"。AI 会生成完整的脚本，包括开场、正文、结尾。</p>
+
+<h2>第二步：生成素材 — Midjourney / Flux / Kling</h2>
+<p>视频需要的图片素材可以用 Midjourney 生成。需要动起来的画面可以用可灵 AI 或者 Runway 生成视频片段。Kling 支持文生视频和图生视频，生成的画面质量接近实拍。</p>
+
+<h2>第三步：数字人配音 — HeyGen</h2>
+<p>如果你不想真人出镜，HeyGen 的 AI 数字人是最佳选择。上传一段 2 分钟的真人视频训练，AI 就能生成一个外形和口型都和你一样的数字人。输入文案后自动生成口型同步的视频。多语言翻译功能也很实用，中文视频一键转换成英文。</p>
+
+<h2>第四步：视频编辑 — 剪映 / VEED</h2>
+<p>剪映内置了大量 AI 功能：智能字幕准确率 99%、AI 数字人、自动特效、曲线变速。VEED 则是在线方案，直接在浏览器里剪辑，AI 字幕支持 100+ 语言翻译。</p>
+
+<h2>第五步：音效与配乐 — Suno / Udio</h2>
+<p>用 Suno 或者 Udio 生成背景音乐。输入"轻快的科技感电子音乐，2 分钟"就能生成。还可以生成音效，适合给视频增加氛围。</p>
+
+<h2>完整工作流示例</h2>
+<p>以制作一个 3 分钟的"ChatGPT 使用教程"视频为例：</p>
+<ol>
+  <li>ChatGPT 生成脚本（5 分钟）</li>
+  <li>Kling 生成演示视频片段（10 分钟）</li>
+  <li>HeyGen 生成数字人解说（15 分钟）</li>
+  <li>剪映合成 AI 字幕 + 特效（20 分钟）</li>
+  <li>Suno 生成背景音乐（3 分钟）</li>
+</ol>
+<p>总耗时不到 1 小时，传统方式至少需要半天到一天。</p>
+
+      <div class="related-section">
+  <h3>🔗 相关工具</h3>
+  <div class="related-grid"><a class="related-card" href="/tool/runway"><div class="r-icon">🎬</div><div class="r-name">Runway Gen-3</div><div class="r-desc">专业级 AI 视频生成与编辑平台。</div></a><a class="related-card" href="/tool/kling"><div class="r-icon">🎞️</div><div class="r-name">可灵 AI</div><div class="r-desc">快手出品的视频生成模型，支持文本/图像转视频。</div></a><a class="related-card" href="/tool/heygen"><div class="r-icon">👤</div><div class="r-name">HeyGen</div><div class="r-desc">AI 数字人视频生成，支持多语言口型同步。</div></a><a class="related-card" href="/tool/veed"><div class="r-icon">✂️</div><div class="r-name">VEED.io</div><div class="r-desc">在线视频编辑平台，AI 字幕、翻译、剪辑。</div></a></div>
+</div>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 酱肘AI &mdash; <a href="/">发现最好的 AI 工具</a> &nbsp;·&nbsp;
+  <a href="/about">关于我们</a> &nbsp;·&nbsp;
+  <a href="/contact">联系我们</a> &nbsp;·&nbsp;
+  <a href="/privacy">隐私政策</a> &nbsp;·&nbsp;
+  <a href="/terms">服务条款</a> &nbsp;·&nbsp;
+  <a href="/editorial">编辑准则</a>
+</footer>
+
+</body>
+</html>

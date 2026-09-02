@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="酱肘AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="google-site-verification" content="uKC3K2ArEDrW3FQkAgbXPG5RfJnbqdBkfNCckyB49ok" />
+<meta name="google-site-verification" content="Wsq4c3zO5bibhXAw6kxO56XsaFS0xb9nKduMqGakfOY" />
+<meta name="description" content="2026 年最主流的三个 AI 编程工具，哪个更适合你的开发场景？">
+<link rel="canonical" href="https://jzzai.cn/blog/ai-code-tools-comparison" />
+<title>AI 代码助手怎么选？Cursor / Copilot / Windsurf 横向对比 — 酱肘AI</title>
+<meta property="og:title" content="AI 代码助手怎么选？Cursor / Copilot / Windsurf 横向对比">
+<meta property="og:description" content="2026 年最主流的三个 AI 编程工具，哪个更适合你的开发场景？">
+<meta property="og:url" content="https://jzzai.cn/blog/ai-code-tools-comparison">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Article", "headline": "AI 代码助手怎么选？Cursor / Copilot / Windsurf 横向对比", "description": "2026 年最主流的三个 AI 编程工具，哪个更适合你的开发场景？", "datePublished": "2026-06-07", "dateModified": "2026-06-07", "author": {"@type": "Organization", "name": "酱肘AI"}, "publisher": {"@type": "Organization", "name": "酱肘AI", "url": "https://jzzai.cn"}, "mainEntityOfPage": "https://jzzai.cn/blog/ai-code-tools-comparison"}
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --border: #e6e8ec;
+    --text: #1a1d26;
+    --text-secondary: #6b7280;
+    --primary: #4f6cf7;
+    --primary-light: #eef1ff;
+    --primary-dark: #3b55d6;
+    --ad-label: #9ca3af;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --max-w: 800px;
+    --header-h: 64px;
+  }
+  html { font-size: 16px; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.8;
+  }
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,.85); backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    height: var(--header-h); display: flex; align-items: center;
+  }
+  header .inner {
+    max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+    width: 100%; display: flex; align-items: center; gap: 12px;
+  }
+  .back-link {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--text-secondary); font-size: .9rem; font-weight: 500;
+    text-decoration: none; padding: 6px 12px; border-radius: var(--radius-sm);
+    transition: background .15s, color .15s;
+  }
+  .back-link:hover { background: var(--primary-light); color: var(--primary); }
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 32px 24px 60px; }
+  .article-content {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 40px 44px;
+  }
+  .article-content .icon-wrap {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: var(--primary-light); display: flex; align-items: center;
+    justify-content: center; font-size: 2rem; margin-bottom: 16px;
+  }
+  .article-content h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
+  .article-meta {
+    color: var(--text-secondary); font-size: .85rem; margin-bottom: 24px;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .article-content h2 {
+    font-size: 1.2rem; font-weight: 600; margin: 32px 0 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .article-content h3 { font-size: 1.05rem; font-weight: 600; margin: 24px 0 8px; }
+  .article-content p { margin-bottom: 16px; color: var(--text); }
+  .article-content table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .9rem; }
+  .article-content th, .article-content td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+  .article-content th { background: var(--bg); font-weight: 600; }
+  .related-section { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .related-section h3 { font-size: 1rem; font-weight: 600; margin-bottom: 12px; }
+  .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+  .related-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 14px; cursor: pointer; text-decoration: none;
+    color: inherit; display: block; transition: box-shadow .2s;
+  }
+  .related-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+  .related-card .r-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 1rem; margin-bottom: 6px; }
+  .related-card .r-name { font-weight: 600; font-size: .88rem; }
+  .related-card .r-desc { font-size: .78rem; color: var(--text-secondary); }
+  footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: .82rem; }
+  footer a { color: var(--primary); text-decoration: none; }
+  @media (max-width: 640px) {
+    .article-content { padding: 24px 20px; }
+    .article-content table { font-size: .78rem; }
+    .article-content th, .article-content td { padding: 6px 8px; }
+  }
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9519141393679331" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-006K3L3V06"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-006K3L3V06');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <a class="back-link" href="/">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      返回首页
+    </a>
+  </div>
+</header>
+
+<div class="container">
+  <div id="content">
+    <div class="article-content">
+      <div class="icon-wrap">💻</div>
+      <h1>AI 代码助手怎么选？Cursor / Copilot / Windsurf 横向对比</h1>
+      <div class="article-meta">
+        <span>📅 2026-06-07</span>
+        <span>📂 💻 代码开发</span>
+      </div>
+      
+<p>AI 代码助手已经成了程序员的新标配。Cursor、GitHub Copilot、Windsurf 是目前最受欢迎的三个选择。</p>
+
+<h2>核心对比</h2>
+<table>
+  <tr><th>维度</th><th>Cursor</th><th>GitHub Copilot</th><th>Windsurf</th></tr>
+  <tr><td>使用方式</td><td>独立 IDE</td><td>VS Code 插件</td><td>独立 IDE</td></tr>
+  <tr><td>代码补全</td><td>✅</td><td>✅</td><td>✅</td></tr>
+  <tr><td>多文件编辑</td><td>✅ Composer</td><td>✅ Copilot Chat</td><td>✅ Flow</td></tr>
+  <tr><td>全项目理解</td><td>✅ 优秀</td><td>✅ 良好</td><td>✅ 优秀</td></tr>
+  <tr><td>AI 模型选择</td><td>多模型（GPT-4o/Claude）</td><td>OpenAI 专属</td><td>多模型</td></tr>
+  <tr><td>免费版</td><td>✅ 有限</td><td>✅ 有限</td><td>✅ 有限</td></tr>
+  <tr><td>付费价格</td><td>$20/月</td><td>$10/月</td><td>$15/月</td></tr>
+</table>
+
+<h2>怎么选？</h2>
+
+<p><strong>Cursor</strong> 是目前综合体验最好的。Composer 能一次改多个文件，理解项目上下文的能力很强。如果你愿意换个编辑器，Cursor 是最推荐的选择。</p>
+
+<p><strong>GitHub Copilot</strong> 最大的优势是轻量——安装个插件就行，不用切换 IDE。如果你习惯了 VS Code 的工作流，不想换编辑器，Copilot 是最方便的选择。而且价格最便宜，$10/月。</p>
+
+<p><strong>Windsurf</strong> 的 Flow 模式可以实现半自治的"代理"体验，你告诉他做什么，他自己改代码、跑命令。对新项目起步很有帮助。</p>
+
+<h2>性价比建议</h2>
+<p>从便宜到贵全用一遍：先用 Copilot（$10/月），体验不满意换 Windsurf（$15/月），最后上 Cursor（$20/月）。大多数场景 Cursor 值得多花那 $10。</p>
+
+      <div class="related-section">
+  <h3>🔗 相关工具</h3>
+  <div class="related-grid"><a class="related-card" href="/tool/cursor"><div class="r-icon">📟</div><div class="r-name">Cursor</div><div class="r-desc">AI 优先的代码编辑器，内置多模型对话能力。</div></a><a class="related-card" href="/tool/copilot"><div class="r-icon">🧑‍💻</div><div class="r-name">GitHub Copilot</div><div class="r-desc">AI 代码补全助手，深度集成 VS Code 等 IDE。</div></a><a class="related-card" href="/tool/windsurf"><div class="r-icon">🏄</div><div class="r-name">Windsurf</div><div class="r-desc">Codeium 出品的 AI 驱动 IDE，支持 Flow 模式。</div></a></div>
+</div>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 酱肘AI &mdash; <a href="/">发现最好的 AI 工具</a> &nbsp;·&nbsp;
+  <a href="/about">关于我们</a> &nbsp;·&nbsp;
+  <a href="/contact">联系我们</a> &nbsp;·&nbsp;
+  <a href="/privacy">隐私政策</a> &nbsp;·&nbsp;
+  <a href="/terms">服务条款</a> &nbsp;·&nbsp;
+  <a href="/editorial">编辑准则</a>
+</footer>
+
+</body>
+</html>

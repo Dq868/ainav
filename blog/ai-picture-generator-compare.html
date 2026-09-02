@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="酱肘AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="google-site-verification" content="uKC3K2ArEDrW3FQkAgbXPG5RfJnbqdBkfNCckyB49ok" />
+<meta name="google-site-verification" content="Wsq4c3zO5bibhXAw6kxO56XsaFS0xb9nKduMqGakfOY" />
+<meta name="description" content="四大主流 AI 绘图工具横向对比，帮你选出最适合你的那一款。">
+<link rel="canonical" href="https://jzzai.cn/blog/ai-picture-generator-compare" />
+<title>Midjourney / DALL·E / Flux / Stable Diffusion 绘图工具选哪个 — 酱肘AI</title>
+<meta property="og:title" content="Midjourney / DALL·E / Flux / Stable Diffusion 绘图工具选哪个">
+<meta property="og:description" content="四大主流 AI 绘图工具横向对比，帮你选出最适合你的那一款。">
+<meta property="og:url" content="https://jzzai.cn/blog/ai-picture-generator-compare">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Article", "headline": "Midjourney / DALL·E / Flux / Stable Diffusion 绘图工具选哪个", "description": "四大主流 AI 绘图工具横向对比，帮你选出最适合你的那一款。", "datePublished": "2026-07-04", "dateModified": "2026-07-04", "author": {"@type": "Organization", "name": "酱肘AI"}, "publisher": {"@type": "Organization", "name": "酱肘AI", "url": "https://jzzai.cn"}, "mainEntityOfPage": "https://jzzai.cn/blog/ai-picture-generator-compare"}
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --border: #e6e8ec;
+    --text: #1a1d26;
+    --text-secondary: #6b7280;
+    --primary: #4f6cf7;
+    --primary-light: #eef1ff;
+    --primary-dark: #3b55d6;
+    --ad-label: #9ca3af;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --max-w: 800px;
+    --header-h: 64px;
+  }
+  html { font-size: 16px; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.8;
+  }
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,.85); backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    height: var(--header-h); display: flex; align-items: center;
+  }
+  header .inner {
+    max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+    width: 100%; display: flex; align-items: center; gap: 12px;
+  }
+  .back-link {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--text-secondary); font-size: .9rem; font-weight: 500;
+    text-decoration: none; padding: 6px 12px; border-radius: var(--radius-sm);
+    transition: background .15s, color .15s;
+  }
+  .back-link:hover { background: var(--primary-light); color: var(--primary); }
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 32px 24px 60px; }
+  .article-content {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 40px 44px;
+  }
+  .article-content .icon-wrap {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: var(--primary-light); display: flex; align-items: center;
+    justify-content: center; font-size: 2rem; margin-bottom: 16px;
+  }
+  .article-content h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
+  .article-meta {
+    color: var(--text-secondary); font-size: .85rem; margin-bottom: 24px;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .article-content h2 {
+    font-size: 1.2rem; font-weight: 600; margin: 32px 0 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .article-content h3 { font-size: 1.05rem; font-weight: 600; margin: 24px 0 8px; }
+  .article-content p { margin-bottom: 16px; color: var(--text); }
+  .article-content table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .9rem; }
+  .article-content th, .article-content td { padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
+  .article-content th { background: var(--bg); font-weight: 600; }
+  .related-section { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .related-section h3 { font-size: 1rem; font-weight: 600; margin-bottom: 12px; }
+  .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+  .related-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 14px; cursor: pointer; text-decoration: none;
+    color: inherit; display: block; transition: box-shadow .2s;
+  }
+  .related-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+  .related-card .r-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 1rem; margin-bottom: 6px; }
+  .related-card .r-name { font-weight: 600; font-size: .88rem; }
+  .related-card .r-desc { font-size: .78rem; color: var(--text-secondary); }
+  footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: .82rem; }
+  footer a { color: var(--primary); text-decoration: none; }
+  @media (max-width: 640px) {
+    .article-content { padding: 24px 20px; }
+    .article-content table { font-size: .78rem; }
+    .article-content th, .article-content td { padding: 6px 8px; }
+  }
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9519141393679331" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-006K3L3V06"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-006K3L3V06');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <a class="back-link" href="/">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      返回首页
+    </a>
+  </div>
+</header>
+
+<div class="container">
+  <div id="content">
+    <div class="article-content">
+      <div class="icon-wrap">🖼️</div>
+      <h1>Midjourney / DALL·E / Flux / Stable Diffusion 绘图工具选哪个</h1>
+      <div class="article-meta">
+        <span>📅 2026-07-04</span>
+        <span>📂 🎨 图像生成</span>
+      </div>
+      
+<p>AI 绘图工具的选择越来越多了。Midjourney、DALL·E、Flux、Stable Diffusion 四大主流工具各有优劣，这篇文章帮你理清选择思路。</p>
+
+<h2>核心维度对比</h2>
+<table>
+  <tr><th>维度</th><th>Midjourney</th><th>DALL·E</th><th>Flux</th><th>Stable Diffusion</th></tr>
+  <tr><td>画质</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐（看模型）</td></tr>
+  <tr><td>易用性</td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐</td></tr>
+  <tr><td>可控性</td><td>⭐⭐⭐</td><td>⭐⭐⭐</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td></tr>
+  <tr><td>价格</td><td>$10-60/月</td><td>按用量</td><td>免费/开源</td><td>免费/开源</td></tr>
+  <tr><td>文字渲染</td><td>一般</td><td>好</td><td>好</td><td>一般</td></tr>
+  <tr><td>中国风</td><td>一般</td><td>一般</td><td>好</td><td>优秀</td></tr>
+</table>
+
+<h2>Midjourney — 艺术感最强</h2>
+<p>Midjourney 的画质依然是最好的，特别适合做艺术感强的图片。光影、构图、色彩表现力很强。缺点是控制力弱，难以精确指定某个物体的位置或形状。在 Discord 中使用，界面不太友好。</p>
+
+<h2>DALL·E 3 — 最听话</h2>
+<p>DALL·E 3 最擅长的是"理解提示词"。你描述什么它就画什么，很少偏离。特别适合做写实的插图、产品图。文字渲染能力比 Midjourney 强。ChatGPT Plus 用户直接内置。</p>
+
+<h2>Flux — 开源的挑战者</h2>
+<p>Black Forest Labs 出品的 Flux 在 2025 年底开源后迅速崛起。画质接近 Midjourney，而且是开源免费的。可以在本地运行，也可以在线使用。Replicate、Hugging Face 上都可在线体验。</p>
+
+<h2>Stable Diffusion — 自由度最高</h2>
+<p>Stable Diffusion 生态最丰富，社区有上万个微调模型。配合 ComfyUI 或 Automatic1111 可以做出 Midjourney 无法实现的效果。如果你愿意花时间学习，SD 的上限最高。</p>
+
+<h2>选哪个？</h2>
+<p>新手推荐 <strong>DALL·E</strong>（最简单）或 <strong>Midjourney</strong>（画质最好）。技术用户推荐 <strong>Flux</strong>（开源免费）。进阶用户推荐 <strong>Stable Diffusion</strong>（自由度最高）。</p>
+
+      <div class="related-section">
+  <h3>🔗 相关工具</h3>
+  <div class="related-grid"><a class="related-card" href="/tool/midjourney"><div class="r-icon">🎨</div><div class="r-name">Midjourney</div><div class="r-desc">顶尖 AI 图像生成工具，艺术风格出众。</div></a><a class="related-card" href="/tool/dalle"><div class="r-icon">🖼️</div><div class="r-name">DALL·E 3</div><div class="r-desc">OpenAI 文字生成图像模型，集成于 ChatGPT。</div></a><a class="related-card" href="/tool/flux"><div class="r-icon">⚡</div><div class="r-name">Flux</div><div class="r-desc">BlackForest Labs 出品的高质量图像生成模型。</div></a><a class="related-card" href="/tool/stable-diffusion"><div class="r-icon">🌈</div><div class="r-name">Stable Diffusion</div><div class="r-desc">开源图像生成模型，可本地部署，社区生态丰富。</div></a></div>
+</div>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 酱肘AI &mdash; <a href="/">发现最好的 AI 工具</a> &nbsp;·&nbsp;
+  <a href="/about">关于我们</a> &nbsp;·&nbsp;
+  <a href="/contact">联系我们</a> &nbsp;·&nbsp;
+  <a href="/privacy">隐私政策</a> &nbsp;·&nbsp;
+  <a href="/terms">服务条款</a> &nbsp;·&nbsp;
+  <a href="/editorial">编辑准则</a>
+</footer>
+
+</body>
+</html>
