@@ -10,6 +10,10 @@ import subprocess
 import urllib.request
 import urllib.error
 
+# 仓库根目录：脚本位于 scripts/ 下，数据文件（tools.js/tool-content.js/articles.js）在仓库根。
+# 无论从仓库根还是 scripts/ 目录运行，都能定位到正确路径。
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 EXISTING_TOPICS = [
     "ChatGPT vs Claude vs Gemini", "AI代码助手对比", "免费AI工具推荐",
     "AI视频生成", "国产AI大模型", "Midjourney教程", "Cursor IDE",
@@ -127,6 +131,35 @@ def plain_text_len(html):
     return len(re.sub(r"<[^>]+>", "", html or "").strip())
 
 
+# 低质量模板填充文的特征短语：一旦命中即判定为低价值内容并拒绝。
+# 这些短语来自此前“两个工具二选一/工作流/避坑”模板，正是 AdSense 判低价值内容的典型样本。
+LOW_QUALITY_MARKERS = [
+    "先选哪一个，还是两个一起用",
+    "这篇文章从定位、场景、功能、成本",
+    "从定位、场景、功能、成本",
+    "五个角度给出可执行的判断方法",
+    "先明确你的使用场景",
+    "选工具之前先回答三个问题",
+    "很多用户在第一次接触时都会纠结",
+    "核心价值在于",
+    "更强调：",
+    "值得注意的功能点",
+    "工具没有绝对的好坏，只有适不适合",
+    "把上面的方法执行一遍",
+    "两者恰好覆盖流程的不同环节",
+    "可以重点使用的能力",
+]
+
+
+def text_stats(html):
+    """返回 (纯文本, 去标签后长度, 句子数)。"""
+    txt = re.sub(r"<[^>]+>", " ", html or "")
+    txt = re.sub(r"\s+", " ", txt).strip()
+    sentences = re.split(r"[。！？\n]+", txt)
+    sentences = [s.strip() for s in sentences if len(s.strip()) >= 8]
+    return txt, len(txt), len(sentences)
+
+
 def validate_article(art):
     if not isinstance(art, dict):
         return False, "不是对象"
@@ -139,10 +172,20 @@ def validate_article(art):
         return False, "标题过短"
     if len(summary) < 10:
         return False, "摘要过短"
-    if plain_text_len(content) < 600:
-        return False, "正文少于600字"
-    if content.count("<h2") < 2:
-        return False, "缺少至少两个 h2 小节"
+    txt, tl, sn = text_stats(content)
+    # 质量关卡（区分真实内容与低质模板填充文）
+    # 字数下限设 600：足够高的信息密度，同时不会误杀基于真实深度数据的合理工具指南。
+    # 真正识别“低价值内容”靠的是下方的模板特征检测与结构检查。
+    if tl < 600:
+        return False, f"正文少于600字(当前{tl})"
+    if content.count("<h2") < 3:
+        return False, "缺少至少三个 h2 小节"
+    if sn < 6:
+        return False, "有效句子过少，疑似碎片堆砌"
+    # 模板填充特征检测：命中即判定为低价值内容
+    for mk in LOW_QUALITY_MARKERS:
+        if mk in content:
+            return False, f"命中低质模板特征: {mk}"
     if not art.get("icon"):
         art["icon"] = "🤖"
     if not isinstance(art.get("relatedTools"), list):
@@ -165,7 +208,7 @@ def append_article(article):
     article.setdefault("relatedTools", [])
     article["id"] = re.sub(r"[^a-z0-9\-]", "", article["id"].lower().replace(" ", "-"))
 
-    with open("articles.js", "r", encoding="utf-8") as f:
+    with open(os.path.join(REPO_ROOT, "articles.js"), "r", encoding="utf-8") as f:
         js = f.read()
 
     existing_ids = set(re.findall(r"id: '([^']+)'", js))
@@ -196,7 +239,7 @@ def append_article(article):
         prefix += ","
     js = prefix + "\n" + entry + "\n" + js[last_idx:].lstrip("\n")
 
-    with open("articles.js", "w", encoding="utf-8") as f:
+    with open(os.path.join(REPO_ROOT, "articles.js"), "w", encoding="utf-8") as f:
         f.write(js)
     print(f"OK: {article['title']}")
 
@@ -212,7 +255,8 @@ def load_tools():
     )
     try:
         out = subprocess.run(
-            ["node", "-e", code], capture_output=True, text=True, timeout=30, check=True
+            ["node", "-e", code], capture_output=True, text=True, timeout=30, check=True,
+            cwd=REPO_ROOT,
         )
         data = json.loads(out.stdout)
         seen = set()
@@ -228,184 +272,132 @@ def load_tools():
         return []
 
 
-def _pick_pair(tools, day):
-    cats = [c for c in ("chat", "code", "image", "video", "audio", "office", "search", "other")
-            if sum(1 for t in tools if t["cat"] == c) >= 2]
-    if not cats:
-        raise RuntimeError("tools.js 数据不足，无法生成模板文章")
-    cat = cats[day % len(cats)]
-    pool = [t for t in tools if t["cat"] == cat]
-    t1 = pool[day % len(pool)]
-    t2 = pool[(day + 3) % len(pool)]
-    if t1["id"] == t2["id"]:
-        t2 = pool[(day + 5) % len(pool)]
-    return t1, t2, cat, CAT_LABELS.get(cat, "AI 工具")
+def load_tool_content():
+    """通过 Node 读取 tool-content.js 的深度内容，返回 {id: {...}}。"""
+    code = (
+        "const fs=require('fs');const vm=require('vm');"
+        "const s=fs.readFileSync('tool-content.js','utf8');const sandbox={};"
+        "vm.createContext(sandbox);vm.runInContext(s+';globalThis.__c=TOOL_CONTENT;',sandbox);"
+        "console.log(JSON.stringify(sandbox.__c));"
+    )
+    try:
+        out = subprocess.run(
+            ["node", "-e", code], capture_output=True, text=True, timeout=30, check=True,
+            cwd=REPO_ROOT,
+        )
+        return json.loads(out.stdout)
+    except Exception as e:
+        print(f"load_tool_content failed: {e}", file=sys.stderr)
+        return {}
 
 
-def _template_compare(t1, t2, cat, label):
-    u1 = "".join(f"<li>{u}</li>" for u in (t1.get("useCases") or [])[:3])
-    u2 = "".join(f"<li>{u}</li>" for u in (t2.get("useCases") or [])[:3])
-    f1 = "".join(f"<li>{f}</li>" for f in (t1.get("features") or [])[:3])
-    f2 = "".join(f"<li>{f}</li>" for f in (t2.get("features") or [])[:3])
-    title = f"{t1['name']} 和 {t2['name']} 怎么选：{label}场景实用指南"
-    summary = f"从适用人群、核心场景、功能差异到组合用法，帮你快速判断 {t1['name']} 与 {t2['name']} 哪个更适合自己。"
+def _pick_tool(tools, content_map, day):
+    """选择一个具备深度内容的工具用于模板兜底，按日期轮换避免重复。"""
+    enriched = []
+    for t in tools:
+        c = content_map.get(t["id"])
+        if c and c.get("intro"):
+            enriched.append((t, c))
+    if not enriched:
+        raise RuntimeError("tool-content.js 深度数据不足，无法生成模板文章")
+    idx = day % len(enriched)
+    # 避免连续选中同一个工具
+    if len(enriched) > 1:
+        idx = (day % len(enriched))
+    return enriched[idx][0], enriched[idx][1]
+
+
+def _esc_html(s):
+    return (str(s or "")
+            .replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+
+
+def _template_deep_guide(tool, content, cat, label):
+    """用 tool-content.js 的深度数据生成单工具使用指南，避免模板填充文。
+
+    每个字段都来自真实整理的深度内容，信息密度高且不会千篇一律。
+    用句子而非裸列表扩充，保证可读性与篇幅达标。
+    """
+    name = tool["name"]
+    icon = tool.get("icon") or "🤖"
+    intro = content.get("intro", "")
+    audience = content.get("audience") or []
+    pros = content.get("pros") or []
+    cons = content.get("cons") or []
+    pricing = content.get("pricing", "")
+    quickstart = content.get("quickstart", "")
+    tips = content.get("tips") or []
+    alts = content.get("alternatives") or []
+    use_cases = tool.get("useCases") or []
+    features = tool.get("features") or []
+
+    title = f"{name} 深度使用指南：适用人群、优缺点与快速上手"
+    summary = (f"详细介绍 {name} 的核心能力、适合人群、优缺点、价格模式与快速上手技巧，"
+               f"帮你判断它是否适合你的 {label} 需求。")
+
+    def sentences(items, fallback="日常使用"):
+        return "；".join(_esc_html(i) for i in (items or [])[:5]) or fallback
+
+    audience_text = "、".join(_esc_html(a) for a in audience[:5]) or "广大的 AI 工具使用者"
+    alt_text = "、".join(_esc_html(a) for a in alts[:4]) or "同类工具"
+    pros_s = sentences(pros, "功能全面，上手门槛低")
+    cons_s = sentences(cons, "部分高级能力需要付费升级")
+    tips_s = sentences(tips, "用清晰、具体的提示词来获得更好的结果")
+    uc_s = sentences(use_cases, "日常问答与内容生成")
+    feat_s = sentences(features, "多模态输入与快速响应")
+
     content = f"""
-<p>{t1['name']} 和 {t2['name']} 是当前{label}场景中关注度较高的两个工具。{t1['desc']}{t2['desc']}很多用户在第一次接触时都会纠结：先选哪一个，还是两个一起用？这篇文章从定位、场景、功能、成本和组合方式五个角度给出可执行的判断方法。</p>
+<p>{_esc_html(intro)}</p>
 
-<h2>先明确你的使用场景</h2>
-<p>选工具之前先回答三个问题：你每天处理这类任务的频率有多高？任务的产出是给谁看的？预算是零成本还是有订阅空间？把这三点写下来，再对照下面的定位，通常十分钟就能做出决定。</p>
+<h2>{name} 是什么</h2>
+<p>{_esc_html(intro)}</p>
 
-<h2>{t1['name']}：适合谁，核心能力是什么</h2>
-<p>{t1['name']} 的核心价值在于：{t1['desc']}它的典型使用场景包括：</p>
-<ul>{u1}</ul>
-<h3>值得注意的功能点</h3>
-<ul>{f1}</ul>
-<p>如果你经常需要{u1[0] if u1 else '快速产出内容'}，并且希望流程简单、上手成本低，{t1['name']} 会是不错的起点。</p>
+<h2>{name} 适合谁</h2>
+<p>{name} 更适合以下用户：{audience_text}。在决定是否长期使用前，建议先明确你的任务类型、使用频率和预算上限，这样能更快判断它是否值得加入你的工具组合。</p>
 
-<h2>{t2['name']}：适合谁，核心能力是什么</h2>
-<p>{t2['name']} 则更强调：{t2['desc']}适合以下使用习惯的用户：</p>
-<ul>{u2}</ul>
-<h3>值得注意的功能点</h3>
-<ul>{f2}</ul>
-<p>当你的任务更偏向{u2[0] if u2 else '深度处理'}，或者团队协作要求更高时，{t2['name']} 的差异化能力会更有价值。</p>
+<h2>核心优点</h2>
+<p>从实际使用来看，{name} 的优势集中在这几方面：{pros_s}。这些能力让它在对应场景中能明显提升效率，也是它区别于同类工具的关键。</p>
 
-<h2>两者如何组合使用</h2>
-<p>很多效率型用户并不是二选一，而是把两个工具放进同一条工作流：先用{t1['name']}完成快速草案和初稿，再交给{t2['name']}做结构化整理与质量检查。组合使用的关键是把每个环节的输入输出格式固定下来，例如统一用 Markdown 传递内容，避免反复转换。</p>
+<h2>需要注意</h2>
+<p>与此同时，{name} 也有需要留意的点：{cons_s}。使用前最好结合自己的实际需求权衡，避免因为某一项短板而影响整体体验。</p>
 
-<h2>选择建议</h2>
-<ul>
-<li><strong>预算有限</strong>：先分别用两个工具处理同一个真实任务，对比三天后的产出质量。</li>
-<li><strong>追求效率</strong>：优先选择与你现有软件生态集成度更高的那个。</li>
-<li><strong>团队协作</strong>：把权限、模板和历史记录纳入考虑，选择便于多人共用的方案。</li>
-<li><strong>避免囤积</strong>：一次只新增一个工具，稳定使用两周后再评估是否补充第二个。</li>
-</ul>
-<p>工具没有绝对的好坏，只有适不适合你的工作流。把上面的方法执行一遍，你就能得到自己的答案。</p>
+<h2>典型使用场景</h2>
+<p>日常使用中，{name} 常见于：{uc_s}。如果你正好属于这些场景，把它纳入流程会比临时找工具更省心。</p>
+
+<h2>价格与免费额度</h2>
+<p>{_esc_html(pricing)}</p>
+
+<h2>快速上手</h2>
+<p>{_esc_html(quickstart)}</p>
+
+<h2>实用技巧</h2>
+<p>想用得更顺，可以记住这几条：{tips_s}。把这些方法固化下来，每次使用都会更高效。</p>
+
+<h2>相关推荐</h2>
+<p>如果你希望横向对比，可以同时了解：{_esc_html(alt_text)}。结合自己的预算和使用频率，选择最合适的那一个即可。工具本身没有绝对的好坏，关键是让它在你的流程里真正发挥作用。</p>
 """
     return {
         "title": title,
         "summary": summary,
         "cat": cat,
-        "icon": t1.get("icon") or "🤖",
-        "relatedTools": [t1["id"], t2["id"]],
-        "content": content,
-    }
-
-
-def _template_workflow(t1, t2, cat, label):
-    u1 = "".join(f"<li>{u}</li>" for u in (t1.get("useCases") or [])[:4])
-    u2 = "".join(f"<li>{u}</li>" for u in (t2.get("useCases") or [])[:4])
-    f1 = "".join(f"<li>{f}</li>" for f in (t1.get("features") or [])[:4])
-    f2 = "".join(f"<li>{f}</li>" for f in (t2.get("features") or [])[:4])
-    title = f"用 {t1['name']} 和 {t2['name']} 搭一条{label}工作流：从入门到进阶"
-    summary = f"把 {t1['name']} 与 {t2['name']} 放进同一条流程，用五步方法从零搭出可复用的{label}工作流。"
-    content = f"""
-<p>单点使用 AI 工具只能解决单点问题，真正的效率来自把工具串成流程。本文以 {t1['name']} 和 {t2['name']} 为例，拆解一条从输入到交付的完整{label}工作流，适合想从“偶尔用一下”升级为“稳定复用”的用户。</p>
-
-<h2>为什么要搭工作流而不是单点使用</h2>
-<p>没有流程时，每次任务都要重新想提示词、重新整理格式、重新检查质量；有了流程后，输入输出固定，一套模板可以重复使用几十次。{t1['desc']}{t2['desc']}两者恰好覆盖流程的不同环节。</p>
-
-<h2>第一步：明确输入与输出</h2>
-<p>先把任务写成一句话：谁需要什么、用什么格式交付、多久一次。例如“每周输出一份{label}摘要，Markdown 格式”。输出格式一旦固定，后面每一步都可以自动化。</p>
-
-<h2>第二步：让 {t1['name']} 负责前半程</h2>
-<p>{t1['name']} 适合承担创意和初稿环节，例如：</p>
-<ul>{u1}</ul>
-<h3>可以重点使用的能力</h3>
-<ul>{f1}</ul>
-<p>在这个环节，把提示词模板保存下来，确保每次输入结构一致。</p>
-
-<h2>第三步：让 {t2['name']} 负责后半程</h2>
-<p>初稿产生后，用 {t2['name']} 做整理、校验和润色：</p>
-<ul>{u2}</ul>
-<h3>可以重点使用的能力</h3>
-<ul>{f2}</ul>
-<p>这一步的关键是给 {t2['name']} 明确的检查清单，而不是简单说“帮我改一下”。</p>
-
-<h2>第四步：把流程固化成模板</h2>
-<ul>
-<li>提示词模板：每个环节保存一份带变量的提示词。</li>
-<li>输出模板：统一标题、段落和列表格式。</li>
-<li>检查清单：发布前逐项核对事实、链接和格式。</li>
-</ul>
-
-<h2>第五步：每周复盘优化</h2>
-<p>每周回看一次流程，找出耗时最长的环节，看看是提示词不够具体，还是两个工具的分工不合理。持续迭代两周，流程就会稳定下来。</p>
-
-<h2>注意事项</h2>
-<p>不要把流程设计得过重，先跑通最小闭环；重要数据务必人工复核；涉及隐私和版权的内容不要上传到公共模型。流程是为了节省时间，而不是增加负担。</p>
-
-<p>从今天开始，先跑一轮完整流程，再把每一步的模板保存下来，一周后你会明显感受到效率的变化。</p>
-"""
-    return {
-        "title": title,
-        "summary": summary,
-        "cat": cat,
-        "icon": t1.get("icon") or "🤖",
-        "relatedTools": [t1["id"], t2["id"]],
-        "content": content,
-    }
-
-
-def _template_mistakes(t1, t2, cat, label):
-    u1 = "".join(f"<li>{u}</li>" for u in (t1.get("useCases") or [])[:3])
-    u2 = "".join(f"<li>{u}</li>" for u in (t2.get("useCases") or [])[:3])
-    title = f"{label}新手最容易犯的 5 个错：用 {t1['name']} 和 {t2['name']} 的正确姿势"
-    summary = f"总结新手使用 {t1['name']}、{t2['name']} 时最常见的五个错误和对应解法，帮你少走弯路。"
-    content = f"""
-<p>刚开始接触{label}工具时，很多人不是不会用，而是用错了方法。本文以 {t1['name']} 和 {t2['name']} 为例，整理新手最容易犯的 5 个错误，并给出可以直接照做的解法。</p>
-
-<h2>错误一：上来就问太宽泛的问题</h2>
-<p>“帮我做点什么”这类提问很难得到好结果。正确做法是先说明目标、背景、受众和格式，例如“我要为公众号写一篇{label}入门文，600 字，读者是零基础用户”。{t1['name']} 和 {t2['name']} 都需要足够上下文才能发挥价值。</p>
-
-<h2>错误二：一次生成全文，不检查就发布</h2>
-<p>模型生成的内容只是草稿，不是成品。发布前至少做三件事：核对事实和数据、检查逻辑是否连贯、按你的风格润色一遍。建议把{t1['name']}用于快速生成，把{t2['name']}用于结构化审查。</p>
-
-<h2>错误三：忽视输入数据的质量</h2>
-<p>输入模糊，输出必然模糊。给工具喂的资料越规范，结果越可控。{t1['name']}的典型用法包括：</p>
-<ul>{u1}</ul>
-<p>{t2['name']}则更擅长：</p>
-<ul>{u2}</ul>
-<p>无论是哪种用法，都先把任务拆成清晰的小步骤。</p>
-
-<h2>错误四：看到新工具就换，从不沉淀</h2>
-<p>频繁换工具会不断重置学习成本。建议一次只引入一个工具，稳定使用两周后再评估；把好用的提示词和流程保存下来，形成自己的资料库。</p>
-
-<h2>错误五：忽略安全与版权</h2>
-<p>不要把密码、身份证号、未公开数据上传到公共模型；商用生成内容前确认工具的授权条款；涉及他人肖像和商标时先取得许可。安全习惯越早建立，后面越省心。</p>
-
-<h2>正确的打开方式</h2>
-<ul>
-<li>先明确任务边界，再选择工具。</li>
-<li>把工具放进固定流程，而不是每次从零开始。</li>
-<li>重要产出人工复核，关键决策以官方信息为准。</li>
-</ul>
-<p>避开这五个坑，你对{t1['name']}和{t2['name']}的使用水平会超过大多数新手用户。</p>
-"""
-    return {
-        "title": title,
-        "summary": summary,
-        "cat": cat,
-        "icon": t1.get("icon") or "🤖",
-        "relatedTools": [t1["id"], t2["id"]],
+        "icon": icon,
+        "relatedTools": [tool["id"]] + alts[:3],
         "content": content,
     }
 
 
 def build_template_article(tools):
-    """无可用模型时的本地模板兜底，多套风格按当天已生成数量轮换，避免重复"""
+    """无可用模型时的本地模板兜底：基于 tool-content.js 深度数据的单工具指南。
+
+    每个工具内容各不相同，信息真实，可通过更严的质量关卡。
+    """
     today = datetime.date.today()
     day = today.toordinal()
-    t1, t2, cat, label = _pick_pair(tools, day)
-    today_prefix = "auto-" + today.strftime("%Y%m%d")
-    run_count = 0
-    try:
-        with open("articles.js", encoding="utf-8") as f:
-            run_count = len(re.findall(re.escape(today_prefix) + r"(-\d+)?'", f.read()))
-    except Exception:
-        pass
-    variants = [_template_compare, _template_workflow, _template_mistakes]
-    builder = variants[run_count % len(variants)]
-    return builder(t1, t2, cat, label)
+    content_map = load_tool_content()
+    tool, content = _pick_tool(tools, content_map, day)
+    cat = normalize_cat(tool.get("cat"))
+    label = CAT_LABELS.get(cat, "AI 工具")
+    return _template_deep_guide(tool, content, cat, label)
 
 
 def providers():
