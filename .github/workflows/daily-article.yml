@@ -27,6 +27,9 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: python3 scripts/generate_article.py
       
+      - name: Generate article static pages
+        run: python3 scripts/generate_article_pages.py
+      
       - name: Commit & Push
         env:
           GH_TOKEN: ${{ secrets.GH_PAT || github.token }}
@@ -34,7 +37,7 @@ jobs:
           node --check articles.js
           git config user.name "ainav-bot"
           git config user.email "bot@ainav.local"
-          git add articles.js
+          git add articles.js blog/
           git diff --cached --quiet || (
             git commit -m "auto: $(date +%Y-%m-%d)"
             git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
