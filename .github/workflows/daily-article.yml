@@ -1,8 +1,14 @@
-name: Daily AI Article
+# 注意：每日定时生成已在 2026-09-02 停用。
+# 原因：自动生成的文章高度重复（平均互相相似度 ~65%，34 篇中 14 篇同讲“AI 写作”），
+# 属于 Google 垃圾内容政策中的“规模化内容滥用”，是 AdSense 判“低价值内容”的主因之一。
+# 现已下架重复文章、只保留 8 篇主题各异的自动文章 + 23 篇人工原创。
+# 定时触发（schedule）已移除；如将来接入真实高质量模型并确保证内容不重复，可重新加回：
+#   schedule:
+#     - cron: '0 2 * * *'
+name: Daily AI Article (manual only)
 
 on:
-  schedule:
-    - cron: '0 2 * * *'
+  # 仅保留手动触发，避免持续产出批量重复内容
   workflow_dispatch:
 
 permissions:

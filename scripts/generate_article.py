@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
-"""每日 AI 文章生成：仅使用免费模型，自动多供应商切换 + 质量校验"""
+"""AI 文章生成：仅使用免费模型，自动多供应商切换 + 质量校验 + 标题去重。
+
+注意（2026-09-02 复盘）：模板兜底已移除。模板基于站内已有数据生成，
+与工具页内容重复（实测相似度 ~72%），会构成“规模化内容滥用”。
+没有可用 AI 供应商时，本脚本不生成任何文章。
+"""
 
 import os
 import sys
 import json
 import re
 import datetime
-import subprocess
 import urllib.request
 import urllib.error
 
@@ -193,6 +197,45 @@ def validate_article(art):
     return True, ""
 
 
+def _norm_title(s):
+    """标题归一化：去掉标点与空白，便于去重比较。"""
+    return re.sub(r"[\s，。、：；！？·\-—/\\()（）【】\[\]“”\"'’]+", "", str(s or ""))
+
+
+def load_existing_titles():
+    """读取 articles.js 中已有文章的标题列表。"""
+    try:
+        path = os.path.join(REPO_ROOT, "articles.js")
+        with open(path, encoding="utf-8") as f:
+            js = f.read()
+        return re.findall(r"title: '([^']+)'", js)
+    except Exception as e:
+        print(f"load_existing_titles failed: {e}", file=sys.stderr)
+        return []
+
+
+def check_duplicate(title, existing_titles, threshold=0.55):
+    """检查标题与已有文章是否过于相似，避免产出重复内容。
+
+    用 difflib 比较归一化标题；阈值 0.55 时，像
+    “AI写作辅助工具实战：从选题到成稿的高效工作流” 与
+    “AI写作辅助工具深度使用指南：从大纲到终稿的高效工作流”
+    这类高度雷同的标题会被拦下。
+    """
+    import difflib
+    nt = _norm_title(title)
+    if not nt:
+        return True, ""
+    for old in existing_titles:
+        no = _norm_title(old)
+        if not no:
+            continue
+        r = difflib.SequenceMatcher(None, nt, no).ratio()
+        if r >= threshold:
+            return True, f"与已有文章过于相似({r:.2f}): {old}"
+    return False, ""
+
+
 def escape_js(s):
     s = s.replace("\\", "\\\\")
     s = s.replace("`", "\\`")
@@ -244,162 +287,6 @@ def append_article(article):
     print(f"OK: {article['title']}")
 
 
-def load_tools():
-    """通过 Node 读取 tools.js，返回精简工具列表，供模板兜底使用"""
-    code = (
-        "const fs=require('fs');const vm=require('vm');"
-        "const s=fs.readFileSync('tools.js','utf8');const sandbox={};"
-        "vm.createContext(sandbox);vm.runInContext(s+';globalThis.__t=TOOLS;',sandbox);"
-        "console.log(JSON.stringify(sandbox.__t.map(t=>({id:t.id,name:t.name,desc:t.desc,"
-        "cat:t.cat,icon:t.icon,useCases:t.useCases||[],features:t.features||[]}))));"
-    )
-    try:
-        out = subprocess.run(
-            ["node", "-e", code], capture_output=True, text=True, timeout=30, check=True,
-            cwd=REPO_ROOT,
-        )
-        data = json.loads(out.stdout)
-        seen = set()
-        tools = []
-        for t in data:
-            if t["id"] in seen:
-                continue
-            seen.add(t["id"])
-            tools.append(t)
-        return tools
-    except Exception as e:
-        print(f"load_tools failed: {e}", file=sys.stderr)
-        return []
-
-
-def load_tool_content():
-    """通过 Node 读取 tool-content.js 的深度内容，返回 {id: {...}}。"""
-    code = (
-        "const fs=require('fs');const vm=require('vm');"
-        "const s=fs.readFileSync('tool-content.js','utf8');const sandbox={};"
-        "vm.createContext(sandbox);vm.runInContext(s+';globalThis.__c=TOOL_CONTENT;',sandbox);"
-        "console.log(JSON.stringify(sandbox.__c));"
-    )
-    try:
-        out = subprocess.run(
-            ["node", "-e", code], capture_output=True, text=True, timeout=30, check=True,
-            cwd=REPO_ROOT,
-        )
-        return json.loads(out.stdout)
-    except Exception as e:
-        print(f"load_tool_content failed: {e}", file=sys.stderr)
-        return {}
-
-
-def _pick_tool(tools, content_map, day):
-    """选择一个具备深度内容的工具用于模板兜底，按日期轮换避免重复。"""
-    enriched = []
-    for t in tools:
-        c = content_map.get(t["id"])
-        if c and c.get("intro"):
-            enriched.append((t, c))
-    if not enriched:
-        raise RuntimeError("tool-content.js 深度数据不足，无法生成模板文章")
-    idx = day % len(enriched)
-    # 避免连续选中同一个工具
-    if len(enriched) > 1:
-        idx = (day % len(enriched))
-    return enriched[idx][0], enriched[idx][1]
-
-
-def _esc_html(s):
-    return (str(s or "")
-            .replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
-
-
-def _template_deep_guide(tool, content, cat, label):
-    """用 tool-content.js 的深度数据生成单工具使用指南，避免模板填充文。
-
-    每个字段都来自真实整理的深度内容，信息密度高且不会千篇一律。
-    用句子而非裸列表扩充，保证可读性与篇幅达标。
-    """
-    name = tool["name"]
-    icon = tool.get("icon") or "🤖"
-    intro = content.get("intro", "")
-    audience = content.get("audience") or []
-    pros = content.get("pros") or []
-    cons = content.get("cons") or []
-    pricing = content.get("pricing", "")
-    quickstart = content.get("quickstart", "")
-    tips = content.get("tips") or []
-    alts = content.get("alternatives") or []
-    use_cases = tool.get("useCases") or []
-    features = tool.get("features") or []
-
-    title = f"{name} 深度使用指南：适用人群、优缺点与快速上手"
-    summary = (f"详细介绍 {name} 的核心能力、适合人群、优缺点、价格模式与快速上手技巧，"
-               f"帮你判断它是否适合你的 {label} 需求。")
-
-    def sentences(items, fallback="日常使用"):
-        return "；".join(_esc_html(i) for i in (items or [])[:5]) or fallback
-
-    audience_text = "、".join(_esc_html(a) for a in audience[:5]) or "广大的 AI 工具使用者"
-    alt_text = "、".join(_esc_html(a) for a in alts[:4]) or "同类工具"
-    pros_s = sentences(pros, "功能全面，上手门槛低")
-    cons_s = sentences(cons, "部分高级能力需要付费升级")
-    tips_s = sentences(tips, "用清晰、具体的提示词来获得更好的结果")
-    uc_s = sentences(use_cases, "日常问答与内容生成")
-    feat_s = sentences(features, "多模态输入与快速响应")
-
-    content = f"""
-<p>{_esc_html(intro)}</p>
-
-<h2>{name} 是什么</h2>
-<p>{_esc_html(intro)}</p>
-
-<h2>{name} 适合谁</h2>
-<p>{name} 更适合以下用户：{audience_text}。在决定是否长期使用前，建议先明确你的任务类型、使用频率和预算上限，这样能更快判断它是否值得加入你的工具组合。</p>
-
-<h2>核心优点</h2>
-<p>从实际使用来看，{name} 的优势集中在这几方面：{pros_s}。这些能力让它在对应场景中能明显提升效率，也是它区别于同类工具的关键。</p>
-
-<h2>需要注意</h2>
-<p>与此同时，{name} 也有需要留意的点：{cons_s}。使用前最好结合自己的实际需求权衡，避免因为某一项短板而影响整体体验。</p>
-
-<h2>典型使用场景</h2>
-<p>日常使用中，{name} 常见于：{uc_s}。如果你正好属于这些场景，把它纳入流程会比临时找工具更省心。</p>
-
-<h2>价格与免费额度</h2>
-<p>{_esc_html(pricing)}</p>
-
-<h2>快速上手</h2>
-<p>{_esc_html(quickstart)}</p>
-
-<h2>实用技巧</h2>
-<p>想用得更顺，可以记住这几条：{tips_s}。把这些方法固化下来，每次使用都会更高效。</p>
-
-<h2>相关推荐</h2>
-<p>如果你希望横向对比，可以同时了解：{_esc_html(alt_text)}。结合自己的预算和使用频率，选择最合适的那一个即可。工具本身没有绝对的好坏，关键是让它在你的流程里真正发挥作用。</p>
-"""
-    return {
-        "title": title,
-        "summary": summary,
-        "cat": cat,
-        "icon": icon,
-        "relatedTools": [tool["id"]] + alts[:3],
-        "content": content,
-    }
-
-
-def build_template_article(tools):
-    """无可用模型时的本地模板兜底：基于 tool-content.js 深度数据的单工具指南。
-
-    每个工具内容各不相同，信息真实，可通过更严的质量关卡。
-    """
-    today = datetime.date.today()
-    day = today.toordinal()
-    content_map = load_tool_content()
-    tool, content = _pick_tool(tools, content_map, day)
-    cat = normalize_cat(tool.get("cat"))
-    label = CAT_LABELS.get(cat, "AI 工具")
-    return _template_deep_guide(tool, content, cat, label)
-
-
 def providers():
     gh_token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_MODEL_TOKEN")
     if gh_token:
@@ -424,6 +311,7 @@ def providers():
 def main():
     attempts = []
     found = False
+    existing_titles = load_existing_titles()
     for name, fn in providers():
         try:
             raw = fn()
@@ -431,6 +319,10 @@ def main():
             ok, reason = validate_article(art)
             if not ok:
                 attempts.append(f"{name}: 质量校验未通过({reason})")
+                continue
+            dup, why = check_duplicate(art.get("title", ""), existing_titles)
+            if dup:
+                attempts.append(f"{name}: 内容重复({why})")
                 continue
             print(f"provider={name}")
             append_article(art)
@@ -442,19 +334,16 @@ def main():
         except Exception as e:
             attempts.append(f"{name}: {type(e).__name__} {str(e)[:120]}")
     if not found:
-        print("FREE PROVIDERS FAILED, falling back to template: " + "; ".join(attempts), file=sys.stderr)
-        tools = load_tools()
-        try:
-            art = build_template_article(tools)
-        except Exception as e:
-            print(f"TEMPLATE FAILED: {e}", file=sys.stderr)
-            sys.exit(1)
-        ok, reason = validate_article(art)
-        if not ok:
-            print(f"TEMPLATE QUALITY FAILED: {reason}", file=sys.stderr)
-            sys.exit(1)
-        print("provider=template")
-        append_article(art)
+        # 重要：不再使用“模板兜底”生成文章。
+        # 原因（2026-09-02 复盘）：此前的模板兜底基于 tool-content.js 的数据生成
+        # “<工具名> 深度使用指南”，与站内已有的 /tool/<id> 工具页内容高度重复
+        # （实测相似度 ~72%），且每天生成一篇、结构与标题几乎一致，属于 Google
+        # 垃圾内容政策中的“规模化内容滥用（scaled content abuse）”，是 AdSense
+        # 反复判定“低价值内容”的直接来源。模板天然无法产出独特内容，因此：
+        #   —— 没有可用的真实 AI 供应商时，本次不生成任何文章（安全退出）。
+        print("FREE PROVIDERS FAILED, 本次不生成文章（已禁用模板兜底以避免重复内容）: "
+              + "; ".join(attempts), file=sys.stderr)
+        sys.exit(0)
 
 
 if __name__ == "__main__":
