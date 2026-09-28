@@ -206,13 +206,29 @@ def render_article(art, tool_by_id, cat_label):
     .article-content th, .article-content td {{ padding: 6px 8px; }}
   }}
 </style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9519141393679331" crossorigin="anonymous"></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-006K3L3V06"></script>
+<!-- 百度统计（国内可用；把 BAIDU_TONGJI_ID 换成 tongji.baidu.com 里的 ID） -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){{dataLayer.push(arguments);}}
-  gtag('js', new Date());
-  gtag('config', 'G-006K3L3V06');
+var _hmt = _hmt || [];
+(function() {{
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?BAIDU_TONGJI_ID";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+}})();
+</script>
+<!-- 百度自动推送：用户访问即向百度报备 URL，加速收录 -->
+<script>
+(function(){{
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {{
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }} else {{
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }}
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+}})();
 </script>
 </head>
 <body>
