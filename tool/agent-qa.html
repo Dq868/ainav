@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <!-- Google tag (gtag.js) -->
+<script>
+  // ========== 深色模式 ==========
+  (function initTheme() {
+    const saved = localStorage.getItem("ainav_theme");
+    if (saved === "dark") document.documentElement.setAttribute("data-theme", "dark");
+  })();
+
+  window.toggleTheme = function() {
+    const el = document.documentElement;
+    const isDark = el.getAttribute("data-theme") === "dark";
+    if (isDark) { el.removeAttribute("data-theme"); localStorage.setItem("ainav_theme", "light"); }
+    else { el.setAttribute("data-theme", "dark"); localStorage.setItem("ainav_theme", "dark"); }
+    const btn = document.querySelector(".theme-btn");
+    if (btn) btn.textContent = isDark ? "🌙" : "☀️";
+  };
+  setTimeout(function() {
+    const btn = document.querySelector(".theme-btn");
+    if (btn) btn.textContent = document.documentElement.getAttribute("data-theme") === "dark" ? "☀️" : "🌙";
+  }, 0);
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta name="google-site-verification" content="Wsq4c3zO5bibhXAw6kxO56XsaFS0xb9nKduMqGakfOY" />
+  <meta name="google-site-verification" content="uKC3K2ArEDrW3FQkAgbXPG5RfJnbqdBkfNCckyB49ok" />
+  <meta name="baidu-site-verification" content="codeva-Lo0lFC30bF" />
+  <meta name="baidu-site-verification" content="codeva-KaTWlA6dHV" />
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="酱肘AI">
+<meta name="twitter:card" content="summary_large_image">
+<title>agent-qa — 酱肘AI</title>
+<meta name="description" content="vostride 的网页、Android 与 iOS 测试智能体，结合 memidex 持久记忆和经验证的自我改进。模型服务费用另计，价格以官方页面为准。">
+<link rel="canonical" href="https://jzzai.cn/tool/agent-qa" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --border: #e6e8ec;
+    --text: #1a1d26;
+    --text-secondary: #6b7280;
+    --primary: #4f6cf7;
+    --primary-light: #eef1ff;
+    --primary-dark: #3b55d6;
+    --ad-label: #9ca3af;
+    --shadow: 0 1px 3px rgba(0,0,0,.06);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,.08);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --max-w: 900px;
+    --header-h: 64px;
+  }
+  html { font-size: 16px; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6;
+  }
+
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    height: var(--header-h);
+    display: flex; align-items: center;
+  }
+  header .inner {
+    max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+    width: 100%; display: flex; align-items: center; gap: 12px;
+  }
+  .back-link {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--text-secondary); font-size: .9rem; font-weight: 500;
+    text-decoration: none; padding: 6px 12px; border-radius: var(--radius-sm);
+    transition: background .15s, color .15s;
+  }
+  .back-link:hover { background: var(--primary-light); color: var(--primary); }
+
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 32px 24px 60px; }
+
+  /* Loading / Error */
+  .loading-state, .error-state {
+    text-align: center; padding: 80px 20px; color: var(--text-secondary);
+  }
+  .loading-state .spinner {
+    width: 36px; height: 36px; border: 3px solid var(--border);
+    border-top-color: var(--primary); border-radius: 50%;
+    animation: spin .8s linear infinite; margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .error-state .emoji { font-size: 3rem; margin-bottom: 12px; }
+  .error-state h2 { margin-bottom: 8px; }
+
+  /* Tool Hero */
+  .tool-hero {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 36px;
+    display: flex; gap: 28px; align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .tool-hero .icon-wrap {
+    width: 72px; height: 72px; border-radius: 16px;
+    background: var(--primary-light); display: flex; align-items: center;
+    justify-content: center; font-size: 2.4rem; flex-shrink: 0;
+  }
+  .tool-hero .info { flex: 1; min-width: 0; }
+  .tool-hero h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 4px; }
+  .tool-hero .cat-tag {
+    display: inline-block; font-size: .78rem; padding: 2px 12px;
+    border-radius: 999px; background: var(--primary-light); color: var(--primary);
+    margin-bottom: 10px;
+  }
+  .tool-hero p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; }
+  .tool-hero .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tool-hero .tag {
+    font-size: .75rem; padding: 3px 12px; border-radius: 999px;
+    background: var(--bg); color: var(--text-secondary);
+  }
+  .tool-hero .tag.free { background: #e0f2e9; color: #0b7a4a; }
+  .tool-hero .tag.paid { background: #fef3e2; color: #b45a0c; }
+  .tool-hero .tag.freemium { background: #e8edff; color: #4f6cf7; }
+  .tool-hero .tag.hot { background: #fef0ec; color: #d13b3b; }
+  .tool-hero .tag.oss { background: #ede9fe; color: #6d28d9; }
+  .btn-visit {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 28px; border-radius: 999px; font-size: .95rem;
+    background: var(--primary); color: #fff; font-weight: 600;
+    border: none; cursor: pointer; text-decoration: none;
+    transition: background .2s, transform .15s;
+  }
+  .btn-visit:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+  /* Ad */
+  .ad-banner {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 24px;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    margin-bottom: 24px; min-height: 72px;
+    color: var(--ad-label); font-size: .8rem; cursor: pointer;
+    transition: box-shadow .2s;
+  }
+  .ad-banner:hover { box-shadow: var(--shadow-hover); }
+  .ad-banner .ad-icon { font-size: 1.5rem; opacity: .5; }
+
+  /* Sections */
+  .detail-section {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px 32px; margin-bottom: 20px;
+  }
+  .detail-section h2 {
+    font-size: 1.1rem; font-weight: 600; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .detail-section ul {
+    list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .detail-section ul li {
+    padding: 8px 14px; background: var(--bg); border-radius: var(--radius-sm);
+    font-size: .9rem; display: flex; align-items: center; gap: 8px;
+  }
+  .detail-section ul li::before {
+    content: '✓'; color: var(--primary); font-weight: 700; font-size: .85rem;
+  }
+
+  /* 深度内容 */
+  .deep-content h3 { font-size: .95rem; font-weight: 600; margin-bottom: 10px; }
+  .deep-intro { color: var(--text-secondary); line-height: 1.85; font-size: .93rem; }
+  .deep-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 18px 0; }
+  .deep-grid h3 { margin-top: 0; }
+  .audience-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .audience-tag {
+    font-size: .8rem; background: var(--primary-light); color: var(--primary);
+    padding: 4px 12px; border-radius: 999px;
+  }
+  .deep-pricing { color: var(--text-secondary); font-size: .9rem; line-height: 1.7; }
+  .deep-two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+  .pros-box, .cons-box {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 16px 18px;
+  }
+  .deep-content ul { display: grid; grid-template-columns: 1fr; gap: 8px; list-style: none; padding: 0; margin: 0; }
+  .deep-content ul li {
+    padding: 5px 0 5px 22px; position: relative; background: transparent;
+    font-size: .88rem; line-height: 1.6;
+  }
+  .deep-content ul li::before {
+    content: ''; position: absolute; left: 2px; top: 12px;
+    width: 8px; height: 8px; border-radius: 50%; background: var(--primary);
+  }
+  .deep-content .cons-box ul li::before { background: #f59e0b; }
+  .deep-step { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .deep-step p, .deep-step ul li { color: var(--text-secondary); }
+  .alt-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .alt-chip {
+    display: inline-flex; align-items: center; gap: 6px; font-size: .82rem;
+    background: var(--primary-light); color: var(--primary);
+    padding: 6px 14px; border-radius: 999px; text-decoration: none;
+  }
+  .alt-chip:hover { background: var(--primary); color: #fff; }
+
+  /* Related */
+  .related-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;
+  }
+  .related-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 16px; cursor: pointer;
+    text-decoration: none; color: inherit; display: block;
+    transition: box-shadow .2s, transform .15s;
+  }
+  .related-card:hover {
+    box-shadow: var(--shadow-hover); transform: translateY(-1px);
+  }
+  .related-card .r-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: var(--primary-light); display: flex; align-items: center;
+    justify-content: center; font-size: 1.1rem; margin-bottom: 8px;
+  }
+  .related-card .r-name { font-weight: 600; font-size: .9rem; }
+  .related-card .r-desc {
+    font-size: .78rem; color: var(--text-secondary);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  footer {
+    text-align: center; padding: 32px 24px; border-top: 1px solid var(--border);
+    color: var(--text-secondary); font-size: .82rem;
+  }
+  footer a { color: var(--primary); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .tool-hero { flex-direction: column; align-items: center; text-align: center; padding: 24px; }
+    .tool-hero .tags { justify-content: center; }
+    .detail-section ul { grid-template-columns: 1fr; }
+    .detail-section { padding: 20px; }
+    .deep-grid, .deep-two { grid-template-columns: 1fr; }
+  }
+</style>
+<script src="/tools.js"></script>
+  <script src="/articles.js"></script>
+  <script src="/tool-content.js"></script>
+<!-- 百度统计（国内可用；把 BAIDU_TONGJI_ID 换成 tongji.baidu.com 里的 ID） -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?BAIDU_TONGJI_ID";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- 百度自动推送：用户访问即向百度报备 URL，加速收录 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script type="application/ld+json" data-tool-ld="1">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "agent-qa",
+  "url": "https://jzzai.cn/tool/agent-qa",
+  "description": "vostride 的网页、Android 与 iOS 测试智能体，结合 memidex 持久记忆和经验证的自我改进。模型服务费用另计，价格以官方页面为准。",
+  "applicationCategory": "DeveloperApplication",
+  "license": "https://github.com/vostride/agent-qa/blob/main/LICENSE.md"
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+          <button class="btn-explore" onclick="goToRandomTool()" style="display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:999px;font-size:.85rem;background:var(--bg);border:1px solid var(--border);cursor:pointer;transition:.15s;color:var(--primary);font-weight:500;">
+        🎲 随机探索
+      </button>
+        <button class="theme-btn" onclick="window.toggleTheme()" title="切换主题">🌙</button>
+    <a class="back-link" href="/">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      返回首页
+    </a>
+  </div>
+</header>
+
+<div class="container">
+  <div id="loading" class="loading-state" style="display:none;">
+    <div class="spinner"></div>
+    <span>加载中...</span>
+  </div>
+  <div id="error" class="error-state" style="display:none;">
+    <div class="emoji">🔍</div>
+    <h2>未找到该工具</h2>
+    <p>请检查链接是否正确</p>
+    <a href="/" class="btn-visit" style="margin-top:12px;display:inline-flex;">返回首页</a>
+  </div>
+  <div id="content">
+    <div class="tool-hero">
+      <div class="icon-wrap">🧪</div>
+      <div class="info">
+        <div class="cat-tag">💻 代码开发</div>
+        <h1>agent-qa</h1>
+        <p>vostride 的网页、Android 与 iOS 测试智能体，结合 memidex 持久记忆和经验证的自我改进。模型服务费用另计，价格以官方页面为准。</p>
+        <a class="btn-visit" href="https://www.vostride.com/" target="_blank" rel="noopener">访问官网</a>
+      </div>
+    </div>
+    <div class="detail-section">
+      <h2>🎯 适用场景</h2>
+      <ul><li>自然语言网页回归测试</li><li>Android 与 iOS 流程验证</li><li>通过 MCP 向编程智能体返回测试证据</li></ul>
+    </div>
+    <div class="detail-section">
+      <h2>⭐ 核心功能</h2>
+      <ul><li>跨运行复用 memidex 记忆</li><li>经验证的自我改进</li><li>可复查的测试证据</li><li>CLI 与 MCP 接入</li></ul>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2026 酱肘AI &mdash; <a href="/">发现最好的 AI 工具</a> &nbsp;·&nbsp;
+  <a href="/about">关于我们</a> &nbsp;·&nbsp;
+  <a href="/contact">联系我们</a> &nbsp;·&nbsp;
+  <a href="/privacy">隐私政策</a> &nbsp;·&nbsp;
+  <a href="/terms">服务条款</a> &nbsp;·&nbsp;
+  <a href="/editorial">编辑准则</a>
+</footer>
+
+0
+<script>
+(function() {
+  // Get tool ID from URL
+  const params = new URLSearchParams(window.location.search);
+  let toolId = params.get("tool");
+
+  // If not in query string, try URL path (Vercel rewrites /tool/xxx)
+  if (!toolId) {
+    const m = window.location.pathname.match(/\/tool\/([^\/]+)/);
+    if (m) toolId = m[1].replace(/\.html$/, '');
+  }
+
+  if (!toolId) {
+  }
+
+  const tool = getToolById(toolId);
+  if (!tool) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
+    return;
+  }
+
+  const cat = CATEGORIES.find(c => c.id === tool.cat);
+  const related = getRelatedTools(tool);
+
+  // SEO meta
+  const siteName = '酱肘AI';
+  document.title = tool.name + ' — ' + siteName;
+  setMeta('description', tool.name + '：' + tool.desc + ' 了解功能、使用场景、优缺点，发现更多 AI 工具。');
+  setMeta('og:title', tool.name + ' — ' + siteName);
+  setMeta('og:description', tool.desc);
+  setMeta('og:url', window.location.href);
+  setCanonical(window.location.href);
+  const twitterDesc = document.querySelector('meta[name="twitter:card"]');
+  if (!twitterDesc) {
+    const m = document.createElement('meta');
+    m.name = 'twitter:title';
+    m.content = tool.name;
+    document.head.appendChild(m);
+  }
+
+  // Build content
+  const content = document.getElementById('content');
+  const tagLabels = { 'free': '免费', 'paid': '付费', 'freemium': '免费增值', '热门': '🔥 热门', '开源': '📂 开源' };
+
+  const tagsHtml = tool.tags.map(t => {
+    const cls = t === 'free' ? 'free' : t === 'paid' ? 'paid' : t === 'freemium' ? 'freemium' : t === '热门' ? 'hot' : t === '开源' ? 'oss' : '';
+    return `<span class="tag ${cls}">${tagLabels[t] || t}</span>`;
+  }).join('');
+
+  const useCasesHtml = (tool.useCases || []).map(uc => `<li>${uc}</li>`).join('');
+  const featuresHtml = (tool.features || []).map(f => `<li>${f}</li>`).join('');
+
+  // ========== 深度内容 ==========
+  function escHtml(str) {
+    return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function buildDeepContent(tool) {
+    const c = (typeof TOOL_CONTENT !== 'undefined' && TOOL_CONTENT[tool.id]) || null;
+    if (!c) return '';
+    const prosHtml = (c.pros || []).map(p => `<li class="pro">${escHtml(p)}</li>`).join('');
+    const consHtml = (c.cons || []).map(p => `<li class="con">${escHtml(p)}</li>`).join('');
+    const audienceHtml = (c.audience || []).map(p => `<span class="audience-tag">${escHtml(p)}</span>`).join('');
+    const tipsHtml = (c.tips || []).map(p => `<li>${escHtml(p)}</li>`).join('');
+    const altNames = (c.alternatives || []).map(id => getToolById(id)).filter(Boolean).slice(0, 3);
+    const altHtml = altNames.map(t => `<a class="alt-chip" href="/tool/${t.id}">${t.icon} ${t.name}</a>`).join('');
+    return `
+    <div class="detail-section deep-content">
+      <h2>📖 ${escHtml(tool.name)} 深度介绍</h2>
+      <div class="deep-intro"><p>${escHtml(c.intro)}</p></div>
+      <div class="deep-grid">
+        <div>
+          <h3>🎯 适合人群</h3>
+          <div class="audience-tags">${audienceHtml}</div>
+        </div>
+        <div>
+          <h3>💰 价格模式</h3>
+          <p class="deep-pricing">${escHtml(c.pricing)}</p>
+        </div>
+      </div>
+      <div class="deep-two">
+        <div class="pros-box">
+          <h3>✅ 优点</h3>
+          <ul>${prosHtml}</ul>
+        </div>
+        <div class="cons-box">
+          <h3>⚠️ 缺点</h3>
+          <ul>${consHtml}</ul>
+        </div>
+      </div>
+      <div class="deep-step">
+        <h3>🚀 快速上手</h3>
+        <p>${escHtml(c.quickstart)}</p>
+      </div>
+      ${tipsHtml ? `<div class="deep-step"><h3>💡 实用技巧</h3><ul>${tipsHtml}</ul></div>` : ''}
+      ${altHtml ? `<div class="deep-step"><h3>🔁 同类替代</h3><div class="alt-row">${altHtml}</div></div>` : ''}
+    </div>
+    `;
+  }
+  const deepHtml = buildDeepContent(tool);
+
+  const relatedHtml = related.map(r => `
+    <a class="related-card" href="${window.location.protocol === "file:" ? "detail.html?tool=" + r.id : "/tool/" + r.id}">
+      <div class="r-icon">${r.icon}</div>
+      <div class="r-name">${r.name}</div>
+      <div class="r-desc">${r.desc}</div>
+    </a>
+  `).join('');
+
+  content.innerHTML = `
+    <div class="tool-hero">
+      <div class="icon-wrap">${tool.icon}</div>
+      <div class="info">
+        <div class="cat-tag">${cat ? cat.label : ''}</div>
+        <h1>${tool.name}</h1>
+        <p>${tool.desc}</p>
+        <div class="tags">${tagsHtml}</div>
+        <a class="btn-visit" href="${tool.url}" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          访问官网
+        </a>
+      </div>
+    </div>
+
+    ${deepHtml}
+
+    <div class="detail-section">
+      <h2>⭐ 用户评分</h2>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div id="avgRating" style="font-size:2.4rem;font-weight:700;color:var(--primary);">-</div>
+          <div id="starDisplay" style="font-size:1.3rem;color:#f59e0b;letter-spacing:2px;"></div>
+          <div id="ratingCount" style="font-size:.8rem;color:var(--text-secondary);"></div>
+        </div>
+        <div>
+          <div style="font-size:.9rem;font-weight:500;margin-bottom:6px;">你的评分：</div>
+          <div id="starSelector" style="font-size:1.8rem;cursor:pointer;color:#ddd;letter-spacing:4px;">
+            <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+          </div>
+          <div id="ratingMsg" style="font-size:.8rem;color:var(--text-secondary);margin-top:4px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h2>💬 用户评价</h2>
+      <div id="commentsList" style="margin-bottom:16px;"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input id="commentName" placeholder="你的昵称" style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;max-width:160px;flex:1;">
+        <input id="commentText" placeholder="写一句评价..." style="padding:8px 14px;border:1px solid var(--border);border-radius:999px;font-size:.85rem;background:var(--bg);outline:none;flex:2;min-width:200px;">
+        <button id="submitComment" class="btn-visit" style="padding:8px 20px;font-size:.85rem;border-radius:999px;">发表</button>
+      </div>
+    </div>
+
+    <div class="detail-section" id="relatedArticles" style="display:none;">
+      <h2>📝 相关文章</h2>
+      <div class="related-grid" id="relatedArticlesGrid"></div>
+    </div>
+
+    <div class="detail-section">
+      <h2>🎯 适用场景</h2>
+      <ul>${useCasesHtml}</ul>
+    </div>
+
+    <div class="detail-section">
+      <h2>⭐ 核心功能</h2>
+      <ul>${featuresHtml}</ul>
+    </div>
+
+    ${related.length > 0 ? `
+    <div class="detail-section">
+      <h2>🔗 相关工具</h2>
+      <div class="related-grid">${relatedHtml}</div>
+    </div>
+    ` : ''}
+
+  `;
+
+  // JSON-LD 结构化数据
+  const ld = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": tool.name,
+    "url": "https://jzzai.cn/tool/" + tool.id,
+    "description": tool.desc,
+    "applicationCategory": cat ? cat.label.replace(/^[^A-Za-z\u4e00-\u9fa5]+/, '') + 'AI' : 'AI工具',
+    "license": "https://github.com/vostride/agent-qa/blob/main/LICENSE.md"
+  };
+  let ldEl = document.querySelector('script[data-tool-ld]');
+  if (!ldEl) {
+    ldEl = document.createElement('script');
+    ldEl.type = 'application/ld+json';
+    ldEl.setAttribute('data-tool-ld', '1');
+    document.head.appendChild(ldEl);
+  }
+  ldEl.textContent = JSON.stringify(ld);
+
+  // Show content
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('content').style.display = 'block';
+
+  function setMeta(name, content) {
+    let el = document.querySelector('meta[name="' + name + '"], meta[property="' + name + '"]');
+    if (!el) {
+      el = document.createElement('meta');
+      if (name.startsWith('og:')) el.setAttribute('property', name);
+      else el.setAttribute('name', name);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', content);
+  }
+
+  function setCanonical(url) {
+    let el = document.querySelector('link[rel="canonical"]');
+    if (el) el.setAttribute('href', url);
+  }
+
+  function goToRandomTool() {
+    const all = getAllTools();
+    const item = all[Math.floor(Math.random() * all.length)];
+    const baseUrl = window.location.protocol === "file:" ? "detail.html?tool=" : "/tool/";
+    window.location.href = baseUrl + item.id;
+  }
+
+  window.goToRandomTool = goToRandomTool;
+
+  // ========== 评分系统 ==========
+  const RATING_KEY = 'ainav_ratings';
+  function getRatings() {
+    try { return JSON.parse(localStorage.getItem(RATING_KEY)) || {}; }
+    catch { return {}; }
+  }
+  function saveRating(toolId, star) {
+    const ratings = getRatings();
+    if (!ratings[toolId]) ratings[toolId] = { total: 0, count: 0 };
+    ratings[toolId].total += star;
+    ratings[toolId].count += 1;
+    localStorage.setItem(RATING_KEY, JSON.stringify(ratings));
+    return ratings[toolId];
+  }
+  function displayRating(toolId) {
+    const ratings = getRatings();
+    const r = ratings[toolId];
+    const el = document.getElementById('avgRating');
+    const starD = document.getElementById('starDisplay');
+    const countEl = document.getElementById('ratingCount');
+    if (r && r.count > 0) {
+      const avg = (r.total / r.count).toFixed(1);
+      el.textContent = avg;
+      const full = Math.round(r.total / r.count);
+      starD.textContent = '★'.repeat(full) + '☆'.repeat(5 - full);
+      countEl.textContent = r.count + ' 人评价';
+    } else {
+      el.textContent = '-';
+      starD.textContent = '☆☆☆☆☆';
+      countEl.textContent = '暂无评分';
+    }
+  }
+
+  // Star selector
+  const starSelector = document.getElementById('starSelector');
+  if (starSelector) {
+    let selectedStar = 0;
+    starSelector.querySelectorAll('span').forEach(s => {
+      s.addEventListener('mouseenter', function() {
+        const star = parseInt(this.dataset.star);
+        starSelector.querySelectorAll('span').forEach((sp, i) => {
+          sp.style.color = i < star ? '#f59e0b' : '#ddd';
+        });
+      });
+      s.addEventListener('mouseleave', function() {
+        starSelector.querySelectorAll('span').forEach((sp, i) => {
+          sp.style.color = i < selectedStar ? '#f59e0b' : '#ddd';
+        });
+      });
+      s.addEventListener('click', function() {
+        if (!toolId) return;
+        selectedStar = parseInt(this.dataset.star);
+        saveRating(toolId, selectedStar);
+        displayRating(toolId);
+        document.getElementById('ratingMsg').textContent = '✅ 评分成功！感谢你的评价';
+      });
+    });
+  }
+
+  displayRating(toolId);
+
+  // ========== 评论系统 ==========
+  const COMMENT_KEY = 'ainav_comments';
+  function getComments() {
+    try { return JSON.parse(localStorage.getItem(COMMENT_KEY)) || {}; }
+    catch { return {}; }
+  }
+  function saveComment(toolId, name, text) {
+    const all = getComments();
+    if (!all[toolId]) all[toolId] = [];
+    all[toolId].push({ name: name || '匿名', text: text, date: new Date().toLocaleDateString('zh-CN') });
+    localStorage.setItem(COMMENT_KEY, JSON.stringify(all));
+    renderComments(toolId);
+  }
+  function renderComments(toolId) {
+    const all = getComments();
+    const list = all[toolId] || [];
+    const el = document.getElementById('commentsList');
+    if (list.length === 0) {
+      el.innerHTML = '<div style="color:var(--text-secondary);font-size:.88rem;">还没有评价，来写第一条吧</div>';
+      return;
+    }
+    el.innerHTML = list.map(c => `
+      <div style="padding:10px 0;border-bottom:1px solid var(--border);font-size:.88rem;">
+        <span style="font-weight:500;">${c.name}</span>
+        <span style="color:var(--ad-label);margin-left:8px;">${c.date}</span>
+        <div style="margin-top:4px;">${c.text}</div>
+      </div>
+    `).join('');
+  }
+
+  const submitBtn = document.getElementById('submitComment');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', function() {
+      const name = document.getElementById('commentName').value.trim();
+      const text = document.getElementById('commentText').value.trim();
+      if (!text) { alert('请输入评价内容'); return; }
+      if (!toolId) { alert('工具 ID 错误'); return; }
+      saveComment(toolId, name || '匿名', text);
+      document.getElementById('commentText').value = '';
+      document.getElementById('commentName').value = '';
+    });
+  }
+  renderComments(toolId);
+
+  // ========== 相关文章 ==========
+  if (typeof getRelatedArticles !== 'undefined') {
+    const relatedArts = getRelatedArticles(toolId, 3);
+    if (relatedArts.length > 0) {
+      const grid = document.getElementById('relatedArticlesGrid');
+      const baseUrl = window.location.protocol === 'file:' ? 'article.html?id=' : '/blog/';
+      grid.innerHTML = relatedArts.map(a => `
+        <a class="related-card" href="${baseUrl}${a.id}">
+          <div class="r-icon">${a.icon}</div>
+          <div class="r-name">${a.title}</div>
+          <div class="r-desc">${a.summary}</div>
+        </a>
+      `).join('');
+      document.getElementById('relatedArticles').style.display = 'block';
+    }
+  }
+
+})();
+</script>
+</body>
+</html>

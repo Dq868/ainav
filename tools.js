@@ -161,6 +161,14 @@ const TOOLS = [
   },
   // -- 代码开发 --
   {
+    id: 'agent-qa', name: 'agent-qa', url: 'https://www.vostride.com/',
+    desc: 'vostride 的网页、Android 与 iOS 测试智能体，结合 memidex 持久记忆和经验证的自我改进。模型服务费用另计，价格以官方页面为准。',
+    cat: 'code', icon: '🧪', tags: ['new'],
+    useCases: ['自然语言网页回归测试', 'Android 与 iOS 流程验证', '通过 MCP 向编程智能体返回测试证据'],
+    features: ['跨运行复用 memidex 记忆', '经验证的自我改进', '可复查的测试证据', 'CLI 与 MCP 接入'],
+    related: ['cursor', 'copilot', 'continue']
+  },
+  {
     id: 'copilot', name: 'GitHub Copilot', url: 'https://github.com/features/copilot',
     desc: 'AI 代码补全助手，深度集成 VS Code 等 IDE。',
     cat: 'code', icon: '🧑‍💻', tags: ['paid', '热门'],
